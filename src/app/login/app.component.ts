@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
 
 @Component(
 {
-	selector: "app-root",
+	selector: "book-share",
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.scss"],
 	encapsulation: ViewEncapsulation.None
@@ -10,5 +10,5 @@ import { Component, ViewEncapsulation } from "@angular/core";
 
 export class AppComponent
 {
-	title = "app works!";
+	title = "Login";
 }
