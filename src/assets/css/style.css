@@ -36,6 +36,7 @@ h1,h2,h3,h4,h5,h6,label,p{
 .header-top{
 	border-bottom: 1px solid #eee;
 	padding: 15px 0;
+	background-color: #FFFF00;
 
 }
 .header-left{
@@ -122,12 +123,14 @@ p.log{
 	font-size: 1em;
 	width: 50%;
 	margin-top: 4%;
+	
 }
 p.log a{
 	color:#FFFF33;
 	text-decoration:none;
 	margin: 0 5%;
 	display: inline-block;
+	color: #000000;
 }
 p.log a:hover{
 	color:#000;
