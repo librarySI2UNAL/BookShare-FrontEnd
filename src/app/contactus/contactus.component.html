@@ -1,136 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
 
-        <div class="container">
+    /* Remove the jumbotron's default bottom margin */
+     .jumbotron {
+      margin-bottom: 0;
+    }
 
-			<!-- Codrops top bar -->
-            <div class="codrops-top">
-                <a href="http://tympanus.net/Development/AnimatedResponsiveImageGrid/">
-                    <strong>&laquo; Previous Demo: </strong>Animated Responsive Image Grid
-                </a>
-                <span class="right">
-                    <a href=" http://tympanus.net/codrops/2012/08/08/circle-hover-effects-with-css-transitions/">
-                        <strong>Back to the Codrops Article</strong>
-                    </a>
-                </span>
-                <div class="clr"></div>
-            </div><!--/ Codrops top bar -->
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
 
-			<header>
-
-				<h1><strong>Circle</strong> Hover Effects</h1>
-				<h2>Pretty hover effects on circles with CSS Transitions</h2>
-
-				<nav class="codrops-demos">
-					<a href="index.html">Demo 1</a>
-					<a href="index2.html">Demo 2</a>
-					<a href="index3.html">Demo 3</a>
-					<a href="index4.html">Demo 4</a>
-					<a href="index5.html">Demo 5</a>
-					<a class="current-demo" href="index6.html">Demo 6</a>
-					<a href="index7.html">Demo 7</a>
-				</nav>
-
-				<div class="support-note"><!-- let's check browser support with modernizr -->
-					<!--span class="no-cssanimations">CSS animations are not supported in your browser</span-->
-					<span class="no-csstransforms">CSS transforms are not supported in your browser</span>
-					<!--span class="no-csstransforms3d">CSS 3D transforms are not supported in your browser</span-->
-					<span class="no-csstransitions">CSS transitions are not supported in your browser</span>
-					<span class="note-ie">Sorry, only modern browsers.</span>
-				</div>
-
-			</header>
-
-			<section class="main">
-
-				<ul class="ch-grid">
-          <li>
-						<div class="ch-item ch-img-3">
-							<div class="ch-info-wrap">
-								<div class="ch-info">
-									<div class="ch-info-front ch-img-3"></div>
-									<div class="ch-info-back">
-										<h3>Ivan Rojas</h3>
-										<p>Estudiante Universidad Nacional de Colombia <a href="https://www.facebook.com/ivanrflorz">Encuentrame en facebook</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-          <li>
-						<div class="ch-item ch-img-3">
-							<div class="ch-info-wrap">
-								<div class="ch-info">
-									<div class="ch-info-front ch-img-3"></div>
-									<div class="ch-info-back">
-										<h3>Miguel Ballén</h3>
-										<p>Estudiante Universidad Nacional de Colombia <a href="https://www.facebook.com/mballeng">Encuentrame en facebook</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-          <li>
-            <div class="ch-item ch-img-3">
-              <div class="ch-info-wrap">
-                <div class="ch-info">
-                  <div class="ch-info-front ch-img-3"></div>
-                  <div class="ch-info-back">
-                    <h3>Jorge Solano</h3>
-                    <p>Estudiante Universidad Nacional de Colombia <a href="https://www.facebook.com/jorge52">Encuentrame en facebook</a></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="ch-item ch-img-3">
-              <div class="ch-info-wrap">
-                <div class="ch-info">
-                  <div class="ch-info-front ch-img-3"></div>
-                  <div class="ch-info-back">
-                    <h3>Miguel Cuesta</h3>
-                    <p>Estudiante Universidad Nacional de Colombia <a href="https://www.facebook.com/Miguel56Angel">Encuentrame en facebook</a></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>BookShare</h1>
+    <p>Contact Us </p>
+  </div>
+</div>
 
 
-          <li>
-            <div class="ch-item ch-img-3">
-              <div class="ch-info-wrap">
-                <div class="ch-info">
-                  <div class="ch-info-front ch-img-3"></div>
-                  <div class="ch-info-back">
-                    <h3>Edilberto Cañon</h3>
-                    <p>Estudiante Universidad Nacional de Colombia <a href="https://www.facebook.com/berto.pasquel">Encuentrame en facebook</a></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-
-
-          <li>
-						<div class="ch-item ch-img-3">
-							<div class="ch-info-wrap">
-								<div class="ch-info">
-									<div class="ch-info-front ch-img-3"></div>
-									<div class="ch-info-back">
-										<h3>David Beltrán</h3>
-										<p>Estudiante Universidad Nacional de Colombia <a href="https://www.facebook.com/david.beltrancifuentes">Encuentrame en facebook</a></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-
-
-
-
-
-
-				</ul>
-
-			</section>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel text-center">
+        <div class="panel-heading "> <strong>
+          BLACK IVAN ROJAS
+        </strong>
         </div>
+        <div class="panel-body"><center><img src="https://scontent.fbog2-2.fna.fbcdn.net/v/t1.0-9/1504942_10203266109266711_5144118434970024097_n.jpg?oh=255a5cf682e104881f3daba270b09cc7&oe=59509F87" class="img-responsive" style="width:45%" alt="Image"></div>
+        </center>
+        <div class="panel-footer">idrojasf@unal.edu.co</div>
+        <div class="panel-footer">Estudiante Universidad Nacional de Colombia</div>
+        <div class="panel-footer"><a href="https://www.facebook.com/ivanrflorz">Encuentrame en facebook</a></div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel text-center ">
+        <div class="panel-heading"><strong>
+          MIGUEL BALLEN</strong>
+        </div>
+        <div class="panel-body"><center><img src="https://scontent.fbog2-2.fna.fbcdn.net/v/t1.0-9/17498455_1384291791630479_4868769353043373476_n.jpg?oh=a8b503f7a830a603c33c365550e0e2d9&oe=596790B2" class="img-responsive" style="width:45%" alt="Image"></div>
+        </center><div class="panel-footer">migaballengal@unal.edu.co</div>
+        <div class="panel-footer">Estudiante Universidad Nacional de Colombia</div>
+        <div class="panel-footer"><a href="https://www.facebook.com/mballeng">Encuentrame en facebook</a></div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel text-center">
+        <div class="panel-heading"><strong>
+          JORGE SOLANO</strong>
+        </div>
+        <div class="panel-body "><center><img src="https://mail.google.com/mail/u/1/?ui=2&ik=6c9fb0ac9b&view=fimg&th=15b23688b6c1b9e8&attid=0.3&disp=inline&realattid=f_j0xjq38o4&safe=1&attbid=ANGjdJ_jQLnV1BV1-pXtoQ0_FVNbt1v9tneU39N-iEW3LgkhC1_Y57PGkkOzkax6LJbuQkvr8tRwpLBmIFzdQtoSdmVbeSbNMnea1_tExwpQvP6083i2SI_T3g3bRgs&ats=1490947724428&rm=15b23688b6c1b9e8&zw&sz=w1366-h662" class="img-responsive" style="width:45%" alt="Image"></div>
+        </center><div class="panel-footer">jasolanoa@unal.edu.co</div>
+        <div class="panel-footer">Estudiante Universidad Nacional de Colombia</div>
+        <div class="panel-footer"><a href="https://www.facebook.com/Jorge52">Encuentrame en facebook</a></div>
+      </div>
+    </div>
+  </div>
+</div><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel text-center ">
+        <div class="panel-heading"><strong>
+          MIGUEL CUESTA </strong>
+          </div>
+        <div class="panel-body"><center><img src="https://mail.google.com/mail/u/1/?ui=2&ik=6c9fb0ac9b&view=fimg&th=15b23688b6c1b9e8&attid=0.6&disp=inline&realattid=f_j0xjrdgh7&safe=1&attbid=ANGjdJ--saZ0xy0L5zm7j85nNNO6abL4w1DJ-fjjpga3sBi6D_lCRN6bMmfw5Cx8R89fL3QeVs5AhNWCmIQY5LcKH1C8thvUQyYiIAq71cDDIBajTi7SnluzgEcvIbg&ats=1490947724429&rm=15b23688b6c1b9e8&zw&sz=w1366-h662" class="img-responsive" style="width:45%" alt="Image"></div>
+        </center>
+        <div class="panel-footer">macuestap@unal.edu.co</div>
+        <div class="panel-footer">Estudiante Universidad Nacional de Colombia</div>
+        <div class="panel-footer"><a href="https://www.facebook.com/Miguel56Angel">Encuentrame en facebook</a></div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel text-center">
+        <div class="panel-heading"><strong>DAVID BELTRAN</div></strong>
+        <div class="panel-body"><center><img src="http://eaglestaekwondo.com/wp-content/uploads/2016/05/frutas.jpg" class="img-responsive" style="width:45%" alt="Image"></div>
+        </center>
+        <div class="panel-footer">dbeltranc@unal.edu.co</div>
+        <div class="panel-footer">Estudiante Universidad Nacional de Colombia</div>
+        <div class="panel-footer"><a href="https://www.facebook.com/david.beltran.cifuentes">Encuentrame en facebook</a></div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel text-center">
+        <div class="panel-heading"><strong>EDILBERTO CAÑON</div></strong>
+        <div class="panel-body"><center><img src="https://mail.google.com/mail/u/1/?ui=2&ik=6c9fb0ac9b&view=fimg&th=15b23688b6c1b9e8&attid=0.4&disp=inline&realattid=f_j0xjq6bu5&safe=1&attbid=ANGjdJ9kv4NyMhcjEicIBWzCFvYIu7nPvCnebDgiQ9j1emMqyhfXN9vPDh4dY81_BQ7oG9jtBFvXr-LilPrxbY4U-2q2L5emXe9g0rcxjdM5tqkZmRi6ZEtsfPLYIKk&ats=1490947724429&rm=15b23688b6c1b9e8&zw&sz=w1366-h662" class="img-responsive" style="width:45%" alt="Image"></div>
+        </center>  <div class="panel-footer">ecanonp@unal.edu.co</div>
+          <div class="panel-footer">Estudiante Universidad Nacional de Colombia</div>
+          <div class="panel-footer"><a href="https://www.facebook.com/berto.pasquel">Encuentrame en facebook</a></div>
+      </div>
+    </div>
+  </div>
+</div><br><br>
