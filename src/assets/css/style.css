@@ -22,6 +22,7 @@ body a{
 	-o-transition: 0.5s all;
 	-moz-transition: 0.5s all;
 	-ms-transition: 0.5s all;
+	
 }
  ul{
 	padding: 0;
@@ -175,6 +176,7 @@ i.glyphicon.glyphicon-phone {
 }
 a.item_add {
  text-decoration: none;
+ 
 }
 .grid_1 img{
 	margin-bottom:1em;
@@ -286,18 +288,20 @@ ul.callbacks_tabs.callbacks1_tabs {
   	color: #000;
 	text-decoration: none;
 }
-.price h5{
+.price h5{ /*-Color de Precio-*/  
 	float: left;
-	color:#000;
+	color:#fFF;
 	font-size: 1.5em;
 	margin-top: 3px;
 }
+/*-Color de botones-*/
 .price a {
-    color: #FFF;
+  color: #000;/*-Color de la fuente-*/
   font-size: 0.9em;
+  font-weight: bold;/*--fuente en negritas-*/
   display: block;
   float: right;
-  background-color: #FFFF33;
+  background-color: #ffff33;/*-Amarillo quemado-*/
   padding: 0.3em 0.6em;
   border-radius: 3px;
   text-decoration: none;
@@ -311,7 +315,7 @@ ul.callbacks_tabs.callbacks1_tabs {
 .col-md1 {
   border: 1px solid #CACACA;
   padding: 1em;
-  border-bottom:5px solid #FFFF33;
+  border-bottom:5px solid #ffff33;/*-Amarillo quemado-*/
 }
 .col-md1:hover {
   border: 1px solid #000;
@@ -322,7 +326,8 @@ ul.callbacks_tabs.callbacks1_tabs {
   -moz-transition: 0.5s all;
   -ms-transition: 0.5s all;
 }
-.col-md1:hover .price a {
+.col-md1:hover .price a { /*-Pasar por ensima el raton a los botones-*/
+  color: #FFF;
   background-color: #000;
   transition: 0.5s all;
   -webkit-transition: 0.5s all;
@@ -597,6 +602,7 @@ p.footer-class a:hover{
 a.forgot {
 	font-size: 0.8125em;
 	  color: #000000;
+		
 }
 .account {
   padding: 4em 0;
@@ -1817,6 +1823,7 @@ button.btn.btn-lg {
   font-size: 0.9em;
   margin: 0 0 0.5em 0px;
   padding: 9px;
+  color: red ;
 }
 .grid1 {
   margin: 0.7em 0 0;
