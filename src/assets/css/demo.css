@@ -3,7 +3,7 @@
 /* General Demo Style */
 body{
 	font-family: Cambria, Georgia, serif;
-	background: #f9f9f9 url(../images/bg.jpg);
+	background: #f9f9f9
 	font-weight: 300;
 	font-size: 15px;
 	color: #333;
@@ -27,6 +27,7 @@ a{
 }
 .main{
 	width: 90%;
+	height: 100%;
 	margin: 0 auto;
 	position: relative;
 }
@@ -96,7 +97,7 @@ a{
 	margin: 0px 4px;
 	padding: 0px 6px;
 	color: #aaa;
-	line-height: 20px;	
+	line-height: 20px;
 	font-size: 13px;
 	text-shadow: 1px 1px 1px #fff;
 	border: 1px solid #fff;
