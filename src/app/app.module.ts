@@ -7,13 +7,21 @@ import { AlertModule } from 'ng2-bootstrap';
 import { AppComponent } from "./login/app.component";
 import { HomepageComponent } from './homepage/homepage.component';
 import { ContactusComponent } from './contactus/contactus.component';
+import { AvailableprodComponent } from './availableprod/availableprod.component';
+import { RegistryComponent } from './registry/registry.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule(
 {
 	declarations: [
 		AppComponent,
 		HomepageComponent,
-		ContactusComponent
+		ContactusComponent,
+		AvailableprodComponent,
+		RegistryComponent,
+		ProfileComponent,
+		ProductComponent
 	],
 	imports: [
 		BrowserModule,
