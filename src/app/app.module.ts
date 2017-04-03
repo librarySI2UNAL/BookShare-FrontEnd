@@ -4,8 +4,8 @@ import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { AlertModule } from 'ng2-bootstrap';
 
-import { AppComponent } from "./login/app.component";
-import { HomepageComponent } from './homepage/homepage.component';
+import { AppComponent } from "./homepage/app.component";
+import { LoginComponent } from './login/login.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { AvailableprodComponent } from './availableprod/availableprod.component';
 import { RegistryComponent } from './registry/registry.component';
@@ -16,7 +16,7 @@ import { ProductComponent } from './product/product.component';
 {
 	declarations: [
 		AppComponent,
-		HomepageComponent,
+		LoginComponent,
 		ContactusComponent,
 		AvailableprodComponent,
 		RegistryComponent,
