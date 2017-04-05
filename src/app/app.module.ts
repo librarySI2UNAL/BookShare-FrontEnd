@@ -12,6 +12,8 @@ import { RegistryComponent } from './registry/registry.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProductComponent } from './product/product.component';
 
+import { ProductService } from "./services/product.service";
+
 @NgModule(
 {
 	declarations: [
@@ -29,7 +31,7 @@ import { ProductComponent } from './product/product.component';
 		HttpModule,
 		AlertModule.forRoot()
 	],
-	providers: [],
+	providers: [ ProductService ],
 	bootstrap: [AppComponent]
 } )
 

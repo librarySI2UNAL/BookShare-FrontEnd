@@ -7,6 +7,6 @@ export class Product
 	description: string;
 	special: boolean;
 	available: boolean;
-	book: Book;
-	collection: Collection;
+	book: any;
+	collection: any;
 }
