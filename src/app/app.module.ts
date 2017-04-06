@@ -1,5 +1,5 @@
-import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { AlertModule } from 'ng2-bootstrap';
@@ -11,6 +11,7 @@ import { AvailableprodComponent } from './availableprod/availableprod.component'
 import { RegistryComponent } from './registry/registry.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProductComponent } from './product/product.component';
+import { AppRoutingModule } from './app.routes';
 
 @NgModule(
 {
@@ -21,13 +22,15 @@ import { ProductComponent } from './product/product.component';
 		AvailableprodComponent,
 		RegistryComponent,
 		ProfileComponent,
-		ProductComponent
+		ProductComponent,
+
 	],
 	imports: [
 		BrowserModule,
 		FormsModule,
 		HttpModule,
-		AlertModule.forRoot()
+		AlertModule.forRoot(),
+		AppRoutingModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

@@ -295,6 +295,7 @@ p.log a{
 	margin: 0 5%;
 	display: inline-block;
 	color: #000000;
+  font-family: 'Lobster', cursive;
 }
 p.log a:hover{
 	color:#000;
@@ -338,7 +339,8 @@ i.glyphicon.glyphicon-phone {
   border:none;
 }
 a.item_add {
- text-decoration: none;
+
+ font-family: 'Lobster', cursive;
 
 }
 .grid_1 img{
@@ -448,14 +450,16 @@ ul.callbacks_tabs.callbacks1_tabs {
   	color: #000;
 }
 .col-md1 h3 a{
-  	color: #000;
+  color: #000;
 	text-decoration: none;
+  size:20px;
 }
 .price h5{ /*-Color de Precio-*/
 	float: left;
 	color:#fFF;
 	font-size: 1.5em;
 	margin-top: 3px;
+  font-family: 'Lobster', cursive
 }
 /*-Color de botones-*/
 .price a {
@@ -702,7 +706,7 @@ p.footer-class a:hover{
 .login-left h4{
 	color:#000;
 	font-size: 1.3em;
-	font-family: 'OleoScript-Regular';
+	font-family: 'Lobster', cursive
 }
  .login-left p {
 	color: #b2b2b2;
@@ -1276,6 +1280,7 @@ h1.typo1 {
 p.log {
   width: 55%;
   font-size: 0.85em;
+
 }
 .number span {
   color: #000;
@@ -1413,6 +1418,7 @@ p.log {
 @media (max-width: 667px){
 p.log {
   font-size: 0.77em;
+
 }
 }
 @media(max-width:640px){
