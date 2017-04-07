@@ -1,0 +1,386 @@
+ <!--LOGIN -->
+ <!--
+<app-login></app-login>
+
+	<app-registry></app-registry>
+
+	<app-contactus></app-contactus> 
+	-->
+
+<!--ACA Inicia el HOME -->
+
+<div class="header">
+	<div class="header-top">
+		<div class="container">
+		<div class="col-sm-4 world"></div>
+
+				<div class="col-sm-4 logo">
+					<a href="index.html"><img src="assets/images/logo.png" alt=""></a>
+				</div>
+			
+			<!--Menu de registro e inicio de secion -->	
+			<div class="col-sm-3 top-footer1">
+				<p class="log"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>	
+				<p class="log"><a href="/registry"><span class="glyphicon glyphicon-log-in"></span> Registrate</a>
+				
+				<form>
+					<H4> UserName  
+					<input type="text" size="5"value="" onfocus="this.value='';" onblur="if (this.value == '') {this.value='';}"></H4>
+					
+					<H4> Password  
+					<input type="password"size="5" value="" onfocus="this.value='';" onblur="if (this.value == '') {this.value='';}"></H4>
+					
+				</form>
+				<!--<span></span><a href="#"><span class="glyphicon glyphicon-log-out  "></span> Login</a></p>-->
+
+
+			<div class="clearfix"> </div>
+			</div>
+				<div class="clearfix"> </div>
+		</div>
+		</div>
+		
+		<div class="container">
+			<div class="head-top">
+				<div class="col-sm-2 number">
+					<span><i class="glyphicon glyphicon-phone"></i>085 596 234</span>
+				</div>
+				
+				
+		 <div class="col-sm-8 h_menu4"><!--Menu Principal -->	
+				<ul class="memenu yellow">
+				
+					<li class=" grid"><a  href="index.html">Home</a></li>
+				      
+					<li><a  href="#">Men</a>
+							<div class="mepanel">
+							<div class="row">
+								<div class="col1">
+									<div class="h_nav">
+										<h4>All Clothing</h4>
+										<ul>
+											<!-- Etiquetas dentro del Menu Men -->	
+											<li><a href="products.html">Shirts</a></li>
+											<li><a href="products.html">Sports Wear</a></li>
+											<li><a href="products.html">Shorts</a></li>
+											<li><a href="products.html">Suits & Blazers</a></li>
+											<li><a href="products.html">Formal Shirts</a></li>
+											<li><a href="products.html">Sweatpants</a></li>
+											<li><a href="products.html">Swimwear</a></li>
+											<li><a href="products.html">Trousers & Chinos</a></li>
+											<li><a href="products.html">T-Shirts</a></li>
+											<li><a href="products.html">Underwear & Socks</a></li>
+
+										</ul>
+									</div>
+								</div>
+						  </div>
+						</div>
+					</li>
+				    
+					<li class="grid"><a  href="#">	Women</a>
+					  	<div class="mepanel">
+						<div class="row">
+							<div class="col1">
+								<div class="h_nav">
+									<h4>All Clothing</h4>
+									<ul>
+										<li><a href="products.html">Shirts & Tops</a></li>
+										<li><a href="products.html">Sports Wear</a></li>
+										<li><a href="products.html">Kurtas & Kurties</a></li>
+										<li><a href="products.html">Suits & Blazers</a></li>
+										<li><a href="products.html">Sarees</a></li>
+										<li><a href="products.html">Sweatpants</a></li>
+										<li><a href="products.html">Swimwear</a></li>
+										<li><a href="products.html">Night-Suits</a></li>
+										<li><a href="products.html">T-Shirts</a></li>
+										<li><a href="products.html">Jeans</a></li>
+
+									</ul>
+								</div>
+							</div>
+							
+							
+						  </div>
+						</div>
+			    </li>
+				<li><a  href="/">Blog</a></li>
+				<!---llamada a la Ruta "/contactus"---->
+				<li><a  href="/contactus">Contact</a></li>
+			  </ul>
+			</div>
+				<div class="col-sm-2 search">
+			<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><i class="glyphicon glyphicon-search"> </i> </a>
+		</div>
+		
+		
+		<div class="clearfix"> </div>
+			<!---pop-up-box---->
+					  <script type="text/javascript" src="js/modernizr.custom.min.js"></script>
+					<link href="assets/css/popuo-box.css" rel="stylesheet" type="text/css" media="all"/>
+					<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
+					<!---//pop-up-box---->
+				<div id="small-dialog" class="mfp-hide">
+				<div class="search-top">
+						<div class="login">
+							<input type="submit" value="">
+							<input type="text" value="Type something..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}">
+						</div>
+						<p>	Shopping</p>
+					</div>
+				</div>
+				 <script>
+						$(document).ready(function() {
+						$('.popup-with-zoom-anim').magnificPopup({
+							type: 'inline',
+							fixedContentPos: false,
+							fixedBgPos: true,
+							overflowY: 'auto',
+							closeBtnInside: true,
+							preloader: false,
+							midClick: true,
+							removalDelay: 300,
+							mainClass: 'my-mfp-zoom-in'
+						});
+
+						});
+				</script>
+	<!---->
+		</div>
+	</div>
+</div>
+<!--banner-->
+<div class="banner">
+	<div class="col-sm-3 banner-mat">
+		<img class="img-responsive"	src="assets/images/ba1.jpg" alt="">
+	</div>
+	<div class="col-sm-6 matter-banner">
+	 	<div class="slider">
+	    	<div class="callbacks_container">
+	      		<ul class="rslides" id="slider">
+	        		<li>
+	          			<img src="assets/images/1.jpg" alt="">
+	       			 </li>
+			 		 <li>
+	          			<img src="assets/images/2.jpg" alt="">
+	       			 </li>
+					 <li>
+	          			<img src="assets/images/ba.jpg" alt="">
+	        		</li>
+	      		</ul>
+	 	 	</div>
+		</div>
+	</div>
+	<div class="col-sm-3 banner-mat">
+		<img class="img-responsive" src="assets/images/ba.jpg" alt="">
+	</div>
+	<div class="clearfix"> </div>
+</div>
+<!--//banner-->
+<!--content-->
+<div class="content">
+	<div class="container">
+		<div class="content-top">
+			<h1>Recent Products</h1>
+			<div class="content-top1">
+				<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi.png" alt="" />
+						</a>
+						<h3><a href="single.html">Tops</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Add To Cart</a>
+								<div class="clearfix"> </div>
+						</div>
+					</div>
+				</div>
+			<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi2.png" alt="" />
+						</a>
+						<h3><a href="single.html">T-Shirt</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Add To Cart</a>
+								<div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+			<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi4.png" alt="" />
+						</a>
+						<h3><a href="single.html">Shirt</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Detalles</a>
+								<div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+			<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi1.png" alt="" />
+						</a>
+						<h3><a href="single.html">Tops</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Add To Cart</a>
+								<div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+			<div class="clearfix"> </div>
+			</div>
+			<div class="content-top1">
+				<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi3.png" alt="" />
+						</a>
+						<h3><a href="single.html">Shirt</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Add To Cart</a>
+								<div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+			<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi5.png" alt="" />
+						</a>
+						<h3><a href="single.html">T-Shirt</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Add To Cart</a>
+								<div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+			<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi6.png" alt="" />
+						</a>
+						<h3><a href="single.html">Jeans</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Add To Cart</a>
+								<div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+			<div class="col-md-3 col-md2">
+					<div class="col-md1 simpleCart_shelfItem">
+						<a href="single.html">
+							<img class="img-responsive" src="assets/images/pi7.png" alt="" />
+						</a>
+						<h3><a href="single.html">Tops</a></h3>
+						<div class="price">
+								<h5 class="item_price">$300</h5>
+								<a href="#" class="item_add">Add To Cart</a>
+								<div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+			<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--//content-->
+<!--footer-->
+<div class="footer">
+	<div class="container">
+		<div class="footer-top">
+			<div class="col-md-8 top-footer">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1988.381925211612!2d-74.08367534486672!3d4.636168136968964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa653b0fc05dac25c!2s401+Facultad+de+Ingenier%C3%ADa+-+Edificio+Insignia!5e0!3m2!1ses-419!2sco!4v1490849137365" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+			</div>
+			<div class="col-md-4 top-footer1">
+				<h2>FOLLOW BOOKSHARE</h2>
+					<form>
+						<input type="text" value="" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}">
+						<input type="submit" value="SUBSCRIBE">
+					</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="footer-bottom">
+
+		<div class="container">
+
+				<!--Columna 1 -->
+				<div class="col-sm-3 footer-bottom-cate">
+					<h6>Autores</h6>
+					<ul>
+						<li><a href="#">Miguel Ángel Ballén</a></li>
+						<li><a href="#">David Beltrán </a></li>
+						<li><a href="#">Miguel Cuesta</a></li>
+						<li><a href="#">Ivan Rojas</a></li>
+						<li><a href="#">Jorge Solano</a></li>
+						<li><a href="#">Edilberto Cañon</a></li>
+
+					</ul>
+				</div>
+				<!--Columna 2 -->
+				<div class="col-sm-3 footer-bottom-cate">
+					<!--<h6>Feature Projects</h6> TODO
+
+					<ul>
+						<li><a href="#">Curabitur sapien</a></li>
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li><a href="#">Dignissim neque</a></li>
+						<li><a href="#">Ornared id aliquet</a></li>
+
+					</ul>-->
+				</div>
+				<!--Columna 3 -->
+				<div class="col-sm-3 footer-bottom-cate">
+					<!--<h6>Top Brands</h6>TODO
+
+					<ul>
+
+						<li><a href="#">Dignissim purus</a></li>
+						<li><a href="#">Tempus pretium</a></li>
+						<li><a href="#">Dignissim neque</a></li>
+						<li><a href="#">Ornared id aliquet</a></li>
+						<li><a href="#">Ultrices id du</a></li>
+						<li><a href="#">Commodo sit</a></li>
+
+					</ul>-->
+				</div>
+				<div class="col-sm-3 footer-bottom-cate cate-bottom">
+					<!--<h6>Our Address</h6>-->
+					<ul>
+						<li>Aliquam metus  dui. </li>
+						<li>orci, ornareidquet</li>
+						<li> ut,DUI.</li>
+						<li>nisi, dignissim</li>
+						<li>gravida at.</li>
+						<li class="phone">SCRUM MASTER: Miguel Ballén </li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+				<p class="footer-class"> © 2017 Ingeniería de Software II - Universidad Nacional| Design by <a >Book Share </a> </p>
+			</div>
+	</div>
+</div>
+<!--ACA Termina el HOME -->
+
+

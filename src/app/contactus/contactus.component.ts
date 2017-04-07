@@ -5,11 +5,7 @@ import { Component, OnInit} from '@angular/core';
 
   selector: 'app-contactus',
   templateUrl: './contactus.component.html',
-
   styleUrls: ['./contactus.component.css']
-
-
-
 
 })
 
