@@ -511,13 +511,30 @@ ul.callbacks_tabs.callbacks1_tabs {
     font-family: 'OleoScript-Regular';
       margin: 0 0 0.5em;
 }
+.top-footer1 h4 {
+  font-size: 2em;
+  color: #FFFF33;
+    font-family: 'OleoScript-Regular';
+      margin: 0 0 0.5em;
+}
 .top-footer1 input[type="text"] {
-  width: 65%;
+  width: 50%;
+  heigth: 50%;
   padding: 0.6em;
   outline: none;
   color: #BDBDBD;
   font-size: 1em;
-  background: none;
+  background: black;
+  border: 1px solid #BDBDBD;
+}
+.top-footer1 input[type="password"] {
+  width: 50%;
+  heigth: 50%;
+  padding: 0.6em;
+  outline: none;
+  color: #BDBDBD;
+  font-size: 1em;
+  background: black;
   border: 1px solid #BDBDBD;
 }
 .top-footer1 input[type="submit"] {
@@ -535,6 +552,19 @@ ul.callbacks_tabs.callbacks1_tabs {
 }
 .footer {
   border-top: 1px solid #BDBDBD;
+}
+.footer input[type="submit"] {
+  width: 50%;
+  heigth: 50%;
+  padding: 0.6em;
+  outline: none;
+  color: #BDBDBD;
+  font-size: 1em;
+  background: black;
+  border: 1px solid #BDBDBD;
+}
+.footer input[type="submit"]:hover {
+  background-color:#FFFF33;
 }
 .footer-top {
   padding: 3em 0 ;

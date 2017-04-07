@@ -34,6 +34,14 @@ const routes : Routes = [
 		component:	 ContactusComponent	
 	},
 	{
+		path: 		'profile',
+		component:	 ProfileComponent	
+	},
+	{
+		path: 		'availprod',
+		component:	 AvailableprodComponent	
+	},
+	{
 		path: 		'',
 		redirectTo: '/home',
 		pathMatch: 'full'
