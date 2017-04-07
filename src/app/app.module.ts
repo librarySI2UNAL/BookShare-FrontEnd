@@ -13,6 +13,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProductComponent } from './product/product.component';
 
 import { ProductService } from "./services/product.service";
+import { UserService } from "./services/user.service";
 
 @NgModule(
 {
@@ -31,8 +32,8 @@ import { ProductService } from "./services/product.service";
 		HttpModule,
 		AlertModule.forRoot()
 	],
-	providers: [ ProductService ],
-	bootstrap: [AppComponent]
+	providers: [ ProductService, UserService ],
+	bootstrap: [ AppComponent ]
 } )
 
 export class AppModule{}
