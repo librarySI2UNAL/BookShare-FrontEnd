@@ -5,13 +5,13 @@ import { HttpModule } from "@angular/http";
 import { AlertModule } from 'ng2-bootstrap';
 
 import { AppComponent } 			from './app.component';
-import { HomeComponent } 			from './homepage/home.component';
-import { LoginComponent } 			from './login/login.component';
-import { ContactusComponent }	 	from './contactus/contactus.component';
-import { AvailableprodComponent } 	from './availableprod/availableprod.component';
-import { RegistryComponent } 		from './registry/registry.component';
-import { ProfileComponent } 		from './profile/profile.component';
-import { ProductComponent }			 from './product/product.component';
+import { HomeComponent } 			from './views/homepage/home.component';
+import { LoginComponent } 			from './views/login/login.component';
+import { ContactusComponent }	 	from './views/contactus/contactus.component';
+import { AvailableprodComponent } 	from './views/availableprod/availableprod.component';
+import { RegistryComponent } 		from './views/registry/registry.component';
+import { ProfileComponent } 		from './views/profile/profile.component';
+import { ProductComponent }			from './views/product/product.component';
 //importar rutas
 import { routing } from "./app.routes";
 @NgModule(
