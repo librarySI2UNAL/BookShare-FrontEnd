@@ -13,6 +13,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProductComponent } from './product/product.component';
 import { AppRoutingModule } from './app.routes';
 
+import { ProductService } from "./services/product.service";
+import { UserService } from "./services/user.service";
+
 @NgModule(
 {
 	declarations: [
@@ -32,8 +35,8 @@ import { AppRoutingModule } from './app.routes';
 		AlertModule.forRoot(),
 		AppRoutingModule
 	],
-	providers: [],
-	bootstrap: [AppComponent]
+	providers: [ ProductService, UserService ],
+	bootstrap: [ AppComponent ]
 } )
 
 export class AppModule{}
