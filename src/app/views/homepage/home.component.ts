@@ -7,9 +7,15 @@ import { Component,OnInit } from '@angular/core';
 })
 
 
-export class HomeComponent implements OnInit { 
-  constructor() { }
-  ngOnInit() {
-  }
-
+export class HomeComponent implements OnInit{
+   location = {};
+   setPosition(position){
+      this.location = position.coords;
+      console.log(position.coords);
+      }
+ngOnInit(){
+   if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+      };
+   }
 }
