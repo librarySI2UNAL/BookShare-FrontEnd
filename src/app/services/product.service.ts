@@ -35,7 +35,7 @@ export class ProductService
 	availableProducts( page: number, perPage: number ): Observable<Product[]>
 	{
 		return this.http.get( `http://localhost:3000/api/v1/products?page=${page}&per_page=${perPage}` )
-			.map( ( r: Response ) => r.json().products as Product[] )
+			.map( ( r: Response ) => r.json().data as Product[] )
 			.catch( this.handleError );
 	}
 }

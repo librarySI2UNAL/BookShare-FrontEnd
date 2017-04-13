@@ -32,17 +32,17 @@ export class UserService
 		return Observable.throw( errMsg );
 	}
 
-	login( credentials: any ): Promise<User>
+	login( credentials: any ): Observable<User>
 	{
-		return this.http.post( `http://localhost:3000/api/v1/login`, { user: credentials }, { headers: this.headers } ).toPromise()
-			.then( response => response.json().data )
+		return this.http.post( `http://localhost:3000/api/v1/login`, { user: credentials }, { headers: this.headers } )
+			.map( ( r: Response ) => r.json().data as User )
 			.catch( this.handleError );
 	}
 
-	createUser( user: User ): Promise<User>
+	createUser( user: User ): Observable<User>
 	{
-		return this.http.post( `http://localhost:3000/api/v1/users`, { user: user }, { headers: this.headers } ).toPromise()
-			.then( response => response.json().data )
+		return this.http.post( `http://localhost:3000/api/v1/users`, { user: user }, { headers: this.headers } )
+			.map( ( r: Response ) => r.json().data as User )
 			.catch( this.handleError );
 	}
 }
