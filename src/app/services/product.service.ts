@@ -21,7 +21,7 @@ export class ProductService
 		{
 			const body = error.json() || "";
 			const err = body.error || JSON.stringify( body );
-			errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+			errMsg = `${error.status} - ${error.statusText || ""} ${err}`;
 		}
 		else
 		{

@@ -1,4 +1,5 @@
 import { City } from "./city";
+import { Interest } from "./interest";
 
 export class User
 {
@@ -11,5 +12,5 @@ export class User
 	latitude: number;
 	longitude: number;
 	city: City;
-	interests: string[];
+	interests: Interest[];
 }
