@@ -29,14 +29,14 @@ export class UserService
 			.catch( this.handleError );
 	}
 
-	getUser( id: number ): Promise<any>
+	get( id: number ): Promise<any>
 	{
 		return this.http.get( `${this.usersURL}/${id}` ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}
 
-	createUser( user: User ): Promise<any>
+	create( user: User ): Promise<any>
 	{
 		let userAux: any = user;
 		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
@@ -45,12 +45,19 @@ export class UserService
 			.catch( this.handleError );
 	}
 
-	updateUser( user: User ): Promise<any>
+	update( user: User ): Promise<any>
 	{
 		let userAux: any = user;
 		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
 		return this.http.put( `${this.usersURL}/${user.id}`, { data: userAux }, { headers: this.headers } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
+	}
+
+	delete( id: number ): Promise<any>
+	{
+		return this.http.delete( `${this.usersURL}/${id}` ).toPromise()
+			.then( response => response.json().data )
+			.catch( this.handleError )
 	}
 }
