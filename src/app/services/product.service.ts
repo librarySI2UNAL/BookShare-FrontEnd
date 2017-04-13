@@ -21,7 +21,7 @@ export class ProductService
 		{
 			const body = error.json() || "";
 			const err = body.error || JSON.stringify( body );
-			errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+			errMsg = `${error.status} - ${error.statusText || ""} ${err}`;
 		}
 		else
 		{
@@ -35,7 +35,7 @@ export class ProductService
 	availableProducts( page: number, perPage: number ): Observable<Product[]>
 	{
 		return this.http.get( `http://localhost:3000/api/v1/products?page=${page}&per_page=${perPage}` )
-			.map( ( r: Response ) => r.json().products as Product[] )
+			.map( ( r: Response ) => r.json().data as Product[] )
 			.catch( this.handleError );
 	}
 }
