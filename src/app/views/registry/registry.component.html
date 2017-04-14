@@ -4,51 +4,39 @@
 		<div class="container">
 			<div class="col-sm-4 world"></div>
 			<div class="col-sm-4 logo">
-					<a href="/home"><img src="assets/images/logo.png" alt=""></a>
+				<a href="/home"><img src="assets/images/logo.png" alt=""></a>
 			</div>
 		</div>
 	</div>
 </div>
 
 <div class="container" >
-	|
-		<div class="col-md-4 top-footer1">
+	<div class="col-md-4 top-footer1">
 		<table style="width:200%">
-					<tr>
-						<td>
-							<h2>REGISTRY BOOKSHARE IM REGISTRY</h2>
+			<tr>
+				<td>
+					<h2>REGISTRY BOOKSHARE IM REGISTRY</h2>
+					<div align="center" style="border:1px solid #ffff33">
+						<form>
+								<h4>Correo electrónico</h4>
+								<input type = "text" name = "email" [(ngModel)] = "user.email">
 								
-								<div align="center" style="border:1px solid #ffff33">
-
-								<form>
-									<H4> Email </H4> 
-									<input type="text"size="5" value="" onfocus="this.value='';" 
-									onblur="if (this.value == '') {this.value='';}">
+								<h4>Nombre</h4>
+								<input type = "text" name = "name" [(ngModel)] = "user.name">
+								
+								<h4>Apellido</h4> 
+								<input type = "text" name = "lastName" [(ngModel)] = "user.lastName">
 									
-									<H4> Name </H4> 
-									<input type="text" size="5"value="" onfocus="this.value='';" 
-									onblur="if (this.value == '') {this.value='';}">
-									
-									<H4> LastName </H4> 
-									<input type="text" size="5"value="" onfocus="this.value='';" 
-									onblur="if (this.value == '') {this.value='';}">
-									
-									
-									<H4> Password </H4> 
-									<input type="password"size="5" value="" onfocus="this.value='';" 
-									onblur="if (this.value == '') {this.value='';}">
+								<h4>Contraseña</h4>
+								<input type = "password" name = "password" [(ngModel)] = "password.value">
 					
-									<H4> Repeat Password </H4> 
-									<input type="password"size="5" value="" onfocus="this.value='';" 
-									onblur="if (this.value == '') {this.value='';}">
-									
-									
-								
-								</form>
-								<br>
-								<br>
-								</div>
-						</td>
+								<h4>Confirme contraseña</h4>
+								<input type = "password" name = "confirmPassword" [(ngModel)] = "password.confirm">
+							</form>
+							<br>
+							<br>
+						</div>
+					</td>
 				<br>
 				<br>
 				
@@ -154,7 +142,7 @@
 	<div class="container">
 		<h4>Registrate</h4>		
 		<form>
-			<input  type="submit" value="SUBSCRIBE">
+			<input  type="submit" value="SUBSCRIBE" (click) = "register()">
 		</form>
 		<br>
 		<br>
