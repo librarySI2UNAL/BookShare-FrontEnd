@@ -10,27 +10,76 @@
 	</div>
 </div>
 
-<div class="container">
-	<div class="col-md-4">
-		<h2>Registro</h2>
-		<div align="center">
-			<form [formGroup] = "signUpForm" (ngSubmit) = "register()">
-				<h4>Correo electrónico</h4>
-				<input type = "text" formControlName = "email" [(ngModel)] = "user.email">
+<div class = "container custom-white-background">
+	<div class = "col-md-4">
+		<h1>Registro</h1>
+		<div>
+			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
+				<div class = "form-group">
+					<label>Correo electrónico</label>
+					<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
 
-				<h4>Nombre</h4>
-				<input type = "text" formControlName = "name" [(ngModel)] = "user.name">
+					<div *ngIf = "signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.email.errors.required">
+							El correo electrónico es requerido
+						</div>
+						<div [hidden] = "!signUpForm.controls.email.errors.pattern">
+							El correo electrónico no es válido
+						</div>
+					</div>
+				</div>
 
-				<h4>Apellido</h4> 
-				<input type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+				<div class = "form-group">
+					<label>Nombre</label>
+					<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
 
-				<h4>Contraseña</h4>
-				<input type = "password" formControlName = "password" [(ngModel)] = "password.value">
+					<div *ngIf = "signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.name.errors.required">
+							El nombre es requerido
+						</div>
+					</div>
+				</div>
 
-				<h4>Confirme la contraseña</h4>
-				<input type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
+				<div class = "form-group">
+					<label>Apellido</label> 
+					<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
 
-				<button type = "submit" [disabled] = "signUpForm.pristine" class = "btn btn-success">Registar</button>
+					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.lastName.errors.required">
+							El apellido es requerido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Contraseña</label>
+					<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
+
+					<div *ngIf = "signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.password.errors.required">
+							La contraseña es requerido
+						</div>
+						<div [hidden] = "!signUpForm.controls.password.errors.minlength">
+							La contraseña debe tener al menos 8 caracteres
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Confirme la contraseña</label>
+					<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
+
+					<div *ngIf = "signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
+							Debe confirmar la contraseña
+						</div>
+						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.minlength">
+							La contraseña debe tener al menos 8 caracteres
+						</div>
+					</div>
+				</div>
+
+				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Registar</button>
 			</form>
 		</div>
 	</div>

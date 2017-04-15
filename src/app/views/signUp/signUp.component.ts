@@ -15,28 +15,36 @@ import { UserService } from "../../services/user.service";
 export class SignUpComponent implements OnInit
 {
 	signUpForm: FormGroup;
-	user: User = new User();
-	password: any = {
-		value: "",
-		confirmation: ""
-	};
+	user: User;
+	password: any;
+	position: any;
 
 	constructor( private userService: UserService,
 		private formBuilder: FormBuilder )
 	{
 		this.signUpForm = this.createSignUpForm();
+		this.user = new User();
+		this.password = {
+			value: "",
+			confirmation: ""
+		};
+		this.position = {
+			latitude: 4.6482836,
+			longitude: -74.1256726
+		};
 	}
 
 	private setPosition( position )
 	{
-		let coordinates: any = position.coords;
-		this.user.latitude = coordinates.latitude;
-		this.user.longitude = coordinates.longitude;
+		this.position = position.coords;
 	}
 
-	private register()
+	private signUp()
 	{
-		console.log( this.user );
+		if( this.signUpForm.invalid )
+		{
+			return;
+		}
 		/*this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{ 
@@ -66,10 +74,7 @@ export class SignUpComponent implements OnInit
 		this.user.interests = [];
 		if( navigator.geolocation )
 			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
-		else
-		{
-			this.user.latitude = 4.6482836;
-			this.user.longitude = -74.1256726;
-		}
+		this.user.latitude = this.position.latitude;
+		this.user.longitude = this.position.longitude;
 	}
 }

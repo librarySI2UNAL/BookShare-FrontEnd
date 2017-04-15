@@ -1,4 +1,14 @@
+@import "../../styles/mixins";
+
 sign-up
 {
-	
+	.form-control
+	{
+		@include border-radius( 0px );
+	}
+
+	.custom-white-background
+	{
+		background-color: white;
+	}
 }
