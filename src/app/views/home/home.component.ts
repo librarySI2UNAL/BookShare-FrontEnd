@@ -2,13 +2,13 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
 @Component(
 {
-	selector: "product",
-	templateUrl: "./product.component.html",
-	styleUrls: ["./product.component.scss"],
+	selector: "home",
+	templateUrl: "./home.component.html",
+	styleUrls: ["./home.component.scss"],
 	encapsulation: ViewEncapsulation.None
 } )
 
-export class ProductComponent implements OnInit
+export class HomeComponent implements OnInit
 {
 	constructor()
 	{
@@ -17,6 +17,6 @@ export class ProductComponent implements OnInit
 
 	ngOnInit()
 	{
-
+		
 	}
 }

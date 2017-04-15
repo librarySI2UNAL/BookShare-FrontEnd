@@ -1,0 +1,177 @@
+<!--Header Book Share-->
+<div class="header">
+	<div class="header-top">
+		<div class="container">
+			<div class="col-sm-4 world"></div>
+			<div class="col-sm-4 logo">
+				<a href="/home"><img src="assets/images/logo.png" alt=""></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class = "container custom-white-background">
+	<div class = "col-md-4">
+		<h1>Registro</h1>
+		<div>
+			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
+				<div class = "form-group">
+					<label>Correo electrónico</label>
+					<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
+
+					<div *ngIf = "signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.email.errors.required">
+							El correo electrónico es requerido
+						</div>
+						<div [hidden] = "!signUpForm.controls.email.errors.pattern">
+							El correo electrónico no es válido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Nombre</label>
+					<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
+
+					<div *ngIf = "signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.name.errors.required">
+							El nombre es requerido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Apellido</label> 
+					<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+
+					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.lastName.errors.required">
+							El apellido es requerido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Contraseña</label>
+					<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
+
+					<div *ngIf = "signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.password.errors.required">
+							La contraseña es requerido
+						</div>
+						<div [hidden] = "!signUpForm.controls.password.errors.minlength">
+							La contraseña debe tener al menos 8 caracteres
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Confirme la contraseña</label>
+					<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
+
+					<div *ngIf = "signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
+							Debe confirmar la contraseña
+						</div>
+						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.minlength">
+							La contraseña debe tener al menos 8 caracteres
+						</div>
+					</div>
+				</div>
+
+				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Registar</button>
+			</form>
+		</div>
+	</div>
+</div>				
+				<!-- Check List 
+				<td>
+				<h2>Selecciona Tus Intereses</h2>
+				
+				<table style="width:200%">
+					<tr>
+						<td>
+						<div class="col-md-10" style="border:1px solid #ffff33">
+							<ul>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>Arts & Photography</H4></label>
+								</li>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>Biographies</H4></label>
+								</li>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>Childrens Book</H4></label>
+								</li>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>History</H4></label>
+								</li>
+							</ul>
+						</div>
+						</td>
+						
+						<td>
+							<div class="col-md-10" style="border:1px solid #ffff33">
+								<ul>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>Cookbooks, food & wine</H4></label>
+								</li>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>Literature & Fiction</H4></label>
+								</li>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>Mystery and suspense</H4></label>
+								</li>
+								<li>
+									<label class="switch">
+									<input type="checkbox">
+									<div class="slider round"></div>
+									</label>
+									<label><H4>Science Fiction and Fantasy</H4></label>
+								</li>
+							</ul>
+						</div>
+						</td>
+					</tr>
+				</table>
+				
+				</td>
+				</tr>
+				</table>	
+				<label class="switch">
+				  <input type="checkbox">
+				  <div class="slider round"></div>
+				</label>
+
+				<label class="switch">
+				  <input type="checkbox" checked>
+				  <div class="slider round"></div>
+				</label>
+				-->

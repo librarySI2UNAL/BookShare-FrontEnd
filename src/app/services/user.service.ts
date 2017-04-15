@@ -36,10 +36,13 @@ export class UserService
 			.catch( this.handleError );
 	}
 
-	create( user: User ): Promise<any>
+	create( user: User, password: string ): Promise<any>
 	{
 		let userAux: any = user;
 		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
+		userAux.password = password;
+		userAux.last_name = user.lastName;
+		delete userAux.lastName;
 		return this.http.post( `${this.usersURL}`, { data: userAux }, { headers: this.headers } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
