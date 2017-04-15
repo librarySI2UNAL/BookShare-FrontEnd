@@ -10,37 +10,32 @@
 	</div>
 </div>
 
-<div class="container" >
-	<div class="col-md-4 top-footer1">
-		<table style="width:200%">
-			<tr>
-				<td>
-					<h2>REGISTRY BOOKSHARE IM REGISTRY</h2>
-					<div align="center" style="border:1px solid #ffff33">
-						<form>
-								<h4>Correo electrónico</h4>
-								<input type = "text" name = "email" [(ngModel)] = "user.email">
-								
-								<h4>Nombre</h4>
-								<input type = "text" name = "name" [(ngModel)] = "user.name">
-								
-								<h4>Apellido</h4> 
-								<input type = "text" name = "lastName" [(ngModel)] = "user.lastName">
-									
-								<h4>Contraseña</h4>
-								<input type = "password" name = "password" [(ngModel)] = "password.value">
-					
-								<h4>Confirme contraseña</h4>
-								<input type = "password" name = "confirmPassword" [(ngModel)] = "password.confirm">
-							</form>
-							<br>
-							<br>
-						</div>
-					</td>
-				<br>
-				<br>
-				
-				<!-- Check List -->
+<div class="container">
+	<div class="col-md-4">
+		<h2>Registro</h2>
+		<div align="center">
+			<form [formGroup] = "signUpForm" (ngSubmit) = "register()">
+				<h4>Correo electrónico</h4>
+				<input type = "text" formControlName = "email" [(ngModel)] = "user.email">
+
+				<h4>Nombre</h4>
+				<input type = "text" formControlName = "name" [(ngModel)] = "user.name">
+
+				<h4>Apellido</h4> 
+				<input type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+
+				<h4>Contraseña</h4>
+				<input type = "password" formControlName = "password" [(ngModel)] = "password.value">
+
+				<h4>Confirme la contraseña</h4>
+				<input type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
+
+				<button type = "submit" [disabled] = "signUpForm.pristine" class = "btn btn-success">Registar</button>
+			</form>
+		</div>
+	</div>
+</div>				
+				<!-- Check List 
 				<td>
 				<h2>Selecciona Tus Intereses</h2>
 				
@@ -108,7 +103,6 @@
 								<li>
 									<label class="switch">
 									<input type="checkbox">
-									<!--<div class="slider"></div>-->
 									<div class="slider round"></div>
 									</label>
 									<label><H4>Science Fiction and Fantasy</H4></label>
@@ -121,9 +115,7 @@
 				
 				</td>
 				</tr>
-				</table>
-				
-								<!--	
+				</table>	
 				<label class="switch">
 				  <input type="checkbox">
 				  <div class="slider round"></div>
@@ -133,19 +125,4 @@
 				  <input type="checkbox" checked>
 				  <div class="slider round"></div>
 				</label>
-				-->		
-		</div>
-				
-	</div>
-
-<div class="footer" align="center">
-	<div class="container">
-		<h4>Registrate</h4>		
-		<form>
-			<input  type="submit" value="SUBSCRIBE" (click) = "register()">
-		</form>
-		<br>
-		<br>
-		<br>
-	</div>
-</div>
+				-->

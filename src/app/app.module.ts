@@ -1,47 +1,54 @@
-import { BrowserModule } 	from "@angular/platform-browser";
-import { NgModule } 		from "@angular/core";
-import { FormsModule } 		from "@angular/forms";
-import { HttpModule } 		from "@angular/http";
-import { AlertModule } 		from 'ng2-bootstrap';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
 
-import { AppComponent } 			from './app.component';
-import { HomeComponent } 			from './views/homepage/home.component';
-import { LoginComponent } 			from './views/login/login.component';
-import { ContactusComponent }	 	from './views/contactus/contactus.component';
-import { AvailableprodComponent } 	from './views/availableprod/availableprod.component';
-import { RegistryComponent } 		from './views/registry/registry.component';
-import { ProfileComponent } 		from './views/profile/profile.component';
-import { ProductComponent }			from './views/product/product.component';
+import { AlertModule } from "ng2-bootstrap";
+
+import { AppComponent } from "./app.component";
+import { HomeComponent } from "./views/home/home.component";
+import { LogInComponent } from "./views/logIn/logIn.component";
+import { ContactUsComponent } from "./views/contactUs/contactUs.component";
+import { ProductsComponent } from "./views/products/products.component";
+import { SignUpComponent } from "./views/signUp/signUp.component";
+import { ProfileComponent } from "./views/profile/profile.component";
+import { ProductComponent }	from "./views/product/product.component";
 
 import { UserService } from "./services/user.service";
+import { ProductService } from "./services/product.service";
 
-//importar rutas
-import { routing } from "./app.routes";
+import { AppRoutingModule } from "./app.routes";
+
 @NgModule(
 {
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		LoginComponent,
-		ContactusComponent,
-		AvailableprodComponent,
-		RegistryComponent,
+		LogInComponent,
+		ContactUsComponent,
+		ProductsComponent,
+		SignUpComponent,
 		ProfileComponent,
 		ProductComponent
 	],
 	imports: [
+		AppRoutingModule,
 		BrowserModule,
 		FormsModule,
+		ReactiveFormsModule,
 		HttpModule,
-		AlertModule.forRoot(),
-		//rutas
-		routing	
+		AlertModule.forRoot(),	
 	],
 	providers: [
-		UserService
+		UserService,
+		ProductService
 	],
-	bootstrap: [AppComponent]
+	bootstrap: [
+		AppComponent
+	]
 } )
 
-
-export class AppModule{}
+export class AppModule
+{
+	
+}
