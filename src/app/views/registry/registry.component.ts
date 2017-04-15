@@ -18,24 +18,31 @@ export class RegistryComponent implements OnInit
 		confirm: ""
 	};
 
-	constructor(){}
+	constructor( private userService: UserService ){}
 
 	setPosition( position )
 	{
 		let coordinates: any = position.coords;
 		this.user.latitude = coordinates.latitude;
 		this.user.longitude = coordinates.longitude;
-		console.log( this.user );
 	}
 
 	register()
 	{
-		console.log( this.user );
-		console.log( this.password );
+		this.userService.create( this.user, this.password.value )
+			.then( data =>
+			{ 
+				console.log( data );
+			} )
+			.catch( error =>
+			{ 
+				console.log( error );
+			} );
 	}
 
 	ngOnInit()
 	{
+		this.user.qualification = 0.0;
 		this.user.interests = [];
 		if( navigator.geolocation )
 			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );

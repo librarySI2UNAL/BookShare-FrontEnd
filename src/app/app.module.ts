@@ -12,6 +12,9 @@ import { AvailableprodComponent } 	from './views/availableprod/availableprod.com
 import { RegistryComponent } 		from './views/registry/registry.component';
 import { ProfileComponent } 		from './views/profile/profile.component';
 import { ProductComponent }			from './views/product/product.component';
+
+import { UserService } from "./services/user.service";
+
 //importar rutas
 import { routing } from "./app.routes";
 @NgModule(
@@ -34,7 +37,9 @@ import { routing } from "./app.routes";
 		//rutas
 		routing	
 	],
-	providers: [],
+	providers: [
+		UserService
+	],
 	bootstrap: [AppComponent]
 } )
 
