@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { Product } from "../../classes/product";
+import { Genre } from "../../classes/genre";
 
 import { ProductService } from "../../services/product.service";
 
@@ -21,12 +22,14 @@ export class ProductComponent implements OnInit
 	product: Product;
 	covers: any;
 	statuses: any;
+	genres: Array<Genre>
 
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
 		private productService: ProductService )
 	{
+		this.genres = [];
 		this.productForm = this.createProductForm();
 		this.covers = [
 		{
@@ -59,6 +62,15 @@ export class ProductComponent implements OnInit
 			value: 5,
 			name: "Excelente"
 		}];
+
+		let genre: Genre = new Genre();
+		genre.id = 1;
+		genre.name = "Drama";
+		this.genres.push( genre );
+		genre = new Genre();
+		genre.id = 2;
+		genre.name = "Novela";
+		this.genres.push( genre );
 	}
 
 	private maxValue( max: Number ): ValidatorFn
@@ -83,12 +95,11 @@ export class ProductComponent implements OnInit
 				cover: [null, [Validators.required]],
 				status: [null, [Validators.required]],
 				author: ["", [Validators.required]],
-				genre: ["", [Validators.required]],
+				genre: [null, [Validators.required]],
+				yearOfPublication: [null, [Validators.required, this.maxValue( new Date().getFullYear() )]],
 				editorial: ["", [Validators.required]],
-				yearOfPublication: [null, [Validators.required, this.maxValue( 2017 )]],
 				code: ["", [Validators.required]],
 				codeType: ["", [Validators.required]],
-				special: [null, [Validators.required]],
 				value: [null, [Validators.required]]
 			} );
 	}
