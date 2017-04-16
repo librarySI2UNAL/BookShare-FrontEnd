@@ -10,11 +10,25 @@ import { Interest } from "../classes/interest";
 @Injectable()
 export class UserService
 {
-	private headers = new Headers( { "Content-Type": "application/json" } );
-	private loginURL = "http://localhost:3000/api/v1/login";
-	private usersURL = "http://localhost:3000/api/v1/users";
+	private user: User;
+	private headers: Headers = new Headers( { "Content-Type": "application/json" } );
+	private loginURL: string = "http://localhost:3000/api/v1/login";
+	private usersURL: string = "http://localhost:3000/api/v1/users";
 
-	constructor( private http: Http ){}
+	constructor( private http: Http )
+	{
+
+	}
+
+	public setUser( user: User ): void
+	{
+		this.user = user;
+	}
+
+	public getUser(): User
+	{
+		return this.user;
+	}
 
 	private handleError( error: any ): Promise<any>
 	{
@@ -44,7 +58,7 @@ export class UserService
 		userAux.last_name = user.lastName;
 		delete userAux.lastName;
 		return this.http.post( `${this.usersURL}`, { data: userAux }, { headers: this.headers } ).toPromise()
-			.then( response => response.json().data )
+			.then( response => response.json() )
 			.catch( this.handleError );
 	}
 

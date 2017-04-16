@@ -13,4 +13,34 @@ export class User
 	longitude: number;
 	city: City;
 	interests: Interest[];
+
+	constructor( data: any )
+	{
+		if( Object.keys( data ).length === 0 )
+		{
+			this.id = null;
+			this.token = null;
+			this.name = null;
+			this.lastName = null;
+			this.email = null;
+			this.qualification = null;
+			this.latitude = null;
+			this.longitude = null;
+			this.city = null;
+			this.interests = [];
+		}
+		else
+		{
+			this.id = data.data.id;
+			this.token = data.token;
+			this.name = data.data.name;
+			this.lastName = data.data.lastName;
+			this.email = data.data.email;
+			this.qualification = parseFloat( data.data.qualification );
+			this.latitude = parseFloat( data.data.latitude );
+			this.longitude = parseFloat( data.data.longitude );
+			this.city = data.data.city;
+			this.interests = data.data.interest;
+		}
+	}
 }

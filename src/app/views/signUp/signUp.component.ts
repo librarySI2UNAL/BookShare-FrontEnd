@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 import { User } from "../../classes/user";
 import { UserService } from "../../services/user.service";
@@ -18,12 +19,13 @@ export class SignUpComponent implements OnInit
 	user: User;
 	password: any;
 	position: any;
+	router: Router;
 
 	constructor( private userService: UserService,
 		private formBuilder: FormBuilder )
 	{
 		this.signUpForm = this.createSignUpForm();
-		this.user = new User();
+		this.user = new User( {} );
 		this.password = {
 			value: "",
 			confirmation: ""
@@ -45,15 +47,19 @@ export class SignUpComponent implements OnInit
 		{
 			return;
 		}
-		/*this.userService.create( this.user, this.password.value )
+		this.userService.create( this.user, this.password.value )
 			.then( data =>
-			{ 
-				console.log( data );
+			{
+				this.user = new User( data );
+				console.log( this.user );
+				//this.user.qualification = parseFloat( this.user.qualification );
+				//console.log( this.user );
+				//this.router.navigateByUrl( "/home" );
 			} )
 			.catch( error =>
 			{ 
 				console.log( error );
-			} );*/
+			} );
 	}
 
 	private createSignUpForm(): FormGroup
