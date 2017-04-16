@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+
+import { Product } from "../../classes/product";
 
 @Component(
 {
@@ -10,13 +13,24 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
 export class ProductComponent implements OnInit
 {
-	constructor()
+	mode: string;
+	product: Product;
+
+	constructor( private route: ActivatedRoute, private router: Router )
 	{
 
 	}
 
 	ngOnInit()
 	{
-
+		this.route.params.subscribe( params =>
+			{
+				if( Object.keys( params ).length === 0 )
+					this.mode = "create";
+				else if( params["mode"] === "view" || params["mode"] === "edit" )
+					this.mode = params["mode"];
+				else
+					this.router.navigate( ["/home"] );
+			} );
 	}
 }

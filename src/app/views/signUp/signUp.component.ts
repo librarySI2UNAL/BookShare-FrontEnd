@@ -54,7 +54,7 @@ export class SignUpComponent implements OnInit
 				console.log( this.user );
 				//this.user.qualification = parseFloat( this.user.qualification );
 				//console.log( this.user );
-				//this.router.navigateByUrl( "/home" );
+				//this.router.navigate( ["/home"] );
 			} )
 			.catch( error =>
 			{ 

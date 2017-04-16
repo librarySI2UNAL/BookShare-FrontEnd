@@ -40,6 +40,10 @@ const routes : Routes = [
 		component: ProductsComponent	
 	},
 	{
+		path: "product/:id/:mode",
+		component: ProductComponent
+	},
+	{
 		path: "product",
 		component: ProductComponent
 	}
