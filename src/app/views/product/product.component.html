@@ -1,74 +1,67 @@
 <div class = "container custom-white-background">
-	<div class = "col-md-4">
+	<div>
 		<h1>Producto</h1>
-		<!--<div>
+		<div class = "col-md-offset-2 col-md-8">
 			<form [formGroup] = "productForm" (ngSubmit) = "save()">
-				<div class = "form-group">
-					<label>Correo electrónico</label>
-					<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
+				<div class = "panel panel-primary">
+					<div class = "panel-heading">
+						<h3 class = "panel-title">Información del título</h3>
+					</div>
+					<div class = "panel-body">
+						<div class = "form-group">
+							<label>Nombre</label>
+							<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "product.productItem.name">
 
-					<div *ngIf = "signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.email.errors.required">
-							El correo electrónico es requerido
+							<div *ngIf = "productForm.controls.name.errors && ( productForm.controls.name.dirty || productForm.controls.name.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.name.errors.required">
+									El nombre es requerido
+								</div>
+							</div>
 						</div>
-						<div [hidden] = "!signUpForm.controls.email.errors.pattern">
-							El correo electrónico no es válido
+
+						<div class = "form-group">
+							<label>Descripción</label>
+							<textarea class = "form-control" rows = "3" formControlName = "description" [(ngModel)] = "product.productItem.description"></textarea>
+
+							<div *ngIf = "productForm.controls.description.errors && ( productForm.controls.description.dirty || productForm.controls.description.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.description.errors.maxlength">
+									La descripción sólo puede tener 1000 caracteres
+								</div>
+							</div>
+						</div>
+
+						<div class = "form-inline">
+							<div class = "form-group">
+								<label>Cubierta</label>
+								<select class = "form-control" formControlName = "cover" [(ngModel)] = "product.productItem.cover">
+									<option *ngFor = "let cover of covers" [ngValue] = "cover.value">{{ cover.name }}</option>
+								</select>
+
+								<div *ngIf = "productForm.controls.cover.errors && ( productForm.controls.cover.dirty || productForm.controls.cover.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.cover.errors.required">
+										La cubierta es requerida
+									</div>
+								</div>
+							</div>
+
+							<div class = "form-group">
+								<label>Estado</label>
+								<select class = "form-control" formControlName = "status" [(ngModel)] = "product.productItem.status">
+									<option *ngFor = "let status of statuses" [ngValue] = "status.value">{{ status.name }}</option>
+								</select>
+
+								<div *ngIf = "productForm.controls.status.errors && ( productForm.controls.status.dirty || productForm.controls.status.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.status.errors.required">
+										El estado es requerido
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class = "form-group">
-					<label>Nombre</label>
-					<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
-
-					<div *ngIf = "signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.name.errors.required">
-							El nombre es requerido
-						</div>
-					</div>
-				</div>
-
-				<div class = "form-group">
-					<label>Apellido</label> 
-					<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
-
-					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.lastName.errors.required">
-							El apellido es requerido
-						</div>
-					</div>
-				</div>
-
-				<div class = "form-group">
-					<label>Contraseña</label>
-					<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
-
-					<div *ngIf = "signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.password.errors.required">
-							La contraseña es requerido
-						</div>
-						<div [hidden] = "!signUpForm.controls.password.errors.minlength">
-							La contraseña debe tener al menos 8 caracteres
-						</div>
-					</div>
-				</div>
-
-				<div class = "form-group">
-					<label>Confirme la contraseña</label>
-					<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
-
-					<div *ngIf = "signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
-							Debe confirmar la contraseña
-						</div>
-						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.minlength">
-							La contraseña debe tener al menos 8 caracteres
-						</div>
-					</div>
-				</div>
-
-				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Guardar</button>
+				<button [disabled] = "productForm.pristine" class = "btn btn-success" type = "submit">Guardar</button>
 			</form>
-		</div>-->
+		</div>
 	</div>
 </div>

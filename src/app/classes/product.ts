@@ -21,7 +21,7 @@ export class Product
 			this.special = null;
 			this.available = null;
 			this.value = null;
-			this.productItem = null;
+			this.productItem = new Book( {} );
 			this.user = null;
 		}
 		else
