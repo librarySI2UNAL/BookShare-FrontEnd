@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/catch";
 
@@ -11,13 +10,15 @@ import { Interest } from "../classes/interest";
 export class UserService
 {
 	private user: User;
-	private headers: Headers = new Headers( { "Content-Type": "application/json" } );
-	private loginURL: string = "http://localhost:3000/api/v1/login";
-	private usersURL: string = "http://localhost:3000/api/v1/users";
+	private headers: Headers;
+	private loginURL: string;
+	private usersURL: string;
 
 	constructor( private http: Http )
 	{
-
+		this.headers = new Headers( { "Content-Type": "application/json" } );
+		this.loginURL = "http://localhost:3000/api/v1/login";
+		this.usersURL = "http://localhost:3000/api/v1/users";
 	}
 
 	public setUser( user: User ): void
