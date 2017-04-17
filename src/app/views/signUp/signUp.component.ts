@@ -57,7 +57,7 @@ export class SignUpComponent implements OnInit
 				//this.router.navigateByUrl( "/home" );
 			} )
 			.catch( error =>
-			{ 
+			{
 				console.log( error );
 			} );
 	}
