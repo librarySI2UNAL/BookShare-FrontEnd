@@ -12,6 +12,7 @@
 
 <div class = "container custom-white-background">
 	<div class = "col-md-4">
+		<br>
 		<h1>Registro</h1>
 		<div>
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
@@ -41,7 +42,7 @@
 				</div>
 
 				<div class = "form-group">
-					<label>Apellido</label> 
+					<label>Apellido</label>
 					<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
 
 					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
@@ -79,15 +80,16 @@
 					</div>
 				</div>
 
-				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Registar</button>
+				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Registrate</button>
 			</form>
 		</div>
+		<br>
 	</div>
-</div>				
-				<!-- Check List 
+</div>
+				<!-- Check List
 				<td>
 				<h2>Selecciona Tus Intereses</h2>
-				
+
 				<table style="width:200%">
 					<tr>
 						<td>
@@ -124,7 +126,7 @@
 							</ul>
 						</div>
 						</td>
-						
+
 						<td>
 							<div class="col-md-10" style="border:1px solid #ffff33">
 								<ul>
@@ -161,10 +163,10 @@
 						</td>
 					</tr>
 				</table>
-				
+
 				</td>
 				</tr>
-				</table>	
+				</table>
 				<label class="switch">
 				  <input type="checkbox">
 				  <div class="slider round"></div>

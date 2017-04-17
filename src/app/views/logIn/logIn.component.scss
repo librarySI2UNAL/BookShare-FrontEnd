@@ -1,4 +1,22 @@
+@import "../../styles/mixins";
+
 log-in
 {
-	
+		.form-control
+		{
+			@include border-radius( 0px );
+		}
+
+		.custom-white-background
+		{
+			background-color: white;
+		}
+		.custom-white-background h1{
+			color:#000;
+			font-size: 3em;
+			font-family: 'OleoScript-Regular';
+			text-align: center;
+			margin: 0 0 1em;
+		}
+
 }
