@@ -36,9 +36,9 @@ export class User
 			this.name = data.data.name;
 			this.lastName = data.data.lastName;
 			this.email = data.data.email;
-			this.qualification = parseFloat( data.data.qualification );
-			this.latitude = parseFloat( data.data.latitude );
-			this.longitude = parseFloat( data.data.longitude );
+			this.qualification = +data.data.qualification;
+			this.latitude = +data.data.latitude;
+			this.longitude = +data.data.longitude;
 			this.city = data.data.city;
 			this.interests = data.data.interest;
 		}
