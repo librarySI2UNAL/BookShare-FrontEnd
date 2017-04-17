@@ -110,6 +110,16 @@ export class ProductComponent implements OnInit
 		{
 			return;
 		}
+		console.log( this.product );
+		this.productService.create( this.product )
+			.then( data =>
+			{
+				console.log( data );
+			} )
+			.catch( error =>
+			{
+				console.log( error );
+			} );
 	}
 
 	ngOnInit()
@@ -120,6 +130,8 @@ export class ProductComponent implements OnInit
 				{
 					this.mode = "create";
 					this.product = new Product( {} );
+					this.product.available = true;
+					this.product.special = true;
 				}
 				else if( params["mode"] === "view" || params["mode"] === "edit" )
 				{
