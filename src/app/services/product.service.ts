@@ -64,7 +64,7 @@ export class ProductService
 
 	create( product: Product ): Promise<any>
 	{
-		let productAux: any = product;
+		let productAux: any = Object.assign( {}, product );
 		productAux.product_item = product.productItem;
 		productAux.product_item.genre = product.productItem.genre.id;
 		productAux.product_item.year_of_publication = product.productItem.yearOfPublication;
@@ -72,7 +72,6 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
-		console.log( productAux );
 		return this.http.post( `${this.usersURL}/1/products`, { data: productAux }, { headers: this.headers } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );

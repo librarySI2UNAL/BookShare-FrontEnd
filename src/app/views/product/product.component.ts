@@ -115,6 +115,8 @@ export class ProductComponent implements OnInit
 			.then( data =>
 			{
 				console.log( data );
+				
+				this.router.navigate( ["/home"] );
 			} )
 			.catch( error =>
 			{
