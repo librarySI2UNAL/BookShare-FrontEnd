@@ -54,7 +54,7 @@ export class ProductService
 	getGenres(): Observable<Genre[]>
 	{
 		return this.http.get( `${this.genresURL}` )
-			.map( ( r: Response ) => r.json().data as Genre[] )
+			.map( ( r: Response ) => r.json().genres as Genre[] )
 			.catch( this.handleError );
 	}
 

@@ -62,15 +62,6 @@ export class ProductComponent implements OnInit
 			value: 5,
 			name: "Excelente"
 		}];
-
-		let genre: Genre = new Genre();
-		genre.id = 1;
-		genre.name = "Drama";
-		this.genres.push( genre );
-		genre = new Genre();
-		genre.id = 2;
-		genre.name = "Novela";
-		this.genres.push( genre );
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -154,6 +145,11 @@ export class ProductComponent implements OnInit
 				}
 				else
 					this.router.navigate( ["/home"] );
+
+				this.productService.getGenres().subscribe( response =>
+					{
+						this.genres = response;
+					} );
 			} );
 	}
 }
