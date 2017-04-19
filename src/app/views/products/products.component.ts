@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
+import { Product } from "../../classes/product";
 import { ProductService } from "../../services/product.service";
 
 @Component(
@@ -14,6 +15,8 @@ export class ProductsComponent implements OnInit
 {
 	page: number;
 	perPage: number;
+	products: Array<Product>;
+	totalProducts: number;
 
 	constructor( private productService: ProductService )
 	{
@@ -24,7 +27,9 @@ export class ProductsComponent implements OnInit
 	{
 		this.productService.availables( 1, this.perPage ).subscribe( response =>
 			{
-				console.log( response );
+				this.totalProducts = response.count;
+				this.products = response.data;
+				console.log( this.products );
 			} );
 	}
 }

@@ -30,6 +30,7 @@ export class ProductComponent implements OnInit
 		private router: Router,
 		private productService: ProductService )
 	{
+		this.product = new Product( {} );
 		this.genres = [];
 		this.productForm = this.createProductForm();
 		this.covers = [
@@ -145,15 +146,16 @@ export class ProductComponent implements OnInit
 						this.router.navigate( ["/home"] );
 					this.mode = params["mode"];
 
-					/*this.productService.get( id )
+					this.productService.get( id )
 						.then( data =>
 						{
 							this.product = new Product( data );
+							console.log( this.product );
 						} )
 						.catch( error =>
 						{
 							console.log( error );
-						} );*/
+						} );
 				}
 				else
 					this.router.navigate( ["/home"] );
