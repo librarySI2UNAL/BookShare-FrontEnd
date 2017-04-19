@@ -22,7 +22,8 @@ export class ProductComponent implements OnInit
 	product: Product;
 	covers: any;
 	statuses: any;
-	genres: Array<Genre>
+	genres: Array<Genre>;
+	types: Array<any>;
 
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -63,14 +64,15 @@ export class ProductComponent implements OnInit
 			name: "Excelente"
 		}];
 
-		let genre: Genre = new Genre();
-		genre.id = 1;
-		genre.name = "Drama";
-		this.genres.push( genre );
-		genre = new Genre();
-		genre.id = 2;
-		genre.name = "Novela";
-		this.genres.push( genre );
+		this.types = [
+		{
+			value: "Book",
+			name: "Libro"
+		},
+		{
+			value: "Collection",
+			name: "Colección"
+		}];
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -98,6 +100,7 @@ export class ProductComponent implements OnInit
 				genre: [null, [Validators.required]],
 				yearOfPublication: [null, [Validators.required, this.maxValue( new Date().getFullYear() )]],
 				editorial: ["", [Validators.required]],
+				type: ["", [Validators.required]],
 				code: ["", [Validators.required]],
 				codeType: ["", [Validators.required]],
 				value: [null, [Validators.required]]
@@ -154,6 +157,11 @@ export class ProductComponent implements OnInit
 				}
 				else
 					this.router.navigate( ["/home"] );
+
+				this.productService.getGenres().subscribe( response =>
+					{
+						this.genres = response;
+					} );
 			} );
 	}
 }

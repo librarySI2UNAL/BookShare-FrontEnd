@@ -1,5 +1,4 @@
-import { Book } from "./book";
-import { Collection } from "./collection";
+import { ProductItem } from "./productItem";
 import { User } from "./user";
 
 export class Product
@@ -13,7 +12,7 @@ export class Product
 	value: number;
 	code: string;
 	codeType: string;
-	productItem: Book | Collection;
+	productItem: ProductItem;
 	user: User;
 
 	constructor( data: any )
@@ -29,7 +28,7 @@ export class Product
 			this.value = null;
 			this.code = null;
 			this.codeType = null;
-			this.productItem = new Book( {} );
+			this.productItem = new ProductItem( {} );
 			this.user = null;
 		}
 		else
