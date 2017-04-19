@@ -6,6 +6,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
  
 import { Product } from "../classes/product";
+import { Genre } from "../classes/genre";
 
 import { UserService } from "./user.service";
  
@@ -15,6 +16,7 @@ export class ProductService
 	private headers: Headers;
 	private productsURL: string;
 	private usersURL: string;
+	private genresURL: string;
 
 	constructor( private http: Http,
 		private userService: UserService )
@@ -22,6 +24,7 @@ export class ProductService
 		this.headers = new Headers( { "Content-Type": "application/json" } );
 		this.productsURL = "http://localhost:3000/api/v1/products";
 		this.usersURL = "http://localhost:3000/api/v1/users";
+		this.genresURL = "http://localhost:3000/api/v1/genres";
 	}
 
 	private handlePromiseError( error: any ): Promise<any>
@@ -46,6 +49,13 @@ export class ProductService
 		console.error( errMsg );
 		
 		return Observable.throw( errMsg );
+	}
+
+	getGenres(): Observable<Genre[]>
+	{
+		return this.http.get( `${this.genresURL}` )
+			.map( ( r: Response ) => r.json().data as Genre[] )
+			.catch( this.handleError );
 	}
 
 	availables( page: number, perPage: number ): Observable<Product[]>
