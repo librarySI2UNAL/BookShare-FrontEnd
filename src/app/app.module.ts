@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
 import { AlertModule } from "ngx-bootstrap";
+import { TypeaheadModule } from "ngx-bootstrap/typeahead";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -37,7 +38,8 @@ import { AppRoutingModule } from "./app.routes";
 		FormsModule,
 		ReactiveFormsModule,
 		HttpModule,
-		AlertModule.forRoot()
+		AlertModule.forRoot(),
+		TypeaheadModule.forRoot()
 	],
 	providers: [
 		UserService,
