@@ -13,9 +13,6 @@
 <div class = "container custom-white-background" >
 	<div class = "col-md-offset-4 col-md-4">
 		<h1>Registro</h1>
-		<div class = "row">
-			<progressbar value = "55"></progressbar>
-		</div>
 		<div>
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
 				<div class = "form-group">
@@ -82,7 +79,7 @@
 					</div>
 				</div>
 
-				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Registrate</button>
+				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Regístrate</button>
 			</form>
 		</div>
 		<br>

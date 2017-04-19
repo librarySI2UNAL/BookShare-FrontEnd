@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
 import { AlertModule } from "ngx-bootstrap";
-import { ProgressbarModule } from "ngx-bootstrap/progressbar";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -38,8 +37,7 @@ import { AppRoutingModule } from "./app.routes";
 		FormsModule,
 		ReactiveFormsModule,
 		HttpModule,
-		AlertModule.forRoot(),
-		ProgressbarModule.forRoot()
+		AlertModule.forRoot()
 	],
 	providers: [
 		UserService,

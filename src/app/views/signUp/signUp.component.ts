@@ -19,9 +19,9 @@ export class SignUpComponent implements OnInit
 	user: User;
 	password: any;
 	position: any;
-	router: Router;
 
 	constructor( private userService: UserService,
+		private router: Router,
 		private formBuilder: FormBuilder )
 	{
 		this.signUpForm = this.createSignUpForm();
@@ -47,15 +47,11 @@ export class SignUpComponent implements OnInit
 		{
 			return;
 		}
-		//console.log( this.user );
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
 				this.user = new User( data );
-				console.log( this.user );
-				//this.user.qualification = parseFloat( this.user.qualification );
-				//console.log( this.user );
-				//this.router.navigate( ["/home"] );
+				this.router.navigate( ["/home"] );
 			} )
 			.catch( error =>
 			{
