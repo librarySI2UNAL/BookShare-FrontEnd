@@ -1,6 +1,6 @@
 import { Genre } from "./genre";
 
-export class Collection
+export class ProductItem
 {
 	id: number;
 	type: string;
@@ -12,10 +12,10 @@ export class Collection
 
 	constructor( data: any )
 	{
-		this.type = "Collection";
 		if( Object.keys( data ).length === 0 )
 		{
 			this.id = null;
+			this.type = null;
 			this.name = null;
 			this.author = null;
 			this.genre = new Genre();
@@ -25,6 +25,7 @@ export class Collection
 		else
 		{
 			this.id = data.id;
+			this.type = data.type;
 			this.name = data.name;
 			this.author = data.author;
 			this.genre = data.genre;

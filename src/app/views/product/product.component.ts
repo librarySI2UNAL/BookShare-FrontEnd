@@ -22,7 +22,8 @@ export class ProductComponent implements OnInit
 	product: Product;
 	covers: any;
 	statuses: any;
-	genres: Array<Genre>
+	genres: Array<Genre>;
+	types: Array<any>;
 
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -62,6 +63,16 @@ export class ProductComponent implements OnInit
 			value: 5,
 			name: "Excelente"
 		}];
+
+		this.types = [
+		{
+			value: "Book",
+			name: "Libro"
+		},
+		{
+			value: "Collection",
+			name: "Colección"
+		}];
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -89,6 +100,7 @@ export class ProductComponent implements OnInit
 				genre: [null, [Validators.required]],
 				yearOfPublication: [null, [Validators.required, this.maxValue( new Date().getFullYear() )]],
 				editorial: ["", [Validators.required]],
+				type: ["", [Validators.required]],
 				code: ["", [Validators.required]],
 				codeType: ["", [Validators.required]],
 				value: [null, [Validators.required]]
