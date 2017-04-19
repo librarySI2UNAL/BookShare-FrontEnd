@@ -73,12 +73,12 @@ export class ProductComponent implements OnInit
 		this.genres.push( genre );
 	}
 
-	private maxValue( max: Number ): ValidatorFn
+	private maxValue( max: number ): ValidatorFn
 	{
 		return ( control: AbstractControl ): { [key: string]: any } =>
 			{
-				let input: number = control.value,
-				isValid = input > max;
+				let input: number = control.value;
+				let isValid: boolean = input > max;
 				if( isValid ) 
 					return { "maxValue": { max } }
 				else
