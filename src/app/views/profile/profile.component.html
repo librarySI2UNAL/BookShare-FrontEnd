@@ -12,7 +12,7 @@
                Regístrate
                </a>
                <a href="/login">
-               <span class="glyphicon glyphicon-log-out  "></span> 
+               <span class="glyphicon glyphicon-log-out  "></span>
                Inicia sesión
                </a>
             </p>
@@ -21,10 +21,110 @@
       </div>
    </div>
 </div>
+
+
+
+
+
+<div class = "container custom-white-background" >
+	<div class = "col-md-offset-4 col-md-4">
+		<h1>Registro</h1>
+		<div>
+			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
+				<div class = "form-group">
+					<label>Correo electrónico</label>
+					<div class = "input-group">
+						<span class = "input-group-addon">@</span>
+						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
+					</div>
+
+					<div *ngIf = "signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.email.errors.required">
+							El correo electrónico es requerido
+						</div>
+						<div [hidden] = "!signUpForm.controls.email.errors.pattern">
+							El correo electrónico no es válido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Nombre</label>
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
+						<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
+					</div>
+
+					<div *ngIf = "signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.name.errors.required">
+							El nombre es requerido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Apellido</label>
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
+						<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+					</div>
+
+					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.lastName.errors.required">
+							El apellido es requerido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Contraseña</label>
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
+						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
+					</div>
+
+					<div *ngIf = "signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.password.errors.required">
+							La contraseña es requerido
+						</div>
+						<div [hidden] = "!signUpForm.controls.password.errors.minlength">
+							La contraseña debe tener al menos 8 caracteres
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Confirme la contraseña</label>
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
+						<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
+					</div>
+
+					<div *ngIf = "signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
+						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
+							Debe confirmar la contraseña
+						</div>
+						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.minlength">
+							La contraseña debe tener al menos 8 caracteres
+						</div>
+						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.mismatch">
+							Las contraseñas no coinciden
+						</div>
+					</div>
+				</div>
+
+				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Regístrate</button>
+			</form>
+		</div>
+		<br>
+	</div>
+</div>
+
+<!--
 <div class="container profile-content-top" style="padding: 1em 1em;
  margin: 1em 20%">
    <div class="row">
-      
+
       <div class="col-md-7 ">
          <div class="panel panel-default">
             <div class="panel-heading" style = "text-align: center;font-family: 'OleoScript-Regular'">
@@ -35,13 +135,13 @@
                   <div class="box-body">
                      <div class="col-sm-6">
                         <div  align="center">
-                           <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive"> 
+                           <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
                            <input id="profilex-image-upload" class="hidden" type="file">
                            <div style="color:#999;" >click aqui para cambiar de imagen</div>
-                           <!--Upload Image Js And Css-->
+
                         </div>
                         <br>
-                        <!-- /input-group -->
+
                      </div>
                      <div class="col-sm-6">
                         <span>
@@ -167,9 +267,9 @@
                            </div>
                         </div>
                      </div>
-                     <!-- /.box-body -->
+
                   </div>
-                  <!-- /.box -->
+
                </div>
             </div>
          </div>
@@ -179,7 +279,8 @@
          $('#profile-image1').on('click', function() {
          $('#profile-image-upload').click();
          });
-         });       
-      </script> 
+         });
+      </script>
    </div>
 </div>
+-->
