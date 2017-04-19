@@ -17,7 +17,10 @@
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
 				<div class = "form-group">
 					<label>Correo electrónico</label>
-					<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
+					<div class = "input-group">
+						<span class = "input-group-addon">@</span>
+						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
+					</div>
 
 					<div *ngIf = "signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched )" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.email.errors.required">
@@ -31,7 +34,10 @@
 
 				<div class = "form-group">
 					<label>Nombre</label>
-					<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
+						<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
+					</div>
 
 					<div *ngIf = "signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched )" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.name.errors.required">
@@ -42,7 +48,10 @@
 
 				<div class = "form-group">
 					<label>Apellido</label>
-					<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
+						<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+					</div>
 
 					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.lastName.errors.required">
@@ -53,7 +62,10 @@
 
 				<div class = "form-group">
 					<label>Contraseña</label>
-					<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
+						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
+					</div>
 
 					<div *ngIf = "signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched )" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.password.errors.required">
@@ -67,7 +79,10 @@
 
 				<div class = "form-group">
 					<label>Confirme la contraseña</label>
-					<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
+					<div class = "input-group">
+						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
+						<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
+					</div>
 
 					<div *ngIf = "signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
