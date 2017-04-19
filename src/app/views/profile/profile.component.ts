@@ -79,9 +79,7 @@ export class ProfileComponent {
 			{
 				name: ["", [Validators.required]],
 				lastName: ["", [Validators.required]],
-				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )]],
-				password: ["", [Validators.required, Validators.minLength( 8 )]],
-				passwordConfirmation: ["", [Validators.required, Validators.minLength( 8 ), this.mismatch()]]
+				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )]]
 			} );
 	}
 
@@ -91,32 +89,31 @@ export class ProfileComponent {
 		this.user.interests = [];
 		if( navigator.geolocation )
 			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
-			this.user.latitude = this.position.latitude;
-			this.user.longitude = this.position.longitude;
+		this.user.latitude = this.position.latitude;
+		this.user.longitude = this.position.longitude;
 
-			this.route.params.subscribe( params =>
+		this.route.params.subscribe( params =>
+		{
+			if( params["mode"] === "view" || params["mode"] === "edit" )
 			{
-			 if( params["mode"] === "view" || params["mode"] === "edit" )
-				{
-					let id: number = +params["id"];
-					if( !id )
-						this.router.navigate( ["/home"] );
-					this.mode = params["mode"];
-
-					/*this.userService.get( id )
-						.then( data =>
-						{|
-							this.user = new User( data );
-						} )
-						.catch( error =>
-						{
-							console.log( error );
-						} );*/
-				}
-				else
+				let id: number = +params["id"];
+				if( !id )
 					this.router.navigate( ["/home"] );
+				this.mode = params["mode"];
 
-
-			} );
+				this.userService.get( id )
+					.then( data =>
+					{
+						this.user = new User( data );
+						console.log( this.user );
+					} )
+					.catch( error =>
+					{
+						console.log( error );
+					} );
+			}
+			else
+				this.router.navigate( ["/home"] );
+		} );
 	}
 }

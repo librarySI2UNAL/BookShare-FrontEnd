@@ -35,7 +35,8 @@ export class User
 		else
 		{
 			this.id = data.data.id;
-			this.token = data.token;
+			//this.token = data.token;
+			this.token = "A";
 			this.name = data.data.name;
 			this.lastName = data.data.lastName;
 			this.email = data.data.email;

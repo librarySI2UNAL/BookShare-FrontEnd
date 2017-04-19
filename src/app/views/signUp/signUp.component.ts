@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit
 			.then( data =>
 			{
 				this.user = new User( data );
-				this.router.navigate( ["/home"] );
+				this.router.navigate( ["/profile", this.user.id, "view"] );
 			} )
 			.catch( error =>
 			{

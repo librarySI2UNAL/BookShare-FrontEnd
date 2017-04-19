@@ -47,7 +47,7 @@ export class UserService
 	get( id: number ): Promise<any>
 	{
 		return this.http.get( `${this.usersURL}/${id}` ).toPromise()
-			.then( response => response.json().data )
+			.then( response => response.json() )
 			.catch( this.handleError );
 	}
 
