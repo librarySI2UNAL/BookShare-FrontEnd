@@ -44,7 +44,7 @@ export class User
 			this.longitude = +data.data.longitude;
 			this.city = data.data.city;
 			this.photo = data.data.photo;
-			this.interests = data.data.interest;
+			this.interests = data.data.interests;
 		}
 	}
 }

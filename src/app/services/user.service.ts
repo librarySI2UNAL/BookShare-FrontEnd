@@ -53,7 +53,7 @@ export class UserService
 
 	create( user: User, password: string ): Promise<any>
 	{
-		let userAux: any = user;
+		let userAux: any = Object.assign( {}, user );
 		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
 		userAux.password = password;
 		userAux.last_name = user.lastName;
