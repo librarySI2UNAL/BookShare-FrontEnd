@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { User } from "../../classes/user";
 import { UserService } from "../../services/user.service";
 
@@ -15,10 +15,12 @@ import { UserService } from "../../services/user.service";
 export class ProfileComponent {
 	profileForm: FormGroup;
 	user: User;
+	mode: string;
 	password: any;
 	position: any;
 
 	constructor( private userService: UserService,
+		private route: ActivatedRoute,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
@@ -89,7 +91,32 @@ export class ProfileComponent {
 		this.user.interests = [];
 		if( navigator.geolocation )
 			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
-		this.user.latitude = this.position.latitude;
-		this.user.longitude = this.position.longitude;
+			this.user.latitude = this.position.latitude;
+			this.user.longitude = this.position.longitude;
+
+			this.route.params.subscribe( params =>
+			{
+			 if( params["mode"] === "view" || params["mode"] === "edit" )
+				{
+					let id: number = +params["id"];
+					if( !id )
+						this.router.navigate( ["/home"] );
+					this.mode = params["mode"];
+
+					/*this.userService.get( id )
+						.then( data =>
+						{|
+							this.user = new User( data );
+						} )
+						.catch( error =>
+						{
+							console.log( error );
+						} );*/
+				}
+				else
+					this.router.navigate( ["/home"] );
+
+
+			} );
 	}
 }
