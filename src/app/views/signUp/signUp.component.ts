@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import { User } from "../../classes/user";
@@ -19,21 +19,35 @@ export class SignUpComponent implements OnInit
 	user: User;
 	password: any;
 	position: any;
-	router: Router;
 
 	constructor( private userService: UserService,
+		private router: Router,
 		private formBuilder: FormBuilder )
 	{
-		this.signUpForm = this.createSignUpForm();
-		this.user = new User( {} );
 		this.password = {
 			value: "",
 			confirmation: ""
 		};
+		this.signUpForm = this.createSignUpForm();
+		this.user = new User( {} );
 		this.position = {
 			latitude: 4.6482836,
 			longitude: -74.1256726
 		};
+	}
+
+	private mismatch(): ValidatorFn
+	{
+		return ( control: AbstractControl ): { [key: string]: any } =>
+			{
+				let input: string = control.value;
+				let password: string = this.password.value;
+				let isValid: boolean = this.password.value !== input;
+				if( isValid ) 
+					return { "mismatch": { password } }
+				else
+					return null;
+			};
 	}
 
 	private setPosition( position )
@@ -51,10 +65,7 @@ export class SignUpComponent implements OnInit
 			.then( data =>
 			{
 				this.user = new User( data );
-				console.log( this.user );
-				//this.user.qualification = parseFloat( this.user.qualification );
-				//console.log( this.user );
-				//this.router.navigate( ["/home"] );
+				this.router.navigate( ["/home"] );
 			} )
 			.catch( error =>
 			{
@@ -70,7 +81,7 @@ export class SignUpComponent implements OnInit
 				lastName: ["", [Validators.required]],
 				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )]],
 				password: ["", [Validators.required, Validators.minLength( 8 )]],
-				passwordConfirmation: ["", [Validators.required, Validators.minLength( 8 )]]
+				passwordConfirmation: ["", [Validators.required, Validators.minLength( 8 ), this.mismatch()]]
 			} );
 	}
 
