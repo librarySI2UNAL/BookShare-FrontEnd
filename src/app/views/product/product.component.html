@@ -1,0 +1,171 @@
+<div class = "container custom-white-background">
+	<div>
+		<h1>Producto</h1>
+		<div class = "col-md-offset-2 col-md-8">
+			<form [formGroup] = "productForm" (ngSubmit) = "save()">
+				<div class = "panel panel-primary">
+					<div class = "panel-heading">
+						<h3 class = "panel-title">Información del título</h3>
+					</div>
+					<div class = "panel-body">
+						<div class = "form-group">
+							<label>Nombre</label>
+							<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "product.productItem.name">
+
+							<div *ngIf = "productForm.controls.name.errors && ( productForm.controls.name.dirty || productForm.controls.name.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.name.errors.required">
+									El nombre es requerido
+								</div>
+							</div>
+						</div>
+
+						<div class = "form-group">
+							<label>Autor</label>
+							<input class = "form-control" type = "text" formControlName = "author" [(ngModel)] = "product.productItem.author">
+
+							<div *ngIf = "productForm.controls.author.errors && ( productForm.controls.author.dirty || productForm.controls.author.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.author.errors.required">
+									El autor es requerido
+								</div>
+							</div>
+						</div>
+
+						<div class = "form-inline">
+							<div class = "form-group">
+								<label>Género</label>
+								<input class = "form-control" formControlName = "genre" [(ngModel)] = "product.productItem.genre" [typeahead] = "genres" typeaheadOptionField = "name">
+
+								<div *ngIf = "productForm.controls.genre.errors && ( productForm.controls.genre.dirty || productForm.controls.genre.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.genre.errors.required">
+										El género es requerido
+									</div>
+								</div>
+							</div>
+
+							<div class = "form-group">
+								<label>Año de publicación</label>
+								<input class = "form-control" type = "number" formControlName = "yearOfPublication" [(ngModel)] = "product.productItem.yearOfPublication">
+
+								<div *ngIf = "productForm.controls.yearOfPublication.errors && ( productForm.controls.yearOfPublication.dirty || productForm.controls.yearOfPublication.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.yearOfPublication.errors.required">
+										El año de publicación es requerido
+									</div>
+									<div [hidden] = "!productForm.controls.yearOfPublication.errors.maxValue">
+										El año de publicación no puede ser mayor al año actual
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class = "form-group">
+							<label>Editorial</label>
+							<input class = "form-control" type = "text" formControlName = "editorial" [(ngModel)] = "product.productItem.editorial">
+
+							<div *ngIf = "productForm.controls.editorial.errors && ( productForm.controls.editorial.dirty || productForm.controls.editorial.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.editorial.errors.required">
+									La editorial es requerida
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class = "panel panel-primary">
+					<div class = "panel-heading">
+						<h3 class = "panel-title">Información del producto</h3>
+					</div>
+					<div class = "panel-body">
+						<div class = "form-group">
+							<label>Tipo de producto</label>
+							<select class = "form-control" formControlName = "type" [(ngModel)] = "product.productItem.type">
+								<option *ngFor = "let type of types" [ngValue] = "type.value">{{ type.name }}</option>
+							</select>
+
+							<div *ngIf = "productForm.controls.type.errors && ( productForm.controls.type.dirty || productForm.controls.type.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.type.errors.required">
+									El tipo de producto es requerido
+								</div>
+							</div>
+						</div>
+
+						<div class = "form-inline">
+							<div class = "form-group">
+								<label>Tipo de código (ISBN, ASIN, ...)</label>
+								<input class = "form-control" type = "text" formControlName = "codeType" [(ngModel)] = "product.codeType">
+
+								<div *ngIf = "productForm.controls.codeType.errors && ( productForm.controls.codeType.dirty || productForm.controls.codeType.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.codeType.errors.required">
+										El tipo de código es requerido
+									</div>
+								</div>
+							</div>
+
+							<div class = "form-group">
+								<label>Código</label>
+								<input class = "form-control" type = "text" formControlName = "code" [(ngModel)] = "product.code">
+
+								<div *ngIf = "productForm.controls.code.errors && ( productForm.controls.code.dirty || productForm.controls.code.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.code.errors.required">
+										El código es requerido
+									</div>
+								</div>
+							</div>
+						</div>
+					
+						<div class = "form-group">
+							<label>Descripción</label>
+							<textarea class = "form-control" rows = "3" formControlName = "description" [(ngModel)] = "product.description"></textarea>
+
+							<div *ngIf = "productForm.controls.description.errors && ( productForm.controls.description.dirty || productForm.controls.description.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.description.errors.maxlength">
+									La descripción sólo puede tener 1000 caracteres
+								</div>
+							</div>
+						</div>
+
+						<div class = "form-inline">
+							<div class = "form-group">
+								<label>Cubierta</label>
+								<select class = "form-control" formControlName = "cover" [(ngModel)] = "product.cover">
+									<option *ngFor = "let cover of covers" [ngValue] = "cover.value">{{ cover.name }}</option>
+								</select>
+
+								<div *ngIf = "productForm.controls.cover.errors && ( productForm.controls.cover.dirty || productForm.controls.cover.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.cover.errors.required">
+										La cubierta es requerida
+									</div>
+								</div>
+							</div>
+
+							<div class = "form-group">
+								<label>Estado</label>
+								<select class = "form-control" formControlName = "status" [(ngModel)] = "product.status">
+									<option *ngFor = "let status of statuses" [ngValue] = "status.value">{{ status.name }}</option>
+								</select>
+
+								<div *ngIf = "productForm.controls.status.errors && ( productForm.controls.status.dirty || productForm.controls.status.touched )" class = "alert alert-danger">
+									<div [hidden] = "!productForm.controls.status.errors.required">
+										El estado es requerido
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class = "form-group">
+							<label>Valor del producto</label>
+							<input class = "form-control" type = "number" formControlName = "value" [(ngModel)] = "product.value">
+
+							<div *ngIf = "productForm.controls.value.errors && ( productForm.controls.value.dirty || productForm.controls.value.touched )" class = "alert alert-danger">
+								<div [hidden] = "!productForm.controls.value.errors.required">
+									El valor es requerido
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<button [disabled] = "productForm.pristine" class = "btn btn-success" type = "submit">Guardar</button>
+			</form>
+		</div>
+	</div>
+</div>

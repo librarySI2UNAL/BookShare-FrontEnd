@@ -1,0 +1,52 @@
+<!--Header Book Share-->
+<div class="header">
+	<div class="header-top">
+		<div class="container">
+			<div class="col-sm-4 world"></div>
+			<div class="col-sm-4 logo">
+					<a href="/home"><img src="assets/images/logo.png" alt=""></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class = "container custom-white-background">
+	<div class = "col-md-4">
+		<br>
+		<h1>Ingresa</h1>
+		<div>
+			<form [formGroup] = "loginForm" >
+				<div class = "form-group">
+					<label>Correo electrónico</label>
+					<input class = "form-control" type = "text" formControlName = "email" >
+
+					<div *ngIf = "loginForm.controls.email.errors && ( loginForm.controls.email.dirty || loginForm.controls.email.touched )" class = "alert alert-danger">
+						<div [hidden] = "!loginForm.controls.email.errors.required">
+							El correo electrónico es requerido
+						</div>
+						<div [hidden] = "!loginForm.controls.email.errors.pattern">
+							El correo electrónico no es válido
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Contraseña</label>
+					<input class = "form-control" type = "password" formControlName = "password" >
+					<div *ngIf = "loginForm.controls.password.errors && ( loginForm.controls.password.dirty || loginForm.controls.password.touched )" class = "alert alert-danger">
+						<div [hidden] = "!loginForm.controls.password.errors.required">
+							La contraseña es requerido
+						</div>
+
+					</div>
+				</div>
+
+
+
+				<button [disabled] = "loginForm.controls.pristine" class = "btn btn-success" type = "submit">Registrate</button>
+			</form>
+			<br>
+		</div>
+	</div>
+</div>
+<!--{{loginForm.value|json}}-->

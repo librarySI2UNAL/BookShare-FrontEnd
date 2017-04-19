@@ -1,48 +1,81 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/catch";
 
 import { User } from "../classes/user";
+import { Interest } from "../classes/interest";
 
 @Injectable()
 export class UserService
 {
-	private headers = new Headers( { "Content-Type": "application/json" } );
+	private user: User;
+	private headers: Headers;
+	private loginURL: string;
+	private usersURL: string;
 
 	constructor( private http: Http )
-	{}
-
-	private handleError( error: Response | any )
 	{
-		let errMsg: string;
-		if( error instanceof Response )
-		{
-			const body = error.json() || "";
-			const err = body.error || JSON.stringify( body );
-			errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-		}
-		else
-		{
-			errMsg = error.message ? error.message : error.toString();
-		}
-		console.error( errMsg );
-		
-		return Observable.throw( errMsg );
+		this.headers = new Headers( { "Content-Type": "application/json" } );
+		this.loginURL = "http://localhost:3000/api/v1/login";
+		this.usersURL = "http://localhost:3000/api/v1/users";
 	}
 
-	login( credentials: any ): Promise<User>
+	public setUser( user: User ): void
 	{
-		return this.http.post( `http://localhost:3000/api/v1/login`, { user: credentials }, { headers: this.headers } ).toPromise()
+		this.user = user;
+	}
+
+	public getUser(): User
+	{
+		return this.user;
+	}
+
+	private handleError( error: any ): Promise<any>
+	{
+		console.error( "An error occurred", error );
+		return Promise.reject( error.message || error );
+	}
+
+	login( credentials: any ): Promise<any>
+	{
+		return this.http.post( `${this.loginURL}`, { data: credentials }, { headers: this.headers } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}
 
-	createUser( user: User ): Promise<User>
+	get( id: number ): Promise<any>
 	{
-		return this.http.post( `http://localhost:3000/api/v1/users`, { user: user }, { headers: this.headers } ).toPromise()
+		return this.http.get( `${this.usersURL}/${id}` ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
+	}
+
+	create( user: User, password: string ): Promise<any>
+	{
+		let userAux: any = Object.assign( {}, user );
+		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
+		userAux.password = password;
+		userAux.last_name = user.lastName;
+		delete userAux.lastName;
+		return this.http.post( `${this.usersURL}`, { data: userAux }, { headers: this.headers } ).toPromise()
+			.then( response => response.json() )
+			.catch( this.handleError );
+	}
+
+	update( user: User ): Promise<any>
+	{
+		let userAux: any = user;
+		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
+		return this.http.put( `${this.usersURL}/${user.id}`, { data: userAux }, { headers: this.headers } ).toPromise()
+			.then( response => response.json().data )
+			.catch( this.handleError );
+	}
+
+	delete( id: number ): Promise<any>
+	{
+		return this.http.delete( `${this.usersURL}/${id}` ).toPromise()
+			.then( response => response.json().data )
+			.catch( this.handleError )
 	}
 }

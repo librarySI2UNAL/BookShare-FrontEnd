@@ -1,42 +1,56 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
-import { AlertModule } from 'ng2-bootstrap';
 
-import { AppComponent } from "./homepage/app.component";
-import { LoginComponent } from './login/login.component';
-import { ContactusComponent } from './contactus/contactus.component';
-import { AvailableprodComponent } from './availableprod/availableprod.component';
-import { RegistryComponent } from './registry/registry.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ProductComponent } from './product/product.component';
-import { AppRoutingModule } from './app.routes';
+import { AlertModule } from "ngx-bootstrap";
+import { TypeaheadModule } from "ngx-bootstrap/typeahead";
 
-import { ProductService } from "./services/product.service";
+import { AppComponent } from "./app.component";
+import { HomeComponent } from "./views/home/home.component";
+import { LogInComponent } from "./views/logIn/logIn.component";
+import { ContactUsComponent } from "./views/contactUs/contactUs.component";
+import { ProductsComponent } from "./views/products/products.component";
+import { SignUpComponent } from "./views/signUp/signUp.component";
+import { ProfileComponent } from "./views/profile/profile.component";
+import { ProductComponent }	from "./views/product/product.component";
+
 import { UserService } from "./services/user.service";
+import { ProductService } from "./services/product.service";
+
+import { AppRoutingModule } from "./app.routes";
 
 @NgModule(
 {
 	declarations: [
 		AppComponent,
-		LoginComponent,
-		ContactusComponent,
-		AvailableprodComponent,
-		RegistryComponent,
+		HomeComponent,
+		LogInComponent,
+		ContactUsComponent,
+		ProductsComponent,
+		SignUpComponent,
 		ProfileComponent,
-		ProductComponent,
-
+		ProductComponent
 	],
 	imports: [
+		AppRoutingModule,
 		BrowserModule,
 		FormsModule,
+		ReactiveFormsModule,
 		HttpModule,
 		AlertModule.forRoot(),
-		AppRoutingModule
+		TypeaheadModule.forRoot()
 	],
-	providers: [ ProductService, UserService ],
-	bootstrap: [ AppComponent ]
+	providers: [
+		UserService,
+		ProductService
+	],
+	bootstrap: [
+		AppComponent
+	]
 } )
 
-export class AppModule{}
+export class AppModule
+{
+	
+}

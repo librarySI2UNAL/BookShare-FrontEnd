@@ -438,6 +438,11 @@ ul.callbacks_tabs.callbacks1_tabs {
 	text-align: center;
 	margin: 0 0 1em;
 }
+.content-top label{
+	color:#fff;
+	margin: 0 0 1em;
+}
+
 .col-md1 img{
 	margin: 0 auto;
 }
