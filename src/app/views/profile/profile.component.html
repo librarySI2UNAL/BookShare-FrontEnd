@@ -30,7 +30,7 @@
 	<div class = "col-md-offset-4 col-md-4">
 		<h1>Registro</h1>
 		<div>
-			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
+			<form [formGroup] = "profileForm" (ngSubmit) = "profile()">
 				<div class = "form-group">
 					<label>Correo electrónico</label>
 					<div class = "input-group">
@@ -38,11 +38,11 @@
 						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.email.errors.required">
+					<div *ngIf = "profileForm.controls.email.errors && ( profileForm.controls.email.dirty || profileForm.controls.email.touched )" class = "alert alert-danger">
+						<div [hidden] = "!profileForm.controls.email.errors.required">
 							El correo electrónico es requerido
 						</div>
-						<div [hidden] = "!signUpForm.controls.email.errors.pattern">
+						<div [hidden] = "!profileForm.controls.email.errors.pattern">
 							El correo electrónico no es válido
 						</div>
 					</div>
@@ -55,8 +55,8 @@
 						<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.name.errors.required">
+					<div *ngIf = "profileForm.controls.name.errors && ( profileForm.controls.name.dirty || profileForm.controls.name.touched )" class = "alert alert-danger">
+						<div [hidden] = "!profileForm.controls.name.errors.required">
 							El nombre es requerido
 						</div>
 					</div>
@@ -69,8 +69,8 @@
 						<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.lastName.errors.required">
+					<div *ngIf = "profileForm.controls.lastName.errors && ( profileForm.controls.lastName.dirty || profileForm.controls.lastName.touched )" class = "alert alert-danger">
+						<div [hidden] = "!profileForm.controls.lastName.errors.required">
 							El apellido es requerido
 						</div>
 					</div>
@@ -83,11 +83,11 @@
 						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.password.errors.required">
+					<div *ngIf = "profileForm.controls.password.errors && ( profileForm.controls.password.dirty || profileForm.controls.password.touched )" class = "alert alert-danger">
+						<div [hidden] = "!profileForm.controls.password.errors.required">
 							La contraseña es requerido
 						</div>
-						<div [hidden] = "!signUpForm.controls.password.errors.minlength">
+						<div [hidden] = "!profileForm.controls.password.errors.minlength">
 							La contraseña debe tener al menos 8 caracteres
 						</div>
 					</div>
@@ -100,20 +100,20 @@
 						<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
-						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
+					<div *ngIf = "profileForm.controls.passwordConfirmation.errors && ( profileForm.controls.passwordConfirmation.dirty || profileForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
+						<div [hidden] = "!profileForm.controls.passwordConfirmation.errors.required">
 							Debe confirmar la contraseña
 						</div>
-						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.minlength">
+						<div [hidden] = "!profileForm.controls.passwordConfirmation.errors.minlength">
 							La contraseña debe tener al menos 8 caracteres
 						</div>
-						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.mismatch">
+						<div [hidden] = "!profileForm.controls.passwordConfirmation.errors.mismatch">
 							Las contraseñas no coinciden
 						</div>
 					</div>
 				</div>
 
-				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Regístrate</button>
+				<button [disabled] = "profileForm.pristine" class = "btn btn-success" type = "submit">Regístrate</button>
 			</form>
 		</div>
 		<br>

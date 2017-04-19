@@ -55,7 +55,7 @@ export class ProfileComponent {
 		this.position = position.coords;
 	}
 
-	private signUp()
+	private profile()
 	{
 		if( this.profileForm.invalid )
 		{
