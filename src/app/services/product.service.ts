@@ -58,10 +58,10 @@ export class ProductService
 			.catch( this.handleError );
 	}
 
-	availables( page: number, perPage: number ): Observable<Product[]>
+	availables( page: number, perPage: number ): Observable<any>
 	{
 		return this.http.get( `${this.productsURL}?page=${page}&per_page=${perPage}` )
-			.map( ( r: Response ) => r.json().data as Product[] )
+			.map( ( r: Response ) => r.json() )
 			.catch( this.handleError );
 	}
 

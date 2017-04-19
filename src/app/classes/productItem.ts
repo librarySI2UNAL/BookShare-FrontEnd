@@ -25,12 +25,13 @@ export class ProductItem
 		else
 		{
 			this.id = data.id;
-			this.type = data.type;
-			this.name = data.name;
-			this.author = data.author;
-			this.genre = data.genre;
-			this.editorial = data.editorial;
-			this.yearOfPublication = data.yearOfPublication;
+			this.name = data[data.type].name;
+			this.author = data[data.type].author;
+			this.genre = new Genre();
+			this.genre.id = data[data.type].genre;
+			this.editorial = data[data.type].editorial;
+			this.yearOfPublication = data[data.type].yearOfPublication;
+			this.type = "Book";
 		}
 	}
 }

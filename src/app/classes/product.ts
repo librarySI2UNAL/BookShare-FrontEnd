@@ -42,8 +42,8 @@ export class Product
 			this.value = data.value;
 			this.code = data.code;
 			this.codeType = data.codeType;
-			this.productItem = data.productItem;
-			this.user = this.user;
+			this.productItem = new ProductItem( data.productItem );
+			this.user = data.user;
 		}
 	}
 }
