@@ -1,5 +1,6 @@
 import { City } from "./city";
 import { Interest } from "./interest";
+import { Photo } from "./photo";
 
 export class User
 {
@@ -11,6 +12,7 @@ export class User
 	qualification: number;
 	latitude: number;
 	longitude: number;
+	photo: Photo;
 	city: City;
 	interests: Interest[];
 
@@ -27,6 +29,7 @@ export class User
 			this.latitude = null;
 			this.longitude = null;
 			this.city = null;
+			this.photo = null;
 			this.interests = [];
 		}
 		else
@@ -40,6 +43,7 @@ export class User
 			this.latitude = +data.data.latitude;
 			this.longitude = +data.data.longitude;
 			this.city = data.data.city;
+			this.photo = data.data.photo;
 			this.interests = data.data.interest;
 		}
 	}

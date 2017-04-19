@@ -47,7 +47,8 @@ export class SignUpComponent implements OnInit
 		{
 			return;
 		}
-		this.userService.create( this.user, this.password.value )
+		console.log( this.user );
+		/*this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
 				this.user = new User( data );
@@ -59,7 +60,7 @@ export class SignUpComponent implements OnInit
 			.catch( error =>
 			{
 				console.log( error );
-			} );
+			} );*/
 	}
 
 	private createSignUpForm(): FormGroup
