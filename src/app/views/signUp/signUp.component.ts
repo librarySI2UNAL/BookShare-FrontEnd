@@ -3,7 +3,10 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from
 import { Router } from "@angular/router";
 
 import { User } from "../../classes/user";
+import { Interest } from "../../classes/interest";
+
 import { UserService } from "../../services/user.service";
+import { ProductService } from "../../services/product.service";
 
 @Component(
 {
@@ -19,8 +22,10 @@ export class SignUpComponent implements OnInit
 	user: User;
 	password: any;
 	position: any;
+	interests: Array<Interest>;
 
 	constructor( private userService: UserService,
+		private productService: ProductService,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
@@ -50,12 +55,26 @@ export class SignUpComponent implements OnInit
 			};
 	}
 
-	private setPosition( position )
+	private setPosition( position ): void
 	{
 		this.position = position.coords;
 	}
 
-	private signUp()
+	private selectInterest( index: number ): void
+	{
+		let exists: boolean = false;
+		for( let i = 0; i < this.user.interests.length; ++i )
+			if( this.user.interests[i].id === this.interests[index].id )
+			{
+				this.user.interests.splice( i, 1 );
+				exists = true;
+				break;
+			}
+		if( !exists )
+			this.user.interests.push( this.interests[index] );
+	}
+
+	private signUp(): void
 	{
 		if( this.signUpForm.invalid )
 		{
@@ -87,6 +106,11 @@ export class SignUpComponent implements OnInit
 
 	public ngOnInit()
 	{
+		this.productService.getInterests().subscribe( interests =>
+			{
+				this.interests = interests;
+				console.log( this.interests );
+			} );
 		this.user.qualification = 0.0;
 		this.user.interests = [];
 		if( navigator.geolocation )

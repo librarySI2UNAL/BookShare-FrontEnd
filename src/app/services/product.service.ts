@@ -7,6 +7,7 @@ import "rxjs/add/operator/catch";
  
 import { Product } from "../classes/product";
 import { Genre } from "../classes/genre";
+import { Interest } from "../classes/interest";
 
 import { UserService } from "./user.service";
  
@@ -17,6 +18,7 @@ export class ProductService
 	private productsURL: string;
 	private usersURL: string;
 	private genresURL: string;
+	private interestsURL: string;
 
 	constructor( private http: Http,
 		private userService: UserService )
@@ -25,6 +27,7 @@ export class ProductService
 		this.productsURL = "http://localhost:3000/api/v1/products";
 		this.usersURL = "http://localhost:3000/api/v1/users";
 		this.genresURL = "http://localhost:3000/api/v1/genres";
+		this.interestsURL = "http://localhost:3000/api/v1/interests";
 	}
 
 	private handlePromiseError( error: any ): Promise<any>
@@ -51,10 +54,17 @@ export class ProductService
 		return Observable.throw( errMsg );
 	}
 
-	getGenres(): Observable<Genre[]>
+	getInterests(): Observable<Array<Interest>>
+	{
+		return this.http.get( `${this.interestsURL}` )
+			.map( ( response: Response ) => response.json().data as Array<Interest> )
+			.catch( this.handleError );
+	}
+
+	getGenres(): Observable<Array<Genre>>
 	{
 		return this.http.get( `${this.genresURL}` )
-			.map( ( r: Response ) => r.json().genres as Genre[] )
+			.map( ( response: Response ) => response.json().data as Array<Genre> )
 			.catch( this.handleError );
 	}
 

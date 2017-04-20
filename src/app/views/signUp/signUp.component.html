@@ -10,8 +10,8 @@
 	</div>
 </div>-->
 
-<div class = "container custom-white-background" >
-	<div class = "col-md-offset-4 col-md-4">
+<div class = "container custom-white-background">
+	<div class = "col-md-4">
 		<h1>Registro</h1>
 		<div>
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
@@ -100,97 +100,17 @@
 				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Regístrate</button>
 			</form>
 		</div>
-		<br>
+	</div>
+
+	<div class = "col-md-8">
+		<h3>Selecciona tus intereses</h3>
+		<div class = "custom-display-grid">
+			<a *ngFor = "let interest of interests; let i = index" class = "thumbnail custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">
+				<img src = "assets/images/pencils.jpg">
+				<div class = "custom-over">
+					<div class = "custom-over-text">{{ interest.name }}</div>
+				</div>
+			</a>
+		</div>
 	</div>
 </div>
-				<!-- Check List 
-				<td>
-				<h2>Selecciona Tus Intereses</h2>
-
-				<table style="width:200%">
-					<tr>
-						<td>
-						<div class="col-md-10" style="border:1px solid #ffff33">
-							<ul>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>Arts & Photography</H4></label>
-								</li>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>Biographies</H4></label>
-								</li>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>Childrens Book</H4></label>
-								</li>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>History</H4></label>
-								</li>
-							</ul>
-						</div>
-						</td>
-
-						<td>
-							<div class="col-md-10" style="border:1px solid #ffff33">
-								<ul>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>Cookbooks, food & wine</H4></label>
-								</li>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>Literature & Fiction</H4></label>
-								</li>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>Mystery and suspense</H4></label>
-								</li>
-								<li>
-									<label class="switch">
-									<input type="checkbox">
-									<div class="slider round"></div>
-									</label>
-									<label><H4>Science Fiction and Fantasy</H4></label>
-								</li>
-							</ul>
-						</div>
-						</td>
-					</tr>
-				</table>
-
-				</td>
-				</tr>
-				</table>
-				<label class="switch">
-				  <input type="checkbox">
-				  <div class="slider round"></div>
-				</label>
-
-				<label class="switch">
-				  <input type="checkbox" checked>
-				  <div class="slider round"></div>
-				</label>
-				-->
