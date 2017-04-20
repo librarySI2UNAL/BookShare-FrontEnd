@@ -5,6 +5,7 @@ import { HttpModule } from "@angular/http";
 
 import { AlertModule } from "ngx-bootstrap";
 import { TypeaheadModule } from "ngx-bootstrap/typeahead";
+import { FileUploadModule } from "ng2-file-upload";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -38,6 +39,7 @@ import { AppRoutingModule } from "./app.routes";
 		FormsModule,
 		ReactiveFormsModule,
 		HttpModule,
+		FileUploadModule,
 		AlertModule.forRoot(),
 		TypeaheadModule.forRoot()
 	],
