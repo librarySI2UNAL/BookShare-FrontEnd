@@ -24,10 +24,10 @@ export class ProductService
 		private userService: UserService )
 	{
 		this.headers = new Headers( { "Content-Type": "application/json" } );
-		this.productsURL = "http://localhost:3000/api/v1/products";
-		this.usersURL = "http://localhost:3000/api/v1/users";
-		this.genresURL = "http://localhost:3000/api/v1/genres";
-		this.interestsURL = "http://localhost:3000/api/v1/interests";
+		this.productsURL = "https://backend-development-debeltranc.c9users.io/api/v1/products";
+		this.usersURL = "https://backend-development-debeltranc.c9users.io/api/v1/users";
+		this.genresURL = "https://backend-development-debeltranc.c9users.io/api/v1/genres";
+		this.interestsURL = "https://backend-development-debeltranc.c9users.io/api/v1/interests";
 	}
 
 	private handlePromiseError( error: any ): Promise<any>
