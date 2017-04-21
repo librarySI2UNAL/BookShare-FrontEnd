@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Router } from "@angular/router";
+import { FileUploader, FileUploaderOptions } from "ng2-file-upload";
 
 import { User } from "../../classes/user";
 import { Interest } from "../../classes/interest";
@@ -18,17 +19,28 @@ import { ProductService } from "../../services/product.service";
 
 export class SignUpComponent implements OnInit
 {
+	uploader: FileUploader;
+	uploaderOptions: FileUploaderOptions;
 	signUpForm: FormGroup;
 	user: User;
 	password: any;
 	position: any;
 	interests: Array<Interest>;
+	photoURL: string;
+	hasPhoto: boolean;
+	profile: string;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
+		this.photoURL = "http://localhost:3000/api/v1/users";
+		this.uploader = new FileUploader( {
+			url: this.photoURL,
+			allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+			maxFileSize: 5242880
+		} );
 		this.password = {
 			value: "",
 			confirmation: ""
@@ -39,6 +51,8 @@ export class SignUpComponent implements OnInit
 			latitude: 4.6482836,
 			longitude: -74.1256726
 		};
+		this.hasPhoto = false;
+		this.profile = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 	}
 
 	private mismatch(): ValidatorFn
@@ -74,9 +88,22 @@ export class SignUpComponent implements OnInit
 			this.user.interests.push( this.interests[index] );
 	}
 
+	private photoOver( e: boolean ): void
+	{
+		console.log( e );
+		this.hasPhoto = e;
+	}
+
 	private signUp(): void
 	{
-		if( this.signUpForm.invalid )
+		this.uploaderOptions = {
+			url: `${this.photoURL}/photos?relation=user`,
+			allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+			maxFileSize: 5242880
+		};
+		this.uploader.setOptions( this.uploaderOptions );
+		console.log( this.uploader.queue );
+		/*if( this.signUpForm.invalid )
 		{
 			return;
 		}
@@ -84,12 +111,19 @@ export class SignUpComponent implements OnInit
 			.then( data =>
 			{
 				this.user = new User( data );
-				this.router.navigate( ["/profile", this.user.id, "view"] );
+				this.uploaderOptions = {
+					url: `${this.photoURL}/${this.user.id}/photos?relation=user`,
+					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+					maxFileSize: 5242880
+				};
+				this.uploader.setOptions( this.uploaderOptions );
+				console.log( this.uploader.queue );
+				//this.router.navigate( ["/profile", this.user.id, "view"] );
 			} )
 			.catch( error =>
 			{
 				console.log( error );
-			} );
+			} );*/
 	}
 
 	private createSignUpForm(): FormGroup
