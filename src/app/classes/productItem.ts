@@ -24,14 +24,13 @@ export class ProductItem
 		}
 		else
 		{
-			this.id = data.id;
-			this.name = data[data.type].name;
-			this.author = data[data.type].author;
-			this.genre = new Genre();
-			this.genre.id = data[data.type].genre;
-			this.editorial = data[data.type].editorial;
-			this.yearOfPublication = data[data.type].yearOfPublication;
-			this.type = "Book";
+			this.type = data.type;
+			this.id = data[this.type].id;
+			this.name = data[this.type].name;
+			this.author = data[this.type].author;
+			this.genre = data[this.type].genre;
+			this.editorial = data[this.type].editorial;
+			this.yearOfPublication = data[this.type].yearOfPublication;
 		}
 	}
 }
