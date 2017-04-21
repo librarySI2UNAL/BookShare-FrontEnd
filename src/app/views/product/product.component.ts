@@ -23,7 +23,8 @@ export class ProductComponent implements OnInit
 	covers: any;
 	statuses: any;
 	genres: Array<Genre>;
-	types: Array<any>;
+	typeValues: any;
+	types: Array<string>;
 
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -33,47 +34,15 @@ export class ProductComponent implements OnInit
 		this.product = new Product( {} );
 		this.genres = [];
 		this.productForm = this.createProductForm();
-		this.covers = [
-		{
-			value: 1,
-			name: "Blanda"
-		},
-		{
-			value: 2,
-			name: "Dura"
-		}];
+		this.covers = ["Blanda", "Dura"];
 
-		this.statuses = [
-		{
-			value: 1,
-			name: "Terrible"
-		},
-		{
-			value: 2,
-			name: "Malo"
-		},
-		{
-			value: 3,
-			name: "Regular"
-		},
-		{
-			value: 4,
-			name: "Bueno"
-		},
-		{
-			value: 5,
-			name: "Excelente"
-		}];
+		this.statuses = ["Terrible", "Malo", "Regular", "Bueno", "Excelente"];
 
-		this.types = [
-		{
-			value: "Book",
-			name: "Libro"
-		},
-		{
-			value: "Collection",
-			name: "Colección"
-		}];
+		this.types = ["Libro", "Colección"];
+		this.typeValues = {
+			Libro: "book",
+			Colección: "collection"
+		};
 	}
 
 	private maxValue( max: number ): ValidatorFn
