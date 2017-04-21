@@ -96,4 +96,19 @@ export class ProductService
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
+
+	update( id: number, product: Product ): Promise<any>
+	{
+		let productAux: any = Object.assign( {}, product );
+		productAux.product_item = product.productItem;
+		productAux.product_item.genre = product.productItem.genre.id;
+		productAux.product_item.year_of_publication = product.productItem.yearOfPublication;
+		delete productAux.productItem;
+		delete productAux.product_item.yearOfPublication;
+		productAux.code_type = product.codeType;
+		delete productAux.codeType;
+		return this.http.put( `${this.usersURL}/1/products/${id}`, { data: productAux }, { headers: this.headers } ).toPromise()
+			.then( response => response.json().data )
+			.catch( this.handlePromiseError );
+	}
 }

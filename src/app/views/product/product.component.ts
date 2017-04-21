@@ -24,6 +24,7 @@ export class ProductComponent implements OnInit
 	statuses: any;
 	genres: Array<Genre>;
 	typeValues: any;
+	typeTexts: any;
 	types: Array<string>;
 
 	constructor( private formBuilder: FormBuilder,
@@ -42,6 +43,10 @@ export class ProductComponent implements OnInit
 		this.typeValues = {
 			Libro: "book",
 			Colección: "collection"
+		};
+		this.typeTexts = {
+			book: "Libro",
+			collection: "Colección"
 		};
 	}
 
@@ -83,18 +88,30 @@ export class ProductComponent implements OnInit
 		{
 			return;
 		}
-		console.log( this.product );
-		this.productService.create( this.product )
-			.then( data =>
-			{
-				console.log( data );
-				
-				this.router.navigate( ["/home"] );
-			} )
-			.catch( error =>
-			{
-				console.log( error );
-			} );
+		if( this.mode === "create" )
+			this.productService.create( this.product )
+				.then( data =>
+				{
+					console.log( data );
+					
+					this.router.navigate( ["/products"] );
+				} )
+				.catch( error =>
+				{
+					console.log( error );
+				} );
+		else
+			this.productService.update( this.product.id, this.product )
+				.then( data =>
+				{
+					console.log( data );
+					
+					//this.router.navigate( ["/products"] );
+				} )
+				.catch( error =>
+				{
+					console.log( error );
+				} );
 	}
 
 	ngOnInit()

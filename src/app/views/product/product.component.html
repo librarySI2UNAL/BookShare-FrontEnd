@@ -41,7 +41,7 @@
 								<label>Género</label>
 								<span *ngIf = "mode === 'view'">{{ product.productItem.genre.name }}</span>
 								<div *ngIf = "mode !== 'view'">
-									<input class = "form-control" formControlName = "genre" [(ngModel)] = "product.productItem.genre" [typeahead] = "genres" typeaheadOptionField = "name">
+									<input class = "form-control" formControlName = "genre" [(ngModel)] = "product.productItem.genre.name" [typeahead] = "genres" typeaheadOptionField = "name">
 
 									<div *ngIf = "productForm.controls.genre.errors && ( productForm.controls.genre.dirty || productForm.controls.genre.touched )" class = "alert alert-danger">
 										<div [hidden] = "!productForm.controls.genre.errors.required">
@@ -92,7 +92,7 @@
 					<div class = "panel-body">
 						<div class = "form-group">
 							<label>Tipo de producto</label>
-							<span *ngIf = "mode === 'view'">{{ types[product.productItem.type] }}</span>
+							<span *ngIf = "mode === 'view'">{{ typeTexts[product.productItem.type] }}</span>
 							<div *ngIf = "mode !== 'view'">
 								<select class = "form-control" formControlName = "type" [(ngModel)] = "product.productItem.type">
 									<option *ngFor = "let type of types" [ngValue] = "typeValues[type]">{{ type }}</option>
@@ -200,7 +200,7 @@
 					</div>
 				</div>
 
-				<button [disabled] = "productForm.pristine" class = "btn btn-success" type = "submit">Guardar</button>
+				<button *ngIf = "mode !== 'view'" [disabled] = "productForm.pristine" class = "btn btn-success" type = "submit">Guardar</button>
 			</form>
 		</div>
 	</div>
