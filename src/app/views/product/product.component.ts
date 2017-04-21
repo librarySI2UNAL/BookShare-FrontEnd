@@ -106,7 +106,7 @@ export class ProductComponent implements OnInit
 				{
 					console.log( data );
 					
-					//this.router.navigate( ["/products"] );
+					this.router.navigate( ["/products"] );
 				} )
 				.catch( error =>
 				{
