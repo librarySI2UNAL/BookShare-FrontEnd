@@ -2,5 +2,15 @@
   <h1>
     Encuantra los Libros Mas cerca a Ti
   </h1>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="map">
+        <sebm-google-map [latitude]="lat" [longitude]="lng"[zoom]=14>
+          <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+        </sebm-google-map>
+      </div>
+    </div>
+  </div>
   near-producs works!
 </div>
