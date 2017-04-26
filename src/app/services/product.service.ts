@@ -4,13 +4,13 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
- 
+
 import { Product } from "../classes/product";
 import { Genre } from "../classes/genre";
 import { Interest } from "../classes/interest";
 
 import { UserService } from "./user.service";
- 
+
 @Injectable()
 export class ProductService
 {
@@ -24,10 +24,10 @@ export class ProductService
 		private userService: UserService )
 	{
 		this.headers = new Headers( { "Content-Type": "application/json" } );
-		this.productsURL = "https://backend-development-debeltranc.c9users.io/api/v1/products";
-		this.usersURL = "https://backend-development-debeltranc.c9users.io/api/v1/users";
-		this.genresURL = "https://backend-development-debeltranc.c9users.io/api/v1/genres";
-		this.interestsURL = "https://backend-development-debeltranc.c9users.io/api/v1/interests";
+		this.productsURL = "http://localhost:3000/api/v1/products";
+		this.usersURL = "https://localhost:3000/api/v1/users";
+		this.genresURL = "http://localhost:3000/api/v1/genres";
+		this.interestsURL = "http://localhost:3000/api/v1/interests";
 	}
 
 	private handlePromiseError( error: any ): Promise<any>
@@ -50,7 +50,7 @@ export class ProductService
 			errMsg = error.message ? error.message : error.toString();
 		}
 		console.error( errMsg );
-		
+
 		return Observable.throw( errMsg );
 	}
 

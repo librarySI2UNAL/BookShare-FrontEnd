@@ -17,8 +17,8 @@ export class UserService
 	constructor( private http: Http )
 	{
 		this.headers = new Headers( { "Content-Type": "application/json" } );
-		this.loginURL = "https://backend-development-debeltranc.c9users.io/api/v1/login";
-		this.usersURL = "https://backend-development-debeltranc.c9users.io/api/v1/users";
+		this.loginURL = "http://localhost:3000/api/v1/login";
+		this.usersURL = "http://localhost:3000/api/v1/users";
 	}
 
 	public setUser( user: User ): void
