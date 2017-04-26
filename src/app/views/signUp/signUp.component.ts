@@ -23,6 +23,8 @@ export class SignUpComponent implements OnInit
 	password: any;
 	position: any;
 	interests: Array<Interest>;
+	submitted: boolean;
+	registeredUser: boolean;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -35,6 +37,8 @@ export class SignUpComponent implements OnInit
 		};
 		this.signUpForm = this.createSignUpForm();
 		this.user = new User( {} );
+		this.submitted = false;
+		this.registeredUser = false;
 	}
 
 	private mismatch(): ValidatorFn
@@ -97,18 +101,29 @@ export class SignUpComponent implements OnInit
 
 	private signUp(): void
 	{
+		this.submitted = true;
 		if( this.signUpForm.invalid )
 			return;
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
 				this.user = new User( data );
-				this.router.navigate( ["/profile", this.user.id, "view"] );
+				this.registeredUser = true;
 			} )
 			.catch( error =>
 			{
 				console.log( error );
 			} );
+	}
+
+	private skip(): void
+	{
+		this.router.navigate( ["/profile", this.user.id, "view"] );
+	}
+
+	private updateUser(): void
+	{
+		
 	}
 
 	private createSignUpForm(): FormGroup

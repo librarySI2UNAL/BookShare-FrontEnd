@@ -1,20 +1,16 @@
 <div class = "container custom-white-background">
-	<div class = "col-md-4">
+	<div>
 		<h1>Registro</h1>
-		<div>
-			<div>
-				<img class = "custom-image" src = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg">
-			</div>
-			<br>
+		<div class = "col-md-offset-4 col-md-4" *ngIf = "registeredUser">
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
-				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched ) }">
+				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.email.touched ) && signUpForm.controls.email.invalid }">
 					<label>Correo electrónico</label>
 					<div class = "input-group">
 						<span class = "input-group-addon">@</span>
 						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched )" class = "alert alert-danger">
+					<div *ngIf = "( submitted || signUpForm.controls.email.touched ) && signUpForm.controls.email.invalid" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.email.errors.required">
 							El correo electrónico es requerido
 						</div>
@@ -27,44 +23,44 @@
 					</div>
 				</div>
 
-				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched ) }">
+				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.name.touched ) && signUpForm.controls.name.invalid }">
 					<label>Nombre</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
 						<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched )" class = "alert alert-danger">
+					<div *ngIf = "( submitted || signUpForm.controls.name.touched ) && signUpForm.controls.name.invalid" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.name.errors.required">
 							El nombre es requerido
 						</div>
 					</div>
 				</div>
 
-				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched ) }">
+				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.lastName.touched ) && signUpForm.controls.lastName.invalid }">
 					<label>Apellido</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
 						<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched )" class = "alert alert-danger">
+					<div *ngIf = "( submitted || signUpForm.controls.lastName.touched ) && signUpForm.controls.lastName.invalid" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.lastName.errors.required">
 							El apellido es requerido
 						</div>
 					</div>
 				</div>
 
-				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched ) }">
+				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.password.touched ) && signUpForm.controls.password.invalid }">
 					<label>Contraseña</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
 						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched )" class = "alert alert-danger">
+					<div *ngIf = "( submitted || signUpForm.controls.password.touched ) && signUpForm.controls.password.invalid" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.password.errors.required">
-							La contraseña es requerido
+							La contraseña es requerida
 						</div>
 						<div [hidden] = "!signUpForm.controls.password.errors.minlength">
 							La contraseña debe tener al menos 8 caracteres
@@ -72,14 +68,14 @@
 					</div>
 				</div>
 
-				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched ) }">
+				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.passwordConfirmation.touched ) && signUpForm.controls.passwordConfirmation.invalid }">
 					<label>Confirme la contraseña</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
 						<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation">
 					</div>
 
-					<div *ngIf = "signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched )" class = "alert alert-danger">
+					<div *ngIf = "( submitted || signUpForm.controls.passwordConfirmation.touched ) && signUpForm.controls.passwordConfirmation.invalid" class = "alert alert-danger">
 						<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
 							Debe confirmar la contraseña
 						</div>
@@ -92,20 +88,27 @@
 					</div>
 				</div>
 
-				<button [disabled] = "signUpForm.pristine" class = "btn btn-primary btn-lg btn-block" type = "submit">Regístrate</button>
+				<button class = "btn btn-primary btn-lg btn-block" type = "submit">Regístrate</button>
 			</form>
 		</div>
-	</div>
-
-	<div class = "col-md-8">
-		<h3>Selecciona tus intereses</h3>
-		<div class = "custom-display-grid">
-			<a *ngFor = "let interest of interests; let i = index" class = "thumbnail custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">
-				<img src = "assets/images/pencils.jpg">
-				<div class = "custom-over">
-					<div class = "custom-over-text">{{ interest.name }}</div>
-				</div>
-			</a>
+		<div class = "col-md-offset-2 col-md-8" *ngIf = "!registeredUser">
+			<h3>Carga tu foto de perfil</h3>
+			<div class = "center-block">
+				<img class = "img-thumbnail custom-image" src = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg">
+			</div>
+			<h3>Selecciona tus intereses</h3>
+			<div class = "custom-display-grid">
+				<a *ngFor = "let interest of interests; let i = index" class = "thumbnail custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">
+					<img src = "assets/images/pencils.jpg">
+					<div class = "custom-over">
+						<div class = "custom-over-text">{{ interest.name }}</div>
+					</div>
+				</a>
+			</div>
+			<div class = "pull-right">
+				<a class = "btn">Saltar este paso</a>
+				<button class = "btn btn-primary" (click) = "updateUser()">Aceptar</button>
+			</div>
 		</div>
 	</div>
 </div>
