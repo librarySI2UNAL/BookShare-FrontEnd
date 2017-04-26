@@ -54,7 +54,8 @@ export class SignUpComponent implements OnInit
 	private setPosition( position ): void
 	{
 		this.position = position.coords;
-		console.log( this.position );
+		this.user.latitude = this.position.latitude;
+		this.user.longitude = this.position.longitude;
 	}
 
 	private selectInterest( index: number ): void
@@ -110,12 +111,13 @@ export class SignUpComponent implements OnInit
 		if( navigator.geolocation )
 			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
 		else
+		{
 			this.position = {
 				latitude: 4.6482836,
 				longitude: -74.1256726
 			};
-		console.log( this.position );
-		//this.user.latitude = this.position.latitude;
-		//this.user.longitude = this.position.longitude;
+			this.user.latitude = this.position.latitude;
+			this.user.longitude = this.position.longitude;
+		}
 	}
 }

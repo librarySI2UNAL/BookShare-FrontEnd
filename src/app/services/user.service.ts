@@ -78,4 +78,11 @@ export class UserService
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}
+
+	public exists( email: string ): Promise<any>
+	{
+		return this.http.get( `${AppSettings.API_ENDPOINT}/users/validate?email=${email}` ).toPromise()
+			.then( response => response.json().data )
+			.catch( this.handleError );
+	}
 }
