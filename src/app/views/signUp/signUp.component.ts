@@ -35,10 +35,6 @@ export class SignUpComponent implements OnInit
 		};
 		this.signUpForm = this.createSignUpForm();
 		this.user = new User( {} );
-		this.position = {
-			latitude: 4.6482836,
-			longitude: -74.1256726
-		};
 	}
 
 	private mismatch(): ValidatorFn
@@ -58,6 +54,7 @@ export class SignUpComponent implements OnInit
 	private setPosition( position ): void
 	{
 		this.position = position.coords;
+		console.log( this.position );
 	}
 
 	private selectInterest( index: number ): void
@@ -77,9 +74,7 @@ export class SignUpComponent implements OnInit
 	private signUp(): void
 	{
 		if( this.signUpForm.invalid )
-		{
 			return;
-		}
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
@@ -107,15 +102,20 @@ export class SignUpComponent implements OnInit
 	public ngOnInit()
 	{
 		this.productService.getInterests().subscribe( interests =>
-			{
-				this.interests = interests;
-				console.log( this.interests );
-			} );
+		{
+			this.interests = interests;
+		} );
 		this.user.qualification = 0.0;
 		this.user.interests = [];
 		if( navigator.geolocation )
 			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
-		this.user.latitude = this.position.latitude;
-		this.user.longitude = this.position.longitude;
+		else
+			this.position = {
+				latitude: 4.6482836,
+				longitude: -74.1256726
+			};
+		console.log( this.position );
+		//this.user.latitude = this.position.latitude;
+		//this.user.longitude = this.position.longitude;
 	}
 }

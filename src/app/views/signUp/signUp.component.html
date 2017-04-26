@@ -1,15 +1,3 @@
-<!--Header Book Share-->
-<!--<div class="header">
-	<div class="header-top">
-		<div class="container">
-			<div class="col-sm-4 world"></div>
-			<div class="col-sm-4 logo">
-				<a href="/home"><img src="assets/images/logo.png" alt=""></a>
-			</div>
-		</div>
-	</div>
-</div>-->
-
 <div class = "container custom-white-background">
 	<div class = "col-md-4">
 		<h1>Registro</h1>
@@ -19,7 +7,7 @@
 			</div>
 			<br>
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
-				<div class = "form-group">
+				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.email.errors && ( signUpForm.controls.email.dirty || signUpForm.controls.email.touched ) }">
 					<label>Correo electrónico</label>
 					<div class = "input-group">
 						<span class = "input-group-addon">@</span>
@@ -36,7 +24,7 @@
 					</div>
 				</div>
 
-				<div class = "form-group">
+				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.name.errors && ( signUpForm.controls.name.dirty || signUpForm.controls.name.touched ) }">
 					<label>Nombre</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
@@ -50,7 +38,7 @@
 					</div>
 				</div>
 
-				<div class = "form-group">
+				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.lastName.errors && ( signUpForm.controls.lastName.dirty || signUpForm.controls.lastName.touched ) }">
 					<label>Apellido</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-user"></span></span>
@@ -64,7 +52,7 @@
 					</div>
 				</div>
 
-				<div class = "form-group">
+				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.password.errors && ( signUpForm.controls.password.dirty || signUpForm.controls.password.touched ) }">
 					<label>Contraseña</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
@@ -81,7 +69,7 @@
 					</div>
 				</div>
 
-				<div class = "form-group">
+				<div class = "form-group" [ngClass] = "{ 'has-error': signUpForm.controls.passwordConfirmation.errors && ( signUpForm.controls.passwordConfirmation.dirty || signUpForm.controls.passwordConfirmation.touched ) }">
 					<label>Confirme la contraseña</label>
 					<div class = "input-group">
 						<span class = "input-group-addon"><span class = "glyphicon glyphicon-lock"></span></span>
@@ -101,7 +89,7 @@
 					</div>
 				</div>
 
-				<button [disabled] = "signUpForm.pristine" class = "btn btn-success" type = "submit">Regístrate</button>
+				<button [disabled] = "signUpForm.pristine" class = "btn btn-primary btn-lg btn-block" type = "submit">Regístrate</button>
 			</form>
 		</div>
 	</div>
