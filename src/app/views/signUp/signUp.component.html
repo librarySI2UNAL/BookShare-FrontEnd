@@ -21,6 +21,9 @@
 						<div [hidden] = "!signUpForm.controls.email.errors.pattern">
 							El correo electrónico no es válido
 						</div>
+						<div [hidden] = "!signUpForm.controls.email.errors.emailExists">
+							El correo electrónico ya existe
+						</div>
 					</div>
 				</div>
 

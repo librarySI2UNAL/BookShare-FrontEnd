@@ -79,10 +79,10 @@ export class UserService
 			.catch( this.handleError );
 	}
 
-	public exists( email: string ): Promise<any>
+	public existsWithEmail( email: string ): Promise<any>
 	{
 		return this.http.get( `${AppSettings.API_ENDPOINT}/users/validate?email=${email}` ).toPromise()
-			.then( response => response.json().data )
+			.then( response => response.json() )
 			.catch( this.handleError );
 	}
 }
