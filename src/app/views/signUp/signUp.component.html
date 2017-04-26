@@ -2,6 +2,9 @@
 	<div>
 		<h1>Registro</h1>
 		<div class = "col-md-offset-4 col-md-4" *ngIf = "registeredUser">
+		<div ng2FileDrop (fileOver) = "photoOver( $event )" [uploader] = "uploader">
+			<img class = "custom-profile-image" [src] = "profile">
+		</div>
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
 				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.email.touched ) && signUpForm.controls.email.invalid }">
 					<label>Correo electrónico</label>
