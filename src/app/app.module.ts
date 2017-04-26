@@ -5,6 +5,7 @@ import { HttpModule } from "@angular/http";
 
 import { AlertModule } from "ngx-bootstrap";
 import { TypeaheadModule } from "ngx-bootstrap/typeahead";
+import { FileUploadModule } from "ng2-file-upload";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -17,6 +18,7 @@ import { ProductComponent }	from "./views/product/product.component";
 
 import { UserService } from "./services/user.service";
 import { ProductService } from "./services/product.service";
+import { PhotoService } from "./services/photo.service";
 
 import { AppRoutingModule } from "./app.routes";
 
@@ -38,12 +40,14 @@ import { AppRoutingModule } from "./app.routes";
 		FormsModule,
 		ReactiveFormsModule,
 		HttpModule,
+		FileUploadModule,
 		AlertModule.forRoot(),
 		TypeaheadModule.forRoot()
 	],
 	providers: [
 		UserService,
-		ProductService
+		ProductService,
+		PhotoService
 	],
 	bootstrap: [
 		AppComponent

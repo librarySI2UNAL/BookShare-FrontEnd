@@ -7,6 +7,12 @@ sign-up
 		@include border-radius( 0px );
 	}
 
+	.custom-profile-image
+	{
+		width: 256px;
+		heigth: 256px;
+	}
+
 	.custom-white-background
 	{
 		background-color: white;
