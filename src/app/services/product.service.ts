@@ -4,13 +4,13 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
- 
+
 import { Product } from "../classes/product";
 import { Genre } from "../classes/genre";
 import { Interest } from "../classes/interest";
 
 import { UserService } from "./user.service";
- 
+
 @Injectable()
 export class ProductService
 {
@@ -25,7 +25,7 @@ export class ProductService
 	{
 		this.headers = new Headers( { "Content-Type": "application/json" } );
 		this.productsURL = "http://localhost:3000/api/v1/products";
-		this.usersURL = "http://localhost:3000/api/v1/users";
+		this.usersURL = "https://localhost:3000/api/v1/users";
 		this.genresURL = "http://localhost:3000/api/v1/genres";
 		this.interestsURL = "http://localhost:3000/api/v1/interests";
 	}
@@ -50,7 +50,7 @@ export class ProductService
 			errMsg = error.message ? error.message : error.toString();
 		}
 		console.error( errMsg );
-		
+
 		return Observable.throw( errMsg );
 	}
 
@@ -93,6 +93,21 @@ export class ProductService
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
 		return this.http.post( `${this.usersURL}/1/products`, { data: productAux }, { headers: this.headers } ).toPromise()
+			.then( response => response.json().data )
+			.catch( this.handlePromiseError );
+	}
+
+	update( id: number, product: Product ): Promise<any>
+	{
+		let productAux: any = Object.assign( {}, product );
+		productAux.product_item = product.productItem;
+		productAux.product_item.genre = product.productItem.genre.id;
+		productAux.product_item.year_of_publication = product.productItem.yearOfPublication;
+		delete productAux.productItem;
+		delete productAux.product_item.yearOfPublication;
+		productAux.code_type = product.codeType;
+		delete productAux.codeType;
+		return this.http.put( `${this.usersURL}/1/products/${id}`, { data: productAux }, { headers: this.headers } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}

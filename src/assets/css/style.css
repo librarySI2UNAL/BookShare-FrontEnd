@@ -295,7 +295,7 @@ p.log a{
 	margin: 0 5%;
 	display: inline-block;
 	color: #000000;
-  font-family: 'Lobster', cursive;
+  font-family: 'Poiret One', cursive;
 }
 p.log a:hover{
 	color:#000;
@@ -340,9 +340,10 @@ i.glyphicon.glyphicon-phone {
 }
 a.item_add {
 
- font-family: 'Lobster', cursive;
-
+ font-family: 'Poiret One', cursive;
+ font-size: 3em;
 }
+
 .grid_1 img{
 	margin-bottom:1em;
 }
@@ -462,9 +463,9 @@ ul.callbacks_tabs.callbacks1_tabs {
 .price h5{ /*-Color de Precio-*/
 	float: left;
 	color:#fFF;
-	font-size: 1.5em;
+	font-size: 2em;
 	margin-top: 3px;
-  font-family: 'Lobster', cursive
+  font-family: 'Poiret One', cursive, ;
 }
 /*-Color de botones-*/
 .price a {
@@ -478,6 +479,19 @@ ul.callbacks_tabs.callbacks1_tabs {
   border-radius: 3px;
   text-decoration: none;
 }
+
+.info{
+  display: inline;
+}
+.info h2{
+
+  color:#FFFFFF;
+	font-size: 2.5em;
+	font-family: 'Poiret One', cursive;
+  font-weight: bold;
+
+}
+
 .content-top {
   padding: 4em 0;
 }
@@ -612,10 +626,11 @@ p.footer-class a:hover{
 	text-align: center;
 }
 .contact-bottom  span,.contact-bottom-top span{
-	font-size:1.2em;
+	font-size:2em;
 	color:#fff;
 	display:block;
 	padding:0 0 0.5em;
+
 }
 .contact-bottom  input[type="text"]{
 	width:100%;
@@ -699,6 +714,8 @@ p.footer-class a:hover{
 	padding-bottom: 0.2em;
 	display: block;
 }
+
+-
 /*--//contact--*/
 /*--login--*/
 .account h1 {
@@ -710,8 +727,8 @@ p.footer-class a:hover{
 }
 .login-left h4{
 	color:#000;
-	font-size: 1.3em;
-	font-family: 'Lobster', cursive
+	font-size: 3em;
+	font-family: 'Poiret One', cursive;
 }
  .login-left p {
 	color: #b2b2b2;
@@ -975,6 +992,7 @@ span.price-in1 {
   padding: 0.3em 0 0;
   display: block;
   color:#FFFF33;
+
 }
 .product-go {
   padding: 1em 0;
@@ -1477,6 +1495,10 @@ select.in-drop, select.in-drop1 {
 }
 .price a {
   padding: 0.3em 0.5em;
+}
+.price span{
+  font-size: 2em;
+  font-family: 'Poiret One', cursive, b;
 }
 /*--single--*/
 .single-top-in {
