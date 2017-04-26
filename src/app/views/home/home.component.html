@@ -12,8 +12,8 @@
 
 			<!--Menu de registro e inicio de secion -->
 			<div class="col-sm-3 top-footer1">
-				<p class="log"><a href="/log-in"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-				<p class="log"><a href="/sign-up"><span class="glyphicon glyphicon-log-in"></span> Registrate</a>
+				<p class="log"><a routerLink="/log-in" routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+				<p class="log"><a routerLink="/sign-up"  routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Sign Up</a>
 
 				<!-- Se ve feo :v
 				<form>
@@ -45,53 +45,18 @@
 		 <div class="col-sm-8 h_menu4"><!--Menu Principal -->
 				<ul class="memenu yellow">
 
-					<li class=" grid"><a  href="/home">Home</a></li>
-				    <!-- En desuso
-					<li><a  href="#">Men</a>
-							<div class="mepanel">
-							<div class="row">
-								<div class="col1">
-									<div class="h_nav">
-										<h4>Holli</h4>
+					<li class=" grid"><a routerLink="/home" routerLinkActive="active">Home</a></li>
 
-									<ul>
-										<li><a href="products.html">Shirts & Tops</a></li>
-										<li><a href="products.html">Sports Wear</a></li>
 
-									</ul>
-									</div>
-								</div>
-						  </div>
-						</div>
-					</li>
-					-->
-
-				<li class="grid"><a  href="/profile">Profile</a>
-					<div class="mepanel">
-						<div class="row">
-							<div class="col1">
-								<div class="h_nav">
-									<h4>Holli</h4>
-									<!---Lista en Desuso"
-									<ul>
-										<li><a href="products.html">Shirts & Tops</a></li>
-										<li><a href="products.html">Sports Wear</a></li>
-
-									</ul>-->
-								</div>
-							</div>
-						</div>
-					</div>
-			    </li>
+				<li class="grid"><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
 				<!---llamada a la Ruta "//availprod"---->
-				<li><a>Oferts</a></li>
+				<li><a routerLink="/products" routerLinkActive="active">All Products</a></li>
 				<!---llamada a la Ruta "/contactus"---->
-				<li><a  href="/contact-us">Contact</a></li>
+
+
+					<li>	<a routerLink="/contact-us" routerLinkActive="active">Contact Us</a></li>
 			  </ul>
 			</div>
-				<div class="col-sm-2 search">
-			<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><i class="glyphicon glyphicon-search"> </i> </a>
-		</div>
 
 
 		<div class="clearfix"> </div>
@@ -103,28 +68,13 @@
 				<div id="small-dialog" class="mfp-hide">
 				<div class="search-top">
 						<div class="login">
-							<input type="submit" value="">
-							<input type="text" value="Type something..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}">
+							<button type="button" class="btn btn-default">Search</button>
+							<input type="text" value="Write here..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}">
 						</div>
-						<p>	Shopping</p>
+
 					</div>
 				</div>
-				 <script>
-						$(document).ready(function() {
-						$('.popup-with-zoom-anim').magnificPopup({
-							type: 'inline',
-							fixedContentPos: false,
-							fixedBgPos: true,
-							overflowY: 'auto',
-							closeBtnInside: true,
-							preloader: false,
-							midClick: true,
-							removalDelay: 300,
-							mainClass: 'my-mfp-zoom-in'
-						});
 
-						});
-				</script>
 	<!---->
 		</div>
 	</div>
