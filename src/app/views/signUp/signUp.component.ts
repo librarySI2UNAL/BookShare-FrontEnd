@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Router } from "@angular/router";
-import { FileUploader, FileUploaderOptions } from "ng2-file-upload";
+import { FileUploader } from "ng2-file-upload";
 
 import { User } from "../../classes/user";
 import { Interest } from "../../classes/interest";
 
 import { UserService } from "../../services/user.service";
 import { ProductService } from "../../services/product.service";
+import { AppSettings } from "../../app.settings";
 
 @Component(
 {
@@ -20,7 +21,6 @@ import { ProductService } from "../../services/product.service";
 export class SignUpComponent implements OnInit
 {
 	uploader: FileUploader;
-	uploaderOptions: FileUploaderOptions;
 	signUpForm: FormGroup;
 	user: User;
 	password: any;
@@ -30,19 +30,14 @@ export class SignUpComponent implements OnInit
 	registeredUser: boolean;
 	photoURL: string;
 	hasPhoto: boolean;
-	profile: string;
+	profileImage: string;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
-		this.photoURL = "http://localhost:3000/api/v1/users";
-		this.uploader = new FileUploader( {
-			url: this.photoURL,
-			allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
-			maxFileSize: 5242880
-		} );
+		this.photoURL = `${AppSettings.API_ENDPOINT}/users`;
 		this.password = {
 			value: "",
 			confirmation: ""
@@ -52,7 +47,7 @@ export class SignUpComponent implements OnInit
 		this.submitted = false;
 		this.registeredUser = false;
 		this.hasPhoto = false;
-		this.profile = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
+		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 	}
 
 	private mismatch(): ValidatorFn
@@ -115,7 +110,6 @@ export class SignUpComponent implements OnInit
 
 	private photoOver( e: boolean ): void
 	{
-		console.log( e );
 		this.hasPhoto = e;
 	}
 
@@ -123,32 +117,32 @@ export class SignUpComponent implements OnInit
 	{
 		this.submitted = true;
 		if( this.signUpForm.invalid )
-		this.uploaderOptions = {
-			url: `${this.photoURL}/photos?relation=user`,
-			allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
-			maxFileSize: 5242880
-		};
-		this.uploader.setOptions( this.uploaderOptions );
-		console.log( this.uploader.queue );
 			return;
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
 				this.user = new User( data );
-				this.registeredUser = true;
-				this.uploaderOptions = {
-					url: `${this.photoURL}/${this.user.id}/photos?relation=user`,
+				this.uploader = new FileUploader( {
+					url: `${this.photoURL}/${this.user.id}/photos`,
 					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
-					maxFileSize: 5242880
+					maxFileSize: 5242880,
+					autoUpload: true
+				} );
+				this.uploader.onCompleteItem = ( fileItem, response, status, headers ) =>
+				{
+					let data: any;
+					if( status === 200 )
+					{
+						data = JSON.parse( response );
+						this.profileImage = AppSettings.SERVER + data.photo.image.url;
+					}
 				};
-				this.uploader.setOptions( this.uploaderOptions );
-				console.log( this.uploader.queue );
-				//this.router.navigate( ["/profile", this.user.id, "view"] );
+				this.registeredUser = true;
 			} )
 			.catch( error =>
 			{
 				console.log( error );
-			} );*/
+			} );
 	}
 
 	private skip(): void
@@ -158,7 +152,7 @@ export class SignUpComponent implements OnInit
 
 	private updateUser(): void
 	{
-		
+
 	}
 
 	private createSignUpForm(): FormGroup

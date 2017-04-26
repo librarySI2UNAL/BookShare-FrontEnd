@@ -1,10 +1,7 @@
 <div class = "container custom-white-background">
 	<div>
 		<h1>Registro</h1>
-		<div class = "col-md-offset-4 col-md-4" *ngIf = "registeredUser">
-		<div ng2FileDrop (fileOver) = "photoOver( $event )" [uploader] = "uploader">
-			<img class = "custom-profile-image" [src] = "profile">
-		</div>
+		<div class = "col-md-offset-4 col-md-4" *ngIf = "!registeredUser">
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
 				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.email.touched ) && signUpForm.controls.email.invalid }">
 					<label>Correo electrónico</label>
@@ -94,11 +91,12 @@
 				<button class = "btn btn-primary btn-lg btn-block" type = "submit">Regístrate</button>
 			</form>
 		</div>
-		<div class = "col-md-offset-2 col-md-8" *ngIf = "!registeredUser">
+		<div class = "col-md-offset-2 col-md-8" *ngIf = "registeredUser">
 			<h3>Carga tu foto de perfil</h3>
-			<div class = "center-block">
-				<img class = "img-thumbnail custom-image" src = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg">
+			<div class = "center-block" ng2FileDrop (fileOver) = "photoOver( $event )" [uploader] = "uploader">
+				<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
 			</div>
+			<input type = "file" ng2FileSelect [uploader] = "uploader"/>
 			<h3>Selecciona tus intereses</h3>
 			<div class = "custom-display-grid">
 				<a *ngFor = "let interest of interests; let i = index" class = "thumbnail custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">
