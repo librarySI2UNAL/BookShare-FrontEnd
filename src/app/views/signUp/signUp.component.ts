@@ -31,6 +31,7 @@ export class SignUpComponent implements OnInit
 	photoURL: string;
 	hasPhoto: boolean;
 	profileImage: string;
+	photosToRemove: Array<number>;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -48,6 +49,7 @@ export class SignUpComponent implements OnInit
 		this.registeredUser = false;
 		this.hasPhoto = false;
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
+		this.photosToRemove = [];
 	}
 
 	private mismatch(): ValidatorFn
@@ -134,8 +136,11 @@ export class SignUpComponent implements OnInit
 					if( status === 200 )
 					{
 						data = JSON.parse( response );
+						this.photosToRemove.push( data.photo.id );
 						this.profileImage = AppSettings.SERVER + data.photo.image.url;
 					}
+					else
+						console.log( response );
 				};
 				this.registeredUser = true;
 			} )
@@ -147,12 +152,28 @@ export class SignUpComponent implements OnInit
 
 	private skip(): void
 	{
-		this.router.navigate( ["/profile", this.user.id, "view"] );
+		if( this.photosToRemove.length > 0 )
+			console.log( "Borrar" );
+		//this.router.navigate( ["/profile"] );
 	}
 
 	private updateUser(): void
 	{
+		if( this.photosToRemove.length > 1 )
+		{
+			this.photosToRemove = this.photosToRemove.slice( 0, this.photosToRemove.length - 1 )
+			console.log( "Borrar" );
+		}
+		/*if( this.user.interests.length > 0 )
+			this.userService.update( this.user )
+				.then( response =>
+				{
+					this.router.navigate( ["/profile"] );
+				} )
+				.catch( response =>
+				{
 
+				} );*/
 	}
 
 	private createSignUpForm(): FormGroup
