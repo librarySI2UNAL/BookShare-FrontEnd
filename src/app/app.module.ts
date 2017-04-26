@@ -18,6 +18,7 @@ import { ProductComponent }	from "./views/product/product.component";
 
 import { UserService } from "./services/user.service";
 import { ProductService } from "./services/product.service";
+import { PhotoService } from "./services/photo.service";
 
 import { AppRoutingModule } from "./app.routes";
 
@@ -45,7 +46,8 @@ import { AppRoutingModule } from "./app.routes";
 	],
 	providers: [
 		UserService,
-		ProductService
+		ProductService,
+		PhotoService
 	],
 	bootstrap: [
 		AppComponent

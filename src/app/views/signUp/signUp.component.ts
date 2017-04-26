@@ -8,6 +8,7 @@ import { Interest } from "../../classes/interest";
 
 import { UserService } from "../../services/user.service";
 import { ProductService } from "../../services/product.service";
+import { PhotoService } from "../../services/photo.service";
 import { AppSettings } from "../../app.settings";
 
 @Component(
@@ -35,6 +36,7 @@ export class SignUpComponent implements OnInit
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
+		private photoService: PhotoService,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
@@ -153,8 +155,16 @@ export class SignUpComponent implements OnInit
 	private skip(): void
 	{
 		if( this.photosToRemove.length > 0 )
-			console.log( "Borrar" );
-		//this.router.navigate( ["/profile"] );
+			this.photoService.deleteArray( this.photosToRemove, "users" )
+				.then( response =>
+				{
+
+				} )
+				.catch( response =>
+				{
+
+				} );
+		this.router.navigate( ["/profile"] );
 	}
 
 	private updateUser(): void
@@ -162,9 +172,17 @@ export class SignUpComponent implements OnInit
 		if( this.photosToRemove.length > 1 )
 		{
 			this.photosToRemove = this.photosToRemove.slice( 0, this.photosToRemove.length - 1 )
-			console.log( "Borrar" );
+			this.photoService.deleteArray( this.photosToRemove, "users" )
+				.then( response =>
+				{
+
+				} )
+				.catch( response =>
+				{
+
+				} );
 		}
-		/*if( this.user.interests.length > 0 )
+		if( this.user.interests.length > 0 )
 			this.userService.update( this.user )
 				.then( response =>
 				{
@@ -173,7 +191,7 @@ export class SignUpComponent implements OnInit
 				.catch( response =>
 				{
 
-				} );*/
+				} );
 	}
 
 	private createSignUpForm(): FormGroup
@@ -191,10 +209,11 @@ export class SignUpComponent implements OnInit
 
 	public ngOnInit()
 	{
-		this.productService.getInterests().subscribe( interests =>
-		{
-			this.interests = interests;
-		} );
+		this.productService.getInterests()
+			.subscribe( interests =>
+			{
+				this.interests = interests;
+			} );
 		this.user.qualification = 0.0;
 		this.user.interests = [];
 		if( navigator.geolocation )
