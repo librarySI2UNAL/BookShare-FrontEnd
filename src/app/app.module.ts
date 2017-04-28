@@ -22,7 +22,7 @@ import { PhotoService } from "./services/photo.service";
 
 import { AppRoutingModule } from "./app.routes";
 
-import { NearProducsComponent } from './near-producs/near-producs.component';
+import { NearProductsComponent } from './near-producs/near-producs.component';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @NgModule(
@@ -36,7 +36,7 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 		SignUpComponent,
 		ProfileComponent,
 		ProductComponent,
-		NearProducsComponent
+		NearProductsComponent
 	],
 	imports: [
 		AppRoutingModule,
