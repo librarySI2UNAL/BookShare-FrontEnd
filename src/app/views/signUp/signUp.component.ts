@@ -20,7 +20,8 @@ import { AppSettings } from "../../app.settings";
 } )
 
 export class SignUpComponent implements OnInit
-{
+{ title: "Ingresa";
+
 	uploader: FileUploader;
 	signUpForm: FormGroup;
 	user: User;
@@ -61,7 +62,7 @@ export class SignUpComponent implements OnInit
 				let input: string = control.value;
 				let password: string = this.password.value;
 				let isValid: boolean = password !== input;
-				if( isValid ) 
+				if( isValid )
 					return { mismatch: { password } }
 				else
 					return null;
@@ -200,7 +201,7 @@ export class SignUpComponent implements OnInit
 			{
 				name: ["", [Validators.required]],
 				lastName: ["", [Validators.required]],
-				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )], 
+				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )],
 					[this.emailExists()]],
 				password: ["", [Validators.required, Validators.minLength( 8 )]],
 				passwordConfirmation: ["", [Validators.required, Validators.minLength( 8 ), this.mismatch()]]

@@ -8,7 +8,7 @@ import { ProductsComponent } from "./views/products/products.component";
 import { SignUpComponent } from "./views/signUp/signUp.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ProductComponent }	from "./views/product/product.component";
-
+import { NearProductsComponent } from './near-producs/near-producs.component';
 const routes : Routes = [
 	{
 		path: "",
@@ -17,31 +17,31 @@ const routes : Routes = [
 	},
 	{
 		path: "home",
-		component: HomeComponent	
+		component: HomeComponent
 	},
 	{
 		path: "log-in",
-		component: LogInComponent	
+		component: LogInComponent
 	},
 	{
 		path: "sign-up",
-		component: SignUpComponent	
+		component: SignUpComponent
 	},
 	{
-		path: "contact-us",	 
-		component: ContactUsComponent	
+		path: "contact-us",
+		component: ContactUsComponent
 	},
 	{
 		path: "profile",
-		component: ProfileComponent	
+		component: ProfileComponent
 	},
 	{
 		path: "profile/:id/:mode",
-		component: ProfileComponent	
+		component: ProfileComponent
 	},
 	{
 		path: "products",
-		component: ProductsComponent	
+		component: ProductsComponent
 	},
 	{
 		path: "product/:id/:mode",
@@ -50,6 +50,10 @@ const routes : Routes = [
 	{
 		path: "product",
 		component: ProductComponent
+	},
+	{
+		path: "near-products",
+		component: NearProductsComponent
 	}
 ];
 
