@@ -12,7 +12,8 @@ import { ProductService } from "../../services/product.service";
 } )
 
 export class ProductsComponent implements OnInit
-{
+{ title:"Productos";
+
 	page: number;
 	perPage: number;
 	products: Array<Product>;

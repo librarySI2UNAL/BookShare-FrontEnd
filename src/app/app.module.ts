@@ -22,6 +22,9 @@ import { PhotoService } from "./services/photo.service";
 
 import { AppRoutingModule } from "./app.routes";
 
+import { NearProducsComponent } from './near-producs/near-producs.component';
+import { AgmCoreModule } from 'angular2-google-maps/core';
+
 @NgModule(
 {
 	declarations: [
@@ -32,7 +35,8 @@ import { AppRoutingModule } from "./app.routes";
 		ProductsComponent,
 		SignUpComponent,
 		ProfileComponent,
-		ProductComponent
+		ProductComponent,
+		NearProducsComponent
 	],
 	imports: [
 		AppRoutingModule,
@@ -42,7 +46,10 @@ import { AppRoutingModule } from "./app.routes";
 		HttpModule,
 		FileUploadModule,
 		AlertModule.forRoot(),
-		TypeaheadModule.forRoot()
+		TypeaheadModule.forRoot(),
+		AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg'
+    })
 	],
 	providers: [
 		UserService,
@@ -56,5 +63,5 @@ import { AppRoutingModule } from "./app.routes";
 
 export class AppModule
 {
-	
+
 }
