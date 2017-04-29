@@ -8,6 +8,7 @@ import "rxjs/add/operator/catch";
 import { Product } from "../classes/product";
 import { Genre } from "../classes/genre";
 import { Interest } from "../classes/interest";
+import { AppSettings } from "../app.settings";
 
 import { UserService } from "./user.service";
 
@@ -24,10 +25,10 @@ export class ProductService
 		private userService: UserService )
 	{
 		this.headers = new Headers( { "Content-Type": "application/json" } );
-		this.productsURL = "http://localhost:3000/api/v1/products";
-		this.usersURL = "https://localhost:3000/api/v1/users";
-		this.genresURL = "http://localhost:3000/api/v1/genres";
-		this.interestsURL = "http://localhost:3000/api/v1/interests";
+		this.productsURL = `${AppSettings.API_ENDPOINT}/products`;
+		this.usersURL = `${AppSettings.API_ENDPOINT}/users`;
+		this.genresURL = `${AppSettings.API_ENDPOINT}/genres`;
+		this.interestsURL = `${AppSettings.API_ENDPOINT}/interests`;
 	}
 
 	private handlePromiseError( error: any ): Promise<any>

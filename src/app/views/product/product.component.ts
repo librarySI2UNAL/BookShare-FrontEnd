@@ -26,6 +26,7 @@ export class ProductComponent implements OnInit
 	typeValues: any;
 	typeTexts: any;
 	types: Array<string>;
+	submitted: boolean;
 
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -48,6 +49,7 @@ export class ProductComponent implements OnInit
 			book: "Libro",
 			collection: "Colección"
 		};
+		this.submitted = false;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -84,10 +86,9 @@ export class ProductComponent implements OnInit
 
 	private save(): void
 	{
+		this.submitted = true;
 		if( this.productForm.invalid )
-		{
 			return;
-		}
 		if( this.mode === "create" )
 			this.productService.create( this.product )
 				.then( data =>
