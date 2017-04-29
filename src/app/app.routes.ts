@@ -8,7 +8,8 @@ import { ProductsComponent } from "./views/products/products.component";
 import { SignUpComponent } from "./views/signUp/signUp.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ProductComponent }	from "./views/product/product.component";
-import { NearProductsComponent } from './near-producs/near-producs.component';
+import { NearProductsComponent } from './views/nearProducts/nearProducts.component';
+
 const routes : Routes = [
 	{
 		path: "",

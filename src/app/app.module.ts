@@ -3,8 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
-import { AlertModule } from "ngx-bootstrap";
-import { TypeaheadModule } from "ngx-bootstrap/typeahead";
+import { AgmCoreModule } from "angular2-google-maps/core";
 import { FileUploadModule } from "ng2-file-upload";
 
 import { AppComponent } from "./app.component";
@@ -15,15 +14,13 @@ import { ProductsComponent } from "./views/products/products.component";
 import { SignUpComponent } from "./views/signUp/signUp.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ProductComponent }	from "./views/product/product.component";
+import { NearProductsComponent } from "./views/nearProducts/nearProducts.component";
 
 import { UserService } from "./services/user.service";
 import { ProductService } from "./services/product.service";
 import { PhotoService } from "./services/photo.service";
 
 import { AppRoutingModule } from "./app.routes";
-
-import { NearProductsComponent } from './near-producs/near-producs.component';
-import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @NgModule(
 {
@@ -45,11 +42,10 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 		ReactiveFormsModule,
 		HttpModule,
 		FileUploadModule,
-		AlertModule.forRoot(),
-		TypeaheadModule.forRoot(),
-		AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg'
-    })
+		AgmCoreModule.forRoot(
+		{
+			apiKey: 'AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg'
+		} )
 	],
 	providers: [
 		UserService,

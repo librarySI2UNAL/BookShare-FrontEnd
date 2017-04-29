@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 
-
 @Component(
 {
 	selector: "log-in",
@@ -12,13 +11,15 @@ import { Router } from "@angular/router";
 } )
 
 export class LogInComponent implements OnInit
-{		loginForm: FormGroup;
-		email:any;
-		password:any;
-		constructor(private formBuilder: FormBuilder)
-		{
-			this.loginForm = this.createLoginForm();
-		}
+{
+	loginForm: FormGroup;
+	email:any;
+	password:any;
+	
+	constructor(private formBuilder: FormBuilder)
+	{
+		this.loginForm = this.createLoginForm();
+	}
 
 	ngOnInit()
 	{
