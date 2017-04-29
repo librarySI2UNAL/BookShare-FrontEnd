@@ -3,7 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
-import { AgmCoreModule } from "angular2-google-maps/core";
+import { AgmCoreModule } from "@agm/core";
 import { FileUploadModule } from "ng2-file-upload";
 
 import { AppComponent } from "./app.component";

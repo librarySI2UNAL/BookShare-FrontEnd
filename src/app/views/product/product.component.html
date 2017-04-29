@@ -41,7 +41,7 @@
 								<label>Género</label>
 								<span *ngIf = "mode === 'view'">{{ product.productItem.genre.name }}</span>
 								<div *ngIf = "mode !== 'view'">
-									<input class = "form-control" formControlName = "genre" [(ngModel)] = "product.productItem.genre.name" [typeahead] = "genres" typeaheadOptionField = "name">
+									<!--<input class = "form-control" formControlName = "genre" [(ngModel)] = "product.productItem.genre.name" [typeahead] = "genres" typeaheadOptionField = "name">-->
 
 									<div *ngIf = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid" class = "alert alert-danger">
 										<div [hidden] = "!productForm.controls.genre.errors.required">

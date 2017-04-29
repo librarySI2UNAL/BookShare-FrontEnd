@@ -24,7 +24,6 @@
     "@angular/platform-browser-dynamic": "^4.1.0",
     "@angular/platform-server": "^4.1.0",
     "@angular/router": "^4.1.0",
-    "angular2-google-maps": "^0.17.0",
     "core-js": "^2.4.1",
     "ng2-file-upload": "^1.2.1",
     "rxjs": "^5.3.0",
