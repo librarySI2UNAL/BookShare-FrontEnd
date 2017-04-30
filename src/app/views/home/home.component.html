@@ -1,0 +1,9 @@
+<div>
+	<swiper [config] = "swiperConfig">
+		<div class = "swiper-wrapper">
+			<img class = "swiper-slide custom-image-size" *ngFor = "let interest of interests" [src] = "interest">
+		</div>
+
+		<div class = "swiper-pagination"></div>
+	</swiper>
+</div>
