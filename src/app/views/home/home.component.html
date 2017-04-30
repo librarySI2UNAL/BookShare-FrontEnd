@@ -1,5 +1,5 @@
 <div>
-	<swiper [config] = "swiperConfig">
+	<swiper *ngIf = "showSwiper" [config] = "swiperConfig">
 		<div class = "swiper-wrapper">
 			<div *ngFor = "let interest of interests; let i = index" class = "swiper-slide custom-image-size" (click) = "selectInterest( i )">
 				<img [src] = "'assets/images/pencils.jpg'">

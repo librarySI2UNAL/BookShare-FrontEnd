@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit
 {
 	swiperConfig: any;
 	interests: Array<Interest>;
+	showSwiper: boolean;
 
 	constructor( private productService: ProductService )
 	{
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit
 				slideShadows : true
 			}
 		};
+		this.showSwiper = false;
 	}
 
 	private selectInterest( index: number )
@@ -46,7 +48,7 @@ export class HomeComponent implements OnInit
 			.subscribe( interests =>
 			{
 				this.interests = interests;
-				console.log( this.interests );
+				this.showSwiper = true;
 			} );
 	}
 }
