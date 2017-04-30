@@ -35,13 +35,22 @@ export class AppComponent implements OnInit
 	{
 		return this.formBuilder.group(
 			{
-				email: ["", [Validators.required, Validators.email]],
+				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )]],
 				password: ["", [Validators.required, Validators.minLength( 8 )]]
 			} );
 	}
 
 	private showLogInModal( value: boolean ): void
 	{
+		if( !value )
+		{
+			this.credentials = {
+				email: "",
+				password: ""
+			};
+			this.logInForm.markAsPristine();
+			this.logInForm.markAsUntouched();
+		}
 		this.showLogIn = value;
 		this.submitted = false;
 	}
