@@ -1,25 +1,12 @@
-<!--inicio contenido-->
-
-	<div class="content">
-		<div class="container" >
-			<div class="content-top">
-				<div class="content-top1">
-				<div class = "col-md-10 col-md-offset-1	 custom-display-grid">
-						<div class="col-md1"  *ngFor = "let product of products">
-							<a [routerLink] = "['/product', product.id, 'view']">
-								<img class="img-responsive" src = "http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg">
-								</a>
-									<div class="info">
-
-									<h2> <b>Título:</b> {{ product.productItem.book.name }}</h2>
-									<h2> <b>Autor: </b> {{ product.productItem.book.author }}</h2>
-									<h2><b>Año de Publicación: </b>{{ product.productItem.book.yearOfPublication }}</h2>
-
-									<div class="price">
-									<a class = "item_add" [routerLink] = "['/product', product.id, 'view']">Ver más</a> </div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+<div>
+	<div class = "card" *ngFor = "let product of products">
+		<div class = "card-img">
+			<img src = "...">
 		</div>
+		<div class = "card-block">
+			<p class = "card-text">
+				{{ product.value }}
+			</p>
+		</div>
+	</div>
+</div>
