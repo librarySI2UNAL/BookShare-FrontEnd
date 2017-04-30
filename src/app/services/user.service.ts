@@ -11,11 +11,10 @@ import { AppSettings } from "../app.settings";
 export class UserService
 {
 	private user: User;
-	private headers: Headers;
 
 	constructor( private http: Http )
 	{
-		this.headers = new Headers( { "Content-Type": "application/json", "Accept": "application/json" } );
+		
 	}
 
 	// Getters
@@ -25,8 +24,8 @@ export class UserService
 		if( user )
 		{
 			this.user = JSON.parse( user );
-			if( !this.headers.get( "Authorization" ) )
-				this.headers.append( "Authorization", this.user.token );
+			if( !AppSettings.HEADERS.get( "Authorization" ) )
+				AppSettings.HEADERS.append( "Authorization", this.user.token );
 		}
 		else
 			this.user = new User( {} );
@@ -54,7 +53,7 @@ export class UserService
 
 	public logIn( credentials: any ): Promise<any>
 	{
-		return this.http.post( `${AppSettings.API_ENDPOINT}/login`, credentials, { headers: this.headers } ).toPromise()
+		return this.http.post( `${AppSettings.API_ENDPOINT}/login`, credentials, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
@@ -73,7 +72,7 @@ export class UserService
 		userAux.password = password;
 		userAux.last_name = user.lastName;
 		delete userAux.lastName;
-		return this.http.post( `${AppSettings.API_ENDPOINT}/users`, { data: userAux }, { headers: this.headers } ).toPromise()
+		return this.http.post( `${AppSettings.API_ENDPOINT}/users`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
@@ -82,7 +81,7 @@ export class UserService
 	{
 		let userAux: any = Object.assign( {}, user );
 		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
-		return this.http.put( `${AppSettings.API_ENDPOINT}/users/${user.id}`, { data: userAux }, { headers: this.headers } ).toPromise()
+		return this.http.put( `${AppSettings.API_ENDPOINT}/users/${user.id}`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}

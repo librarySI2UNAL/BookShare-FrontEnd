@@ -1,3 +1,5 @@
+import { Headers } from "@angular/http";
+
 export class AppSettings
 {
 	public static SERVER: string = "http://localhost:3000";
@@ -7,4 +9,5 @@ export class AppSettings
 		products: false,
 		signUp: false
 	};
+	public static HEADERS: Headers = new Headers( { "Content-Type": "application/json", "Accept": "application/json" } );
 }
