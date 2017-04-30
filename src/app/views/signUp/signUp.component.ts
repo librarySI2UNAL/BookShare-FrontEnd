@@ -46,7 +46,7 @@ export class SignUpComponent implements OnInit
 			confirmation: ""
 		};
 		this.signUpForm = this.createSignUpForm();
-		this.user = new User( {} );
+		this.user = this.userService.getUser();
 		this.submitted = false;
 		this.registeredUser = false;
 		this.hasPhoto = false;

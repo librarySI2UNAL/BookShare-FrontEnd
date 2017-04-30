@@ -6,7 +6,7 @@
 	</div>
 	<div class = "header-nav">
 		<a routerLink = "/home" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.home }">Inicio</a>
-		<a routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
+		<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
 	</div>
 	<form class = "search">
 		<label>
@@ -14,7 +14,7 @@
 		</label>
 	</form>
 	<div class = "header-actions">
-		<div>
+		<div *ngIf = "!user.token">
 			<a routerLink = "/sign-up" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.signUp }">
 				Regístrate
 			</a>
@@ -22,14 +22,14 @@
 				Ingresa
 			</a>
 		</div>
-		<clr-dropdown clrMenuPosition = "bottom-right">
-			<button class = "nav-icon" clrDropdownToggle>
-				<clr-icon shape = "user"></clr-icon>
+		<clr-dropdown *ngIf = "user.token" clrMenuPosition = "bottom-right">
+			<button class = "nav-text" clrDropdownToggle>
+				{{ user.name }} {{ user.lastName }}
 				<clr-icon shape = "caret down"></clr-icon>
 			</button>
 			<clr-dropdown-menu>
 				<a href = "..." clrDropdownItem>Perfil</a>
-				<a href = "..." clrDropdownItem>Salir</a>
+				<a clrDropdownItem (click) = "logOut()">Salir</a>
 			</clr-dropdown-menu>
 		</clr-dropdown>
 		<clr-dropdown clrMenuPosition="bottom-right">
@@ -46,6 +46,13 @@
 <clr-modal [(clrModalOpen)] = "showLogIn" [clrModalClosable] = "false">
 	<h3 class = "modal-title">Ingresa</h3>
 	<div class = "modal-body custom-overflow-visible">
+		<div *ngIf = "logInError" class = "alert alert-danger">
+			<div class = "alert-item">
+				<span class = "alert-text">
+					{{ logInErrorMessage }}
+				</span>
+			</div>
+		</div>
 		<div *ngIf = "!loading">
 			<form [formGroup] = "logInForm">
 				<div class = "form-group">
@@ -58,6 +65,9 @@
 							</div>
 							<div [hidden] = "logInForm.controls.email.errors && !logInForm.controls.email.errors.pattern">
 								El correo electrónico no es válido
+							</div>
+							<div [hidden] = "logInForm.controls.email.errors && !logInForm.controls.email.errors.emailDoesNotExist">
+								Esta cuenta no se encuentra registrada
 							</div>
 						</span>
 					</label>
