@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
 import { Interest } from "../../classes/interest";
+import { LoaderComponent } from "../loader/loader.component";
 
 import { ProductService } from "../../services/product.service";
+import { LoaderService } from "../../services/loader.service";
 import { AppSettings } from "../../app.settings";
 
 @Component(
@@ -19,7 +21,8 @@ export class HomeComponent implements OnInit
 	showSwiper: boolean;
 	interests: Array<Interest>;
 
-	constructor( private productService: ProductService )
+	constructor( private productService: ProductService,
+		private loaderService: LoaderService )
 	{
 		this.swiperConfig = {
 			pagination: ".swiper-pagination",
@@ -48,11 +51,14 @@ export class HomeComponent implements OnInit
 		for( let view in AppSettings.ACTIVES )
 			AppSettings.ACTIVES[view] = false;
 		AppSettings.ACTIVES.home = true;
+		
+		this.loaderService.show();
 		this.productService.getInterests()
 			.subscribe( interests =>
 			{
 				this.interests = interests;
 				this.showSwiper = true;
+				this.loaderService.hide();
 			} );
 	}
 }

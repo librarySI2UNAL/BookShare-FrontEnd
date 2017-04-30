@@ -18,10 +18,12 @@ import { SignUpComponent } from "./views/signUp/signUp.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ProductComponent }	from "./views/product/product.component";
 import { NearProductsComponent } from "./views/nearProducts/nearProducts.component";
+import { LoaderComponent } from "./views/loader/loader.component";
 
 import { UserService } from "./services/user.service";
 import { ProductService } from "./services/product.service";
 import { PhotoService } from "./services/photo.service";
+import { LoaderService } from "./services/loader.service";
 
 import { AppRoutingModule } from "./app.routes";
 
@@ -36,7 +38,8 @@ import { AppRoutingModule } from "./app.routes";
 		SignUpComponent,
 		ProfileComponent,
 		ProductComponent,
-		NearProductsComponent
+		NearProductsComponent,
+		LoaderComponent
 	],
 	imports: [
 		AppRoutingModule,
@@ -56,7 +59,8 @@ import { AppRoutingModule } from "./app.routes";
 	providers: [
 		UserService,
 		ProductService,
-		PhotoService
+		PhotoService,
+		LoaderService
 	],
 	bootstrap: [
 		AppComponent
