@@ -3,6 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
+import { ClarityModule } from "clarity-angular";
 import { AgmCoreModule } from "@agm/core";
 import { FileUploadModule } from "ng2-file-upload";
 
@@ -41,6 +42,7 @@ import { AppRoutingModule } from "./app.routes";
 		FormsModule,
 		ReactiveFormsModule,
 		HttpModule,
+		ClarityModule.forRoot(),
 		FileUploadModule,
 		AgmCoreModule.forRoot(
 		{

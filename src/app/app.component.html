@@ -1,39 +1,47 @@
-<!--INICIO del header---->
-<div class="header-top">
-  <div class="container">
-    {{title}}
-    <div class="col-sm-4 world"></div>
-      <div class="col-sm-4 logo">
-        <a href="index.html"><img src="assets/images/logo.png" alt=""></a>
-      </div>
-
-    <!--Menu de registro e inicio de secion -->
-      <div class="col-sm-3 top-footer1">
-        <p class="log"><a routerLink="/log-in" routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-        <p class="log"><a routerLink="/sign-up"  routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Sign Up</a>				<div class="clearfix"> </div>
-      </div>
-      <div class="clearfix"> </div>
-  </div>
-</div>
-
-  <div class="container">
-    <div class="head-top">
-      <div class="col-sm-2 number">	</div>
-
-
-     <div class="col-sm-8 h_menu4"><!--Menu Principal -->
-        <ul class="memenu yellow">
-          <li class=" grid"><a routerLink="/home"   routerLinkActive="active">Home</a></li>
-          <li class="grid"><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
-          <!---llamada a la Ruta "//availprod"---->
-          <li><a routerLink="/products" routerLinkActive="active">All Products</a></li>
-          <!---llamada a la Ruta "/contactus"---->
-          <li>	<a routerLink="/contact-us"   routerLinkActive="active">Contact Us</a></li>
-          <li>	<a routerLink="/near-products" routerLinkActive="active">Productos Cerca</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-<router-outlet></router-outlet>
-  <!--Fin del header---->
+<header class = "header-6">
+	<div class = "branding">
+		<a href = "..." class = "nav-link">
+			<img class = "custom-image-48" src = "assets/images/logo2.png"/>
+			<span class = "title">BookShare</span>
+		</a>
+	</div>
+	<div class = "header-nav">
+		<a href = "..." class = "active nav-link nav-text">Inicio</a>
+		<a href = "..." class = "nav-link nav-text">Productos disponibles</a>
+	</div>
+	<form class = "search">
+        <label>
+            <input class = "custom-width-200" type = "text" placeholder = "Busca libros o colecciones">
+        </label>
+    </form>
+	<div class = "header-actions">
+		<div>
+			<a href = "..." class = "nav-link nav-text">
+				Regístrate
+			</a>
+			<a href = "..." class = "nav-link nav-text">
+				Ingresa
+			</a>
+		</div>
+		<clr-dropdown clrMenuPosition = "bottom-right">
+			<button class = "nav-icon" clrDropdownToggle>
+				<clr-icon shape = "user"></clr-icon>
+				<clr-icon shape = "caret down"></clr-icon>
+			</button>
+			<clr-dropdown-menu>
+				<a href = "..." clrDropdownItem>Perfil</a>
+				<a href = "..." clrDropdownItem>Salir</a>
+			</clr-dropdown-menu>
+		</clr-dropdown>
+		<clr-dropdown clrMenuPosition="bottom-right">
+			<button class="nav-icon" clrDropdownToggle>
+				<clr-icon shape="cog"></clr-icon>
+				<clr-icon shape="caret down"></clr-icon>
+			</button>
+			<clr-dropdown-menu>
+				<a href="..." clrDropdownItem>Contáctenos</a>
+			</clr-dropdown-menu>
+		</clr-dropdown>
+	</div>
+</header>
 <router-outlet></router-outlet>
