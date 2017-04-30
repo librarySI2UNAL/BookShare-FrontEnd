@@ -7,21 +7,26 @@ sign-up
 		@include border-radius( 0px );
 	}
 
+	.custom-width-100
+	{
+		width: 100%;
+	}
+
 	.custom-profile-image
 	{
 		width: 256px;
 		heigth: 256px;
 	}
 
-	.custom-white-background
+	.custom-none-background
 	{
-		background-color: white;
+		background-image: none;
 	}
 
 	.custom-display-grid
 	{
 		display: grid;
-		grid-template-columns: 25% 25% 25% 25%;
+		grid-template-columns: 23% 23% 23% 23%;
 	}
 
 	.custom-cursor-pointer

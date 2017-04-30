@@ -11,16 +11,24 @@ import { AppSettings } from "../app.settings";
 export class UserService
 {
 	private user: User;
-	private headers: Headers;
 
 	constructor( private http: Http )
 	{
-		this.headers = new Headers( { "Content-Type": "application/json" } );
+		
 	}
 
 	// Getters
 	public getUser(): User
 	{
+		let user: any = localStorage.getItem( "user" );
+		if( user )
+		{
+			this.user = JSON.parse( user );
+			if( !AppSettings.HEADERS.get( "Authorization" ) )
+				AppSettings.HEADERS.append( "Authorization", this.user.token );
+		}
+		else
+			this.user = new User( {} );
 		return this.user;
 	}
 
@@ -28,6 +36,12 @@ export class UserService
 	public setUser( user: User ): void
 	{
 		this.user = user;
+		localStorage.setItem( "user", JSON.stringify( this.user ) );
+	}
+
+	public logOut(): void
+	{
+		localStorage.removeItem( "user" );
 	}
 
 	// Handle errors
@@ -37,10 +51,10 @@ export class UserService
 		return Promise.reject( error.message || error );
 	}
 
-	public login( credentials: any ): Promise<any>
+	public logIn( credentials: any ): Promise<any>
 	{
-		return this.http.post( `${AppSettings.API_ENDPOINT}/login`, { data: credentials }, { headers: this.headers } ).toPromise()
-			.then( response => response.json().data )
+		return this.http.post( `${AppSettings.API_ENDPOINT}/login`, credentials, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json() )
 			.catch( this.handleError );
 	}
 
@@ -58,7 +72,7 @@ export class UserService
 		userAux.password = password;
 		userAux.last_name = user.lastName;
 		delete userAux.lastName;
-		return this.http.post( `${AppSettings.API_ENDPOINT}/users`, { data: userAux }, { headers: this.headers } ).toPromise()
+		return this.http.post( `${AppSettings.API_ENDPOINT}/users`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
@@ -67,7 +81,7 @@ export class UserService
 	{
 		let userAux: any = Object.assign( {}, user );
 		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
-		return this.http.put( `${AppSettings.API_ENDPOINT}/users/${user.id}`, { data: userAux }, { headers: this.headers } ).toPromise()
+		return this.http.put( `${AppSettings.API_ENDPOINT}/users/${user.id}`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}

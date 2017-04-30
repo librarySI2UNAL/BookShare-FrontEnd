@@ -20,8 +20,7 @@ import { AppSettings } from "../../app.settings";
 } )
 
 export class SignUpComponent implements OnInit
-{ title: "Ingresa";
-
+{
 	uploader: FileUploader;
 	signUpForm: FormGroup;
 	user: User;
@@ -47,7 +46,7 @@ export class SignUpComponent implements OnInit
 			confirmation: ""
 		};
 		this.signUpForm = this.createSignUpForm();
-		this.user = new User( {} );
+		this.user = this.userService.getUser();
 		this.submitted = false;
 		this.registeredUser = false;
 		this.hasPhoto = false;
@@ -210,6 +209,9 @@ export class SignUpComponent implements OnInit
 
 	public ngOnInit()
 	{
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+		AppSettings.ACTIVES.signUp = true;
 		this.productService.getInterests()
 			.subscribe( interests =>
 			{

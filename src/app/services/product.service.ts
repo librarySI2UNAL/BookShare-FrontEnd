@@ -15,7 +15,6 @@ import { UserService } from "./user.service";
 @Injectable()
 export class ProductService
 {
-	private headers: Headers;
 	private productsURL: string;
 	private usersURL: string;
 	private genresURL: string;
@@ -24,7 +23,6 @@ export class ProductService
 	constructor( private http: Http,
 		private userService: UserService )
 	{
-		this.headers = new Headers( { "Content-Type": "application/json" } );
 		this.productsURL = `${AppSettings.API_ENDPOINT}/products`;
 		this.usersURL = `${AppSettings.API_ENDPOINT}/users`;
 		this.genresURL = `${AppSettings.API_ENDPOINT}/genres`;
@@ -71,7 +69,7 @@ export class ProductService
 
 	availables( page: number, perPage: number ): Observable<any>
 	{
-		return this.http.get( `${this.productsURL}?page=${page}&per_page=${perPage}` )
+		return this.http.get( `${this.productsURL}?page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
 			.map( ( r: Response ) => r.json() )
 			.catch( this.handleError );
 	}
@@ -93,7 +91,7 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
-		return this.http.post( `${this.usersURL}/1/products`, { data: productAux }, { headers: this.headers } ).toPromise()
+		return this.http.post( `${this.usersURL}/1/products`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
@@ -108,7 +106,7 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
-		return this.http.put( `${this.usersURL}/1/products/${id}`, { data: productAux }, { headers: this.headers } ).toPromise()
+		return this.http.put( `${this.usersURL}/1/products/${id}`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}

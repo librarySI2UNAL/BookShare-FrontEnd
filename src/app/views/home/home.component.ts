@@ -1,5 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
+import { Interest } from "../../classes/interest";
+import { LoaderComponent } from "../loader/loader.component";
+
+import { ProductService } from "../../services/product.service";
+import { LoaderService } from "../../services/loader.service";
+import { AppSettings } from "../../app.settings";
+
 @Component(
 {
 	selector: "home",
@@ -10,13 +17,48 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
 export class HomeComponent implements OnInit
 {
-	constructor()
-	{
+	swiperConfig: any;
+	showSwiper: boolean;
+	interests: Array<Interest>;
 
+	constructor( private productService: ProductService,
+		private loaderService: LoaderService )
+	{
+		this.swiperConfig = {
+			pagination: ".swiper-pagination",
+			effect: "coverflow",
+			grabCursor: true,
+			centeredSlides: true,
+			slidesPerView: "auto",
+			coverflow: {
+				rotate: 50,
+				stretch: 0,
+				depth: 100,
+				modifier: 1,
+				slideShadows : true
+			}
+		};
+		this.showSwiper = false;
+	}
+
+	private selectInterest( index: number )
+	{
+		console.log( index );
 	}
 
 	ngOnInit()
 	{
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+		AppSettings.ACTIVES.home = true;
 		
+		this.loaderService.show();
+		this.productService.getInterests()
+			.subscribe( interests =>
+			{
+				this.interests = interests;
+				this.showSwiper = true;
+				this.loaderService.hide();
+			} );
 	}
 }

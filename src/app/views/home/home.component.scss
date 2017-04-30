@@ -1,4 +1,35 @@
 home
 {
-	
+	swiper
+	{
+    	height: 300px;
+
+    	.custom-image-size
+    	{
+    		width: 640px;
+    		height: 427px;
+    	}
+
+		.custom-over
+		{
+			position: absolute;
+			background-color: transparent;
+			height: 100%;
+			width: 100%;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+
+		.custom-over-text
+		{
+			color: white;
+			font-size: 20px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
 }

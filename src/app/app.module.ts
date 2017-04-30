@@ -1,11 +1,13 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
-import { AlertModule } from "ngx-bootstrap";
-import { TypeaheadModule } from "ngx-bootstrap/typeahead";
+import { ClarityModule } from "clarity-angular";
+import { AgmCoreModule } from "@agm/core";
 import { FileUploadModule } from "ng2-file-upload";
+import { SwiperModule } from "angular2-useful-swiper";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -15,15 +17,15 @@ import { ProductsComponent } from "./views/products/products.component";
 import { SignUpComponent } from "./views/signUp/signUp.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ProductComponent }	from "./views/product/product.component";
+import { NearProductsComponent } from "./views/nearProducts/nearProducts.component";
+import { LoaderComponent } from "./views/loader/loader.component";
 
 import { UserService } from "./services/user.service";
 import { ProductService } from "./services/product.service";
 import { PhotoService } from "./services/photo.service";
+import { LoaderService } from "./services/loader.service";
 
 import { AppRoutingModule } from "./app.routes";
-
-import { NearProductsComponent } from './near-producs/near-producs.component';
-import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @NgModule(
 {
@@ -36,25 +38,29 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 		SignUpComponent,
 		ProfileComponent,
 		ProductComponent,
-		NearProductsComponent
+		NearProductsComponent,
+		LoaderComponent
 	],
 	imports: [
 		AppRoutingModule,
 		BrowserModule,
+		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule,
 		HttpModule,
+		ClarityModule.forRoot(),
 		FileUploadModule,
-		AlertModule.forRoot(),
-		TypeaheadModule.forRoot(),
-		AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg'
-    })
+		AgmCoreModule.forRoot(
+		{
+			apiKey: 'AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg'
+		} ),
+		SwiperModule
 	],
 	providers: [
 		UserService,
 		ProductService,
-		PhotoService
+		PhotoService,
+		LoaderService
 	],
 	bootstrap: [
 		AppComponent
