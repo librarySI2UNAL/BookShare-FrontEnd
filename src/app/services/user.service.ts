@@ -15,7 +15,7 @@ export class UserService
 
 	constructor( private http: Http )
 	{
-		this.headers = new Headers( { "Content-Type": "application/json" } );
+		this.headers = new Headers( { "Content-Type": "application/json", "Accept": "application/json" } );
 	}
 
 	// Getters
@@ -23,7 +23,11 @@ export class UserService
 	{
 		let user: any = localStorage.getItem( "user" );
 		if( user )
+		{
 			this.user = JSON.parse( user );
+			if( !this.headers.get( "Authorization" ) )
+				this.headers.append( "Authorization", this.user.token );
+		}
 		else
 			this.user = new User( {} );
 		return this.user;
