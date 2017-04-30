@@ -209,6 +209,9 @@ export class SignUpComponent implements OnInit
 
 	public ngOnInit()
 	{
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+		AppSettings.ACTIVES.signUp = true;
 		this.productService.getInterests()
 			.subscribe( interests =>
 			{

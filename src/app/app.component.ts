@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { AppSettings } from "./app.settings";
 
 @Component(
 {
@@ -6,7 +8,12 @@ import { Component } from "@angular/core";
 	templateUrl: "./app.component.html"
 } )
 
-export class AppComponent
+export class AppComponent implements OnInit
 {
-	
+	actives: any;
+
+	ngOnInit()
+	{
+		this.actives = AppSettings.ACTIVES;
+	}
 }

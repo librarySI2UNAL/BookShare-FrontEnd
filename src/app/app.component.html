@@ -1,12 +1,12 @@
 <header class = "header-6">
 	<div class = "branding">
-		<a href = "..." class = "nav-link">
+		<a routerLink = "/home" class = "nav-link">
 			<img class = "custom-image-48" src = "assets/images/Isologo_white.png"/>
 		</a>
 	</div>
 	<div class = "header-nav">
-		<a href = "..." class = "active nav-link nav-text">Inicio</a>
-		<a href = "..." class = "nav-link nav-text">Productos disponibles</a>
+		<a routerLink = "/home" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.home }">Inicio</a>
+		<a routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
 	</div>
 	<form class = "search">
         <label>
@@ -15,10 +15,10 @@
     </form>
 	<div class = "header-actions">
 		<div>
-			<a href = "..." class = "nav-link nav-text">
+			<a routerLink = "/sign-up" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.signUp }">
 				Regístrate
 			</a>
-			<a href = "..." class = "nav-link nav-text">
+			<a href = "" class = "nav-link nav-text">
 				Ingresa
 			</a>
 		</div>

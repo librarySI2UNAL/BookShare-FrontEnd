@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Interest } from "../../classes/interest";
 
 import { ProductService } from "../../services/product.service";
+import { AppSettings } from "../../app.settings";
 
 @Component(
 {
@@ -15,8 +16,8 @@ import { ProductService } from "../../services/product.service";
 export class HomeComponent implements OnInit
 {
 	swiperConfig: any;
-	interests: Array<Interest>;
 	showSwiper: boolean;
+	interests: Array<Interest>;
 
 	constructor( private productService: ProductService )
 	{
@@ -44,6 +45,9 @@ export class HomeComponent implements OnInit
 
 	ngOnInit()
 	{
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+		AppSettings.ACTIVES.home = true;
 		this.productService.getInterests()
 			.subscribe( interests =>
 			{
