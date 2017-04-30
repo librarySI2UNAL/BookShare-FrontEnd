@@ -9,16 +9,16 @@
 		<a routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
 	</div>
 	<form class = "search">
-        <label>
-            <input class = "custom-width-200" type = "text" placeholder = "Busca libros o colecciones">
-        </label>
-    </form>
+		<label>
+			<input class = "custom-width-200" type = "text" placeholder = "Busca libros o colecciones">
+		</label>
+	</form>
 	<div class = "header-actions">
 		<div>
 			<a routerLink = "/sign-up" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.signUp }">
 				Regístrate
 			</a>
-			<a href = "" class = "nav-link nav-text">
+			<a class = "nav-link nav-text" (click) = "showLogInModal( true )">
 				Ingresa
 			</a>
 		</div>
@@ -43,4 +43,52 @@
 		</clr-dropdown>
 	</div>
 </header>
+<clr-modal [(clrModalOpen)] = "showLogIn" [clrModalClosable] = "false">
+	<h3 class = "modal-title">Ingresa</h3>
+	<div class = "modal-body custom-overflow-visible">
+		<div *ngIf = "!loading">
+			<form [formGroup] = "logInForm">
+				<div class = "form-group">
+					<label>Correo electrónico</label>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.email.touched ) && logInForm.controls.email.invalid">
+						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "credentials.email"/>
+						<span class = "tooltip-content">
+							<div [hidden] = "logInForm.controls.email.errors && !logInForm.controls.email.errors.required">
+								El correo electrónico es requerido
+							</div>
+							<div [hidden] = "logInForm.controls.email.errors && !logInForm.controls.email.errors.email">
+								El correo electrónico no es válido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Contraseña</label>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.password.touched ) && logInForm.controls.password.invalid">
+						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "credentials.password"/>
+						<span class = "tooltip-content">
+							<div [hidden] = "logInForm.controls.password.errors && !logInForm.controls.password.errors.required">
+								La contraseña es requerida
+							</div>
+							<div [hidden] = "logInForm.controls.password.errors && !logInForm.controls.password.errors.minlength">
+								La contraseña debe tener al menos 8 caracteres
+							</div>
+						</span>
+					</label>
+				</div>
+			</form>
+		</div>
+		<div *ngIf = "loading" class = "progress loop">
+			<progress></progress>
+		</div>
+		<div *ngIf = "loading">
+			<span>Verificando credenciales...</span>
+		</div>
+	</div>
+	<div class = "modal-footer">
+		<button *ngIf = "!loading" class = "btn btn-outline" (click) = "showLogInModal( false )">Cancelar</button>
+		<button *ngIf = "!loading" class = "btn btn-primary" (click) = "logIn()">Ingresar</button>
+	</div>
+</clr-modal>
 <router-outlet></router-outlet>
