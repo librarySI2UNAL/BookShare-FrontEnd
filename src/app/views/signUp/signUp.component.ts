@@ -20,8 +20,7 @@ import { AppSettings } from "../../app.settings";
 } )
 
 export class SignUpComponent implements OnInit
-{ title: "Ingresa";
-
+{
 	uploader: FileUploader;
 	signUpForm: FormGroup;
 	user: User;

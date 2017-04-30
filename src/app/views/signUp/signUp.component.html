@@ -1,7 +1,6 @@
 <div class = "container custom-white-background">
 	<div>
-
-			<h1>Registro</h1>
+		<h1>Registro</h1>
 		<div class = "col-md-offset-4 col-md-4" *ngIf = "!registeredUser">
 			<form [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
 				<div class = "form-group" [ngClass] = "{ 'has-error': ( submitted || signUpForm.controls.email.touched ) && signUpForm.controls.email.invalid }">
@@ -101,7 +100,7 @@
 			<h3>Selecciona tus intereses</h3>
 			<div class = "custom-display-grid">
 				<a *ngFor = "let interest of interests; let i = index" class = "thumbnail custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">
-					<img src = "assets/images/pencils.jpg">
+					<img [src] = "'assets/images/pencils.jpg'">
 					<div class = "custom-over">
 						<div class = "custom-over-text">{{ interest.name }}</div>
 					</div>

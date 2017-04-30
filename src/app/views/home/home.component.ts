@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
+import { Interest } from "../../classes/interest";
+
+import { ProductService } from "../../services/product.service";
+
 @Component(
 {
 	selector: "home",
@@ -11,9 +15,9 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 export class HomeComponent implements OnInit
 {
 	swiperConfig: any;
-	interests: Array<string>;
+	interests: Array<Interest>;
 
-	constructor()
+	constructor( private productService: ProductService )
 	{
 		this.swiperConfig = {
 			pagination: ".swiper-pagination",
@@ -29,16 +33,20 @@ export class HomeComponent implements OnInit
 				slideShadows : true
 			}
 		};
-		this.interests = [
-			"assets/images/pencils.jpg",
-			"assets/images/pencils.jpg",
-			"assets/images/pencils.jpg",
-			"assets/images/pencils.jpg"
-		];
+	}
+
+	private selectInterest( index: number )
+	{
+		console.log( index );
 	}
 
 	ngOnInit()
 	{
-		
+		this.productService.getInterests()
+			.subscribe( interests =>
+			{
+				this.interests = interests;
+				console.log( this.interests );
+			} );
 	}
 }
