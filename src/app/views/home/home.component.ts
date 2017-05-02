@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit
 	swiperConfig: any;
 	showSwiper: boolean;
 	interests: Array<Interest>;
+	server: string;
 
 	constructor( private productService: ProductService,
 		private loaderService: LoaderService )
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit
 			}
 		};
 		this.showSwiper = false;
+		this.server = AppSettings.SERVER;
 	}
 
 	private selectInterest( index: number )
@@ -57,6 +59,7 @@ export class HomeComponent implements OnInit
 			.subscribe( interests =>
 			{
 				this.interests = interests;
+				console.log( this.interests );
 				this.showSwiper = true;
 				this.loaderService.hide();
 			} );
