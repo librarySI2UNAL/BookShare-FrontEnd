@@ -112,7 +112,7 @@
 			<h3>Selecciona tus intereses</h3>
 			<div class = "custom-display-grid">
 				<a *ngFor = "let interest of interests; let i = index" class = "card clickable card-img custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">
-					<img [src] = "'assets/images/pencils.jpg'">
+					<img [src] = "server + interest.photo.image.url">
 					<div class = "custom-over">
 						<div class = "custom-over-text">{{ interest.name }}</div>
 					</div>

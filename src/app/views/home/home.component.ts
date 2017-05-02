@@ -59,7 +59,6 @@ export class HomeComponent implements OnInit
 			.subscribe( interests =>
 			{
 				this.interests = interests;
-				console.log( this.interests );
 				this.showSwiper = true;
 				this.loaderService.hide();
 			} );

@@ -33,6 +33,7 @@ export class SignUpComponent implements OnInit
 	hasPhoto: boolean;
 	profileImage: string;
 	photosToRemove: Array<number>;
+	server: string;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -52,6 +53,7 @@ export class SignUpComponent implements OnInit
 		this.hasPhoto = false;
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 		this.photosToRemove = [];
+		this.server = AppSettings.SERVER;
 	}
 
 	private mismatch(): ValidatorFn
