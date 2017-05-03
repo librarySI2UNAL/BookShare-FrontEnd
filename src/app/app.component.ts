@@ -55,7 +55,7 @@ export class AppComponent implements OnInit
 							else
 								resolve( { emailDoesNotExist: true } );
 						} )
-						.catch( response =>
+						.catch( () =>
 						{
 							resolve( null );
 						} );
@@ -95,9 +95,9 @@ export class AppComponent implements OnInit
 			return;
 		this.loading = true;
 		this.userService.logIn( this.credentials )
-			.then( response =>
+			.then( user =>
 			{
-				this.user = new User( response );
+				this.user = new User( user );
 				this.userService.setUser( this.user );
 				this.logInError = false;
 				this.loading = false;
