@@ -5,9 +5,9 @@ import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-import { Product } from "../classes/product";
-import { Genre } from "../classes/genre";
-import { Interest } from "../classes/interest";
+import { Product } from "../models/product";
+import { Genre } from "../models/genre";
+import { Interest } from "../models/interest";
 import { AppSettings } from "../app.settings";
 
 import { UserService } from "./user.service";

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
-import { Interest } from "../../classes/interest";
+import { Interest } from "../../models/interest";
 import { LoaderComponent } from "../loader/loader.component";
 
 import { ProductService } from "../../services/product.service";

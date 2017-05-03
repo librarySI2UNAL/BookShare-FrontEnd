@@ -3,8 +3,8 @@ import { Headers, Http, Response } from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/catch";
 
-import { User } from "../classes/user";
-import { Interest } from "../classes/interest";
+import { User } from "../models/user";
+import { Interest } from "../models/interest";
 import { AppSettings } from "../app.settings";
 
 @Injectable()

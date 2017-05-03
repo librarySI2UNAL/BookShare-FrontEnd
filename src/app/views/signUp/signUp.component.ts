@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from
 import { Router } from "@angular/router";
 import { FileUploader } from "ng2-file-upload";
 
-import { User } from "../../classes/user";
-import { Interest } from "../../classes/interest";
+import { User } from "../../models/user";
+import { Interest } from "../../models/interest";
 
 import { UserService } from "../../services/user.service";
 import { ProductService } from "../../services/product.service";

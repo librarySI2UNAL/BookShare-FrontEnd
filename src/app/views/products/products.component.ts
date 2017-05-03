@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
-import { Product } from "../../classes/product";
+import { Product } from "../../models/product";
 
 import { ProductService } from "../../services/product.service";
 import { LoaderService } from "../../services/loader.service";
