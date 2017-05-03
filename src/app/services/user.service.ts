@@ -20,7 +20,7 @@ export class UserService
 	// Getters
 	public getUser(): User
 	{
-		let user: any = localStorage.getItem( "user" );
+		let user: any = sessionStorage.getItem( "user" );
 		if( user )
 		{
 			this.user = JSON.parse( user );
@@ -36,12 +36,12 @@ export class UserService
 	public setUser( user: User ): void
 	{
 		this.user = user;
-		localStorage.setItem( "user", JSON.stringify( this.user ) );
+		sessionStorage.setItem( "user", JSON.stringify( this.user ) );
 	}
 
 	public logOut(): void
 	{
-		localStorage.removeItem( "user" );
+		sessionStorage.removeItem( "user" );
 	}
 
 	// Handle errors
