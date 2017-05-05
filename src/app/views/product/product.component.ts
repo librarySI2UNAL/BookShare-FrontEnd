@@ -4,8 +4,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Product } from "../../models/product";
 import { Genre } from "../../models/genre";
+import { User } from "../../models/user";
 
 import { ProductService } from "../../services/product.service";
+import { UserService } from "../../services/user.service";
 
 @Component(
 {
@@ -17,6 +19,7 @@ import { ProductService } from "../../services/product.service";
 
 export class ProductComponent implements OnInit
 {
+	user: User;
 	productForm: FormGroup;
 	mode: string;
 	product: Product;
@@ -31,7 +34,8 @@ export class ProductComponent implements OnInit
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private productService: ProductService )
+		private productService: ProductService,
+		private userService: UserService )
 	{
 		this.product = new Product( {} );
 		this.genres = [];
@@ -90,24 +94,25 @@ export class ProductComponent implements OnInit
 		if( this.productForm.invalid )
 			return;
 		if( this.mode === "create" )
-			this.productService.create( this.product )
-				.then( data =>
+			this.productService.create( this.user.id, this.product )
+				.then( product =>
 				{
-					console.log( data );
+					this.product = new Product( product );
+					console.log( this.product );
 					
-					this.router.navigate( ["/products"] );
+					//this.router.navigate( ["/products"] );
 				} )
 				.catch( error =>
 				{
 					console.log( error );
 				} );
 		else
-			this.productService.update( this.product.id, this.product )
-				.then( data =>
+			this.productService.update( this.user.id, this.product.id, this.product )
+				.then( product =>
 				{
-					console.log( data );
+					this.product = new Product( product );
 					
-					this.router.navigate( ["/products"] );
+					//this.router.navigate( ["/products"] );
 				} )
 				.catch( error =>
 				{
@@ -117,39 +122,45 @@ export class ProductComponent implements OnInit
 
 	ngOnInit()
 	{
+		this.userService.userState
+			.subscribe( user =>
+			{
+				this.user = user;
+			} );
+		this.userService.getSessionStorageUser();
 		this.route.params.subscribe( params =>
 			{
-				if( Object.keys( params ).length === 0 )
+				if( Object.keys( params ).length > 1 )
+					this.router.navigate( ["/home"] );
+				else if( Object.keys( params ).length === 0 )
 				{
 					this.mode = "create";
 					this.product = new Product( {} );
 					this.product.available = true;
 					this.product.special = true;
 				}
-				else if( params["mode"] === "view" || params["mode"] === "edit" )
+				else
 				{
 					let id: number = +params["id"];
 					if( !id )
 						this.router.navigate( ["/home"] );
-					this.mode = params["mode"];
+					this.mode = "view";
 
 					this.productService.get( id )
-						.then( data =>
+						.then( product =>
 						{
-							this.product = new Product( data );
-							console.log( this.product );
+							this.product = new Product( product );
 						} )
 						.catch( error =>
 						{
 							console.log( error );
 						} );
 				}
-				else
-					this.router.navigate( ["/home"] );
 
 				this.productService.getGenres().subscribe( response =>
 					{
 						this.genres = response;
+						this.product.productItem.genre = this.genres[0];
 					} );
 			} );
 	}

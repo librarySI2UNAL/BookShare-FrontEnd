@@ -62,7 +62,7 @@ export class ProductService
 
 	getGenres(): Observable<Array<Genre>>
 	{
-		return this.http.get( `${this.genresURL}` )
+		return this.http.get( `${this.genresURL}`, { headers: AppSettings.HEADERS } )
 			.map( ( response: Response ) => response.json().data as Array<Genre> )
 			.catch( this.handleError );
 	}
@@ -76,12 +76,12 @@ export class ProductService
 
 	get( id: number ): Promise<any>
 	{
-		return this.http.get( `${this.productsURL}/${id}` ).toPromise()
+		return this.http.get( `${this.productsURL}/${id}`, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
 
-	create( product: Product ): Promise<any>
+	create( userId: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
 		productAux.product_item = product.productItem;
@@ -91,12 +91,12 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
-		return this.http.post( `${this.usersURL}/1/products`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
+		return this.http.post( `${this.usersURL}/${userId}/products`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
 
-	update( id: number, product: Product ): Promise<any>
+	update( userId: number, id: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
 		productAux.product_item = product.productItem;
@@ -106,7 +106,7 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
-		return this.http.put( `${this.usersURL}/1/products/${id}`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
+		return this.http.put( `${this.usersURL}/${userId}/products/${id}`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
