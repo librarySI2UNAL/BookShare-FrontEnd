@@ -62,7 +62,7 @@ export class ProductService
 
 	getGenres(): Observable<Array<Genre>>
 	{
-		return this.http.get( `${this.genresURL}` )
+		return this.http.get( `${this.genresURL}`, { headers: AppSettings.HEADERS } )
 			.map( ( response: Response ) => response.json().data as Array<Genre> )
 			.catch( this.handleError );
 	}

@@ -1,14 +1,4 @@
-@import "../../styles/mixins";
-
 product
 {
-	.form-control
-	{
-		@include border-radius( 0px );
-	}
 
-	.custom-white-background
-	{
-		background-color: white;
-	}
 }
