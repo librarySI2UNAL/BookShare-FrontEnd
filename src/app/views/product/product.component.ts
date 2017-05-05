@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Product } from "../../classes/product";
-import { Genre } from "../../classes/genre";
+import { Product } from "../../models/product";
+import { Genre } from "../../models/genre";
 
 import { ProductService } from "../../services/product.service";
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Router } from "@angular/router";
 
-import { User } from "./classes/user";
+import { User } from "./models/user";
 
 import { UserService } from "./services/user.service";
 import { AppSettings } from "./app.settings";
@@ -27,9 +27,9 @@ export class AppComponent implements OnInit
 
 	constructor( private userService: UserService,
 		private formBuilder: FormBuilder,
-		private router: Router, )
+		private router: Router )
 	{
-		this.user = this.userService.getUser();
+		this.user = new User( {} );
 		this.credentials = {
 			email: "",
 			password: ""
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit
 							else
 								resolve( { emailDoesNotExist: true } );
 						} )
-						.catch( response =>
+						.catch( () =>
 						{
 							resolve( null );
 						} );
@@ -95,10 +95,9 @@ export class AppComponent implements OnInit
 			return;
 		this.loading = true;
 		this.userService.logIn( this.credentials )
-			.then( response =>
+			.then( user =>
 			{
-				this.user = new User( response );
-				this.userService.setUser( this.user );
+				this.userService.setUser( new User( user ) );
 				this.logInError = false;
 				this.loading = false;
 				this.showLogInModal( false );
@@ -114,12 +113,17 @@ export class AppComponent implements OnInit
 	private logOut(): void
 	{
 		this.userService.logOut();
-		this.user = this.userService.getUser();
 		this.router.navigate( ["/home"] );
 	}
 
 	ngOnInit()
 	{
+		this.userService.userState
+			.subscribe( user =>
+			{
+				this.user = user;
+			} );
+		this.userService.getSessionStorageUser();
 		this.actives = AppSettings.ACTIVES;
 	}
 }

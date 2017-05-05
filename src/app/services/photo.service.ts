@@ -8,11 +8,9 @@ import { AppSettings } from "../app.settings";
 @Injectable()
 export class PhotoService
 {
-	private headers: Headers;
-
 	constructor( private http: Http )
 	{
-		this.headers = new Headers( { "Content-Type": "application/json" } );
+
 	}
 
 	// Handle errors
@@ -24,7 +22,7 @@ export class PhotoService
 
 	public deleteArray( ids: Array<number>, relation: string ): Promise<any>
 	{
-		return this.http.delete( `${AppSettings.API_ENDPOINT}/${relation}/photos?ids=${ids}`, { headers: this.headers } ).toPromise()
+		return this.http.delete( `${AppSettings.API_ENDPOINT}/${relation}/photos?ids=${ids}`, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}

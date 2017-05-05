@@ -11,7 +11,6 @@ import { SwiperModule } from "angular2-useful-swiper";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
-import { LogInComponent } from "./views/logIn/logIn.component";
 import { ContactUsComponent } from "./views/contactUs/contactUs.component";
 import { ProductsComponent } from "./views/products/products.component";
 import { SignUpComponent } from "./views/signUp/signUp.component";
@@ -32,7 +31,6 @@ import { AppRoutingModule } from "./app.routes";
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		LogInComponent,
 		ContactUsComponent,
 		ProductsComponent,
 		SignUpComponent,
@@ -52,7 +50,7 @@ import { AppRoutingModule } from "./app.routes";
 		FileUploadModule,
 		AgmCoreModule.forRoot(
 		{
-			apiKey: 'AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg'
+			apiKey: "AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg"
 		} ),
 		SwiperModule
 	],
