@@ -9,6 +9,7 @@ import { Interest } from "../../models/interest";
 import { UserService } from "../../services/user.service";
 import { ProductService } from "../../services/product.service";
 import { PhotoService } from "../../services/photo.service";
+import { LoaderService } from "../../services/loader.service";
 import { AppSettings } from "../../app.settings";
 
 @Component(
@@ -38,6 +39,7 @@ export class SignUpComponent implements OnInit
 	constructor( private userService: UserService,
 		private productService: ProductService,
 		private photoService: PhotoService,
+		private loaderService: LoaderService,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
@@ -121,6 +123,7 @@ export class SignUpComponent implements OnInit
 
 	private signUp(): void
 	{
+		this.loaderService.show();
 		this.submitted = true;
 		if( this.signUpForm.invalid )
 			return;
@@ -132,8 +135,10 @@ export class SignUpComponent implements OnInit
 					url: `${this.photoURL}/${this.user.id}/photos`,
 					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
 					maxFileSize: 5242880,
-					autoUpload: true
+					autoUpload: true,
+					authToken: this.user.token
 				} );
+				AppSettings.HEADERS.append( "Authorization", this.user.token );
 				this.uploader.onCompleteItem = ( fileItem, response, status, headers ) =>
 				{
 					let data: any;
@@ -147,9 +152,11 @@ export class SignUpComponent implements OnInit
 						console.log( response );
 				};
 				this.registeredUser = true;
+				this.loaderService.hide();
 			} )
 			.catch( error =>
 			{
+				this.loaderService.hide();
 				console.log( error );
 			} );
 	}
@@ -157,42 +164,34 @@ export class SignUpComponent implements OnInit
 	private skip(): void
 	{
 		if( this.photosToRemove.length > 0 )
-			this.photoService.deleteArray( this.photosToRemove, "users" )
-				.then( response =>
-				{
-
-				} )
-				.catch( response =>
-				{
-
-				} );
-		this.router.navigate( ["/profile"] );
+			this.photoService.deleteArray( this.photosToRemove, "users" );
+		this.router.navigate( ["/home"] );
 	}
 
 	private updateUser(): void
 	{
+		this.loaderService.show();
 		if( this.photosToRemove.length > 1 )
 		{
 			this.photosToRemove = this.photosToRemove.slice( 0, this.photosToRemove.length - 1 )
-			this.photoService.deleteArray( this.photosToRemove, "users" )
-				.then( response =>
-				{
-
-				} )
-				.catch( response =>
-				{
-
-				} );
+			this.photoService.deleteArray( this.photosToRemove, "users" );
+			this.router.navigate( ["/home"] );
 		}
 		if( this.user.interests.length > 0 )
 			this.userService.update( this.user )
-				.then( response =>
+				.then( user =>
 				{
-					this.router.navigate( ["/profile"] );
+					let token: string = this.user.token;
+					this.user = user;
+					this.user.token = token;
+					this.userService.setUser( this.user );
+					this.loaderService.hide();
+					this.router.navigate( ["/home"] );
 				} )
 				.catch( response =>
 				{
-
+					this.loaderService.hide();
+					console.log( response );
 				} );
 	}
 

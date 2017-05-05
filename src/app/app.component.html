@@ -59,15 +59,15 @@
 					<label>Correo electrónico</label>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.email.touched ) && logInForm.controls.email.invalid">
 						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "credentials.email"/>
-						<span class = "tooltip-content">
-							<div [hidden] = "logInForm.controls.email.errors && !logInForm.controls.email.errors.required">
+						<span *ngIf = "logInForm.controls.email.errors" class = "tooltip-content">
+							<div [hidden] = "!logInForm.controls.email.errors.required">
 								El correo electrónico es requerido
 							</div>
-							<div [hidden] = "logInForm.controls.email.errors && !logInForm.controls.email.errors.pattern">
+							<div [hidden] = "!logInForm.controls.email.errors.pattern">
 								El correo electrónico no es válido
 							</div>
-							<div [hidden] = "logInForm.controls.email.errors && !logInForm.controls.email.errors.emailDoesNotExist">
-								Esta cuenta no se encuentra registrada
+							<div [hidden] = "!logInForm.controls.email.errors.emailDoesNotExist">
+								Esta cuenta no se encuentra registrada. <a routerLink = "/sign-up">¿Desea iniciar registrarse?</a>
 							</div>
 						</span>
 					</label>
@@ -77,11 +77,11 @@
 					<label>Contraseña</label>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.password.touched ) && logInForm.controls.password.invalid">
 						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "credentials.password"/>
-						<span class = "tooltip-content">
-							<div [hidden] = "logInForm.controls.password.errors && !logInForm.controls.password.errors.required">
+						<span *ngIf = "logInForm.controls.password.errors" class = "tooltip-content">
+							<div [hidden] = "!logInForm.controls.password.errors.required">
 								La contraseña es requerida
 							</div>
-							<div [hidden] = "logInForm.controls.password.errors && !logInForm.controls.password.errors.minlength">
+							<div [hidden] = "!logInForm.controls.password.errors.minlength">
 								La contraseña debe tener al menos 8 caracteres
 							</div>
 						</span>
