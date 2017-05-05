@@ -27,9 +27,9 @@ export class AppComponent implements OnInit
 
 	constructor( private userService: UserService,
 		private formBuilder: FormBuilder,
-		private router: Router, )
+		private router: Router )
 	{
-		this.user = this.userService.getUser();
+		this.user = new User( {} );
 		this.credentials = {
 			email: "",
 			password: ""
@@ -97,8 +97,7 @@ export class AppComponent implements OnInit
 		this.userService.logIn( this.credentials )
 			.then( user =>
 			{
-				this.user = new User( user );
-				this.userService.setUser( this.user );
+				this.userService.setUser( new User( user ) );
 				this.logInError = false;
 				this.loading = false;
 				this.showLogInModal( false );
@@ -114,12 +113,17 @@ export class AppComponent implements OnInit
 	private logOut(): void
 	{
 		this.userService.logOut();
-		this.user = this.userService.getUser();
 		this.router.navigate( ["/home"] );
 	}
 
 	ngOnInit()
 	{
+		this.userService.userState
+			.subscribe( user =>
+			{
+				this.user = user;
+			} );
+		this.userService.getSessionStorageUser();
 		this.actives = AppSettings.ACTIVES;
 	}
 }

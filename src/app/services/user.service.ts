@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http, Response } from "@angular/http";
+import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/catch";
 
@@ -10,38 +12,43 @@ import { AppSettings } from "../app.settings";
 @Injectable()
 export class UserService
 {
-	private user: User;
+	private userSubject: Subject<User>;
+	public userState: Observable<User>;
 
 	constructor( private http: Http )
 	{
-		
+		this.userSubject = new Subject<User>();
+		this.userState = this.userSubject.asObservable();
 	}
 
 	// Getters
-	public getUser(): User
+	public getSessionStorageUser(): void
 	{
-		let user: any = sessionStorage.getItem( "user" );
-		if( user )
+		let userObject: any = sessionStorage.getItem( "user" );
+		let user: User;
+		if( userObject )
 		{
-			this.user = JSON.parse( user );
+			user = JSON.parse( userObject );
 			if( !AppSettings.HEADERS.get( "Authorization" ) )
-				AppSettings.HEADERS.append( "Authorization", this.user.token );
+				AppSettings.HEADERS.append( "Authorization", user.token );
 		}
 		else
-			this.user = new User( {} );
-		return this.user;
+			user = new User( {} );
+		this.setUser( user );
 	}
 
 	// Setters
 	public setUser( user: User ): void
 	{
-		this.user = user;
-		sessionStorage.setItem( "user", JSON.stringify( this.user ) );
+		this.userSubject.next( <User>user );
+		if( user.token )
+			sessionStorage.setItem( "user", JSON.stringify( user ) );
 	}
 
 	public logOut(): void
 	{
 		sessionStorage.removeItem( "user" );
+		this.setUser( new User( {} ) );
 	}
 
 	// Handle errors

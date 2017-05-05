@@ -43,13 +43,13 @@ export class SignUpComponent implements OnInit
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
+		this.user = new User( {} );
 		this.photoURL = `${AppSettings.API_ENDPOINT}/users`;
 		this.password = {
 			value: "",
 			confirmation: ""
 		};
 		this.signUpForm = this.createSignUpForm();
-		this.user = this.userService.getUser();
 		this.submitted = false;
 		this.registeredUser = false;
 		this.hasPhoto = false;
@@ -131,6 +131,7 @@ export class SignUpComponent implements OnInit
 			.then( data =>
 			{
 				this.user = new User( data );
+				this.userService.setUser( this.user );
 				this.uploader = new FileUploader( {
 					url: `${this.photoURL}/${this.user.id}/photos`,
 					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
@@ -181,10 +182,8 @@ export class SignUpComponent implements OnInit
 			this.userService.update( this.user )
 				.then( user =>
 				{
-					let token: string = this.user.token;
-					this.user = user;
-					this.user.token = token;
-					this.userService.setUser( this.user );
+					user.token = this.user.token;
+					this.userService.setUser( user );
 					this.loaderService.hide();
 					this.router.navigate( ["/home"] );
 				} )

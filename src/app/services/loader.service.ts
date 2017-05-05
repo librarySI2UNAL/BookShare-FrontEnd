@@ -7,8 +7,8 @@ import { LoaderState } from "../views/loader/loader.component";
 @Injectable()
 export class LoaderService
 {
-	loaderSubject: Subject<LoaderState>;
-	loaderState: Observable<LoaderState>;
+	private loaderSubject: Subject<LoaderState>;
+	public loaderState: Observable<LoaderState>;
 
 	constructor()
 	{
