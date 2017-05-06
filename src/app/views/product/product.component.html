@@ -1,7 +1,7 @@
 <div class = "row flex-items-xs-center">
 	<h1>Crea tu producto</h1>
 </div>
-<div *ngIf = "!createdProduct">
+<div *ngIf = "createdProduct">
 	<div class = "row flex-items-xs-center">
 		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
 		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
@@ -24,8 +24,13 @@
 			</div>
 		</section>
 	</div>
+
+	<div class = "row flex-items-xs-center">
+		<button class = "btn btn-link" routerLink = "/home">Saltar este paso</button>
+		<button class = "btn btn-primary" (click) = "updateProduct()">Aceptar</button>
+	</div>
 </div>
-<div *ngIf = "createdProduct">
+<div *ngIf = "!createdProduct">
 	<form [formGroup] = "productForm" (ngSubmit) = "save()">
 		<div class = "row">
 			<div class = "col-xs-6 offset-xs-1">

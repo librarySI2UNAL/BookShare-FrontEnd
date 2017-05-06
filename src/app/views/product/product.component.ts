@@ -67,15 +67,6 @@ export class ProductComponent implements OnInit
 		this.submitted = false;
 		this.createdProduct = false;
 		this.profileImages = [];
-		this.uploader = new FileUploader( {
-			url: `${this.photoURL}/photos`,
-			allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
-			maxFileSize: 5242880
-		} );
-		this.uploader.onAfterAddingFile = ( fileItem: FileItem ) =>
-		{
-			this.addPhoto();
-		};
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -133,6 +124,32 @@ export class ProductComponent implements OnInit
 		this.profileImages.push( e.target.result );
 	}
 
+	private updateProduct(): void
+	{
+		if( this.uploader.queue.length > 0 )
+		{
+			this.uploader.uploadAll();
+			this.router.navigate( ["/home"] );
+		}
+		if( this.product.description && this.product.description.length > 0 )
+		{
+			this.loaderService.show();
+			this.productService.update( this.user.id, this.product.id, this.product )
+				.then( product =>
+				{
+					this.loaderService.hide();
+					this.router.navigate( ["/home"] );
+					//this.router.navigate( ["/profile"] );
+				} )
+				.catch( error =>
+				{
+					this.loaderService.hide();
+					this.router.navigate( ["/home"] );
+					console.log( error );
+				} );
+		}
+	}
+
 	private save(): void
 	{
 		this.submitted = true;
@@ -151,6 +168,10 @@ export class ProductComponent implements OnInit
 						maxFileSize: 5242880,
 						authToken: this.user.token
 					} );
+					this.uploader.onAfterAddingFile = ( fileItem: FileItem ) =>
+					{
+						this.addPhoto();
+					};
 					this.loaderService.hide();
 				} )
 				.catch( error =>

@@ -20,7 +20,7 @@ export class Product
 		if( Object.keys( data ).length === 0 )
 		{
 			this.id = null;
-			this.description = null;
+			this.description = "";
 			this.special = null;
 			this.available = null;
 			this.cover = null;
