@@ -3,10 +3,18 @@
 </div>
 <div *ngIf = "!createdProduct">
 	<div class = "row flex-items-xs-center">
-		<button class = "btn">Agregar foto</button>
+		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
+		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
 	</div>
 
-	<br>
+	<div class = "row flex-items-xs-center">
+		<div *ngFor = "let profileImage of profileImages; let i = index">
+			<button class = "close" (click) = "deletePhoto( i )">
+				<clr-icon shape = "close"></clr-icon>
+			</button>
+			<img class = "img-thumbnail custom-product-image" [src] = "profileImage">
+		</div>
+	</div>
 
 	<div class = "row flex-items-xs-center">
 		<section class = "form-block">

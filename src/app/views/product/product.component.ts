@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FileUploader, FileItem } from "ng2-file-upload";
 
 import { Product } from "../../models/product";
 import { Genre } from "../../models/genre";
@@ -9,6 +10,7 @@ import { User } from "../../models/user";
 import { ProductService } from "../../services/product.service";
 import { UserService } from "../../services/user.service";
 import { LoaderService } from "../../services/loader.service";
+import { AppSettings } from "../../app.settings";
 
 @Component(
 {
@@ -20,6 +22,7 @@ import { LoaderService } from "../../services/loader.service";
 
 export class ProductComponent implements OnInit
 {
+	uploader: FileUploader;
 	user: User;
 	productForm: FormGroup;
 	mode: string;
@@ -32,6 +35,10 @@ export class ProductComponent implements OnInit
 	types: Array<string>;
 	submitted: boolean;
 	createdProduct: boolean;
+	photoURL: string;
+	profileImages: Array<string>;
+
+	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -40,6 +47,7 @@ export class ProductComponent implements OnInit
 		private userService: UserService,
 		private loaderService: LoaderService )
 	{
+		this.photoURL = `${AppSettings.API_ENDPOINT}/products`;
 		this.product = new Product( {} );
 		this.genres = [];
 		this.productForm = this.createProductForm();
@@ -58,6 +66,16 @@ export class ProductComponent implements OnInit
 		};
 		this.submitted = false;
 		this.createdProduct = false;
+		this.profileImages = [];
+		this.uploader = new FileUploader( {
+			url: `${this.photoURL}/photos`,
+			allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+			maxFileSize: 5242880
+		} );
+		this.uploader.onAfterAddingFile = ( fileItem: FileItem ) =>
+		{
+			this.addPhoto();
+		};
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -91,6 +109,30 @@ export class ProductComponent implements OnInit
 			} );
 	}
 
+	private showInputFileDialog( fileInput: any ): void
+	{
+		this.fileInput.nativeElement.click();
+	}
+
+	private addPhoto(): void
+	{
+		let fileReader: FileReader = new FileReader();
+
+		fileReader.onload = this.completeOnLoadPhoto.bind( this );
+		fileReader.readAsDataURL( this.uploader.queue[this.uploader.queue.length - 1]._file );
+	}
+
+	private deletePhoto( index: number ): void
+	{
+		this.profileImages.splice( index, 1 );
+		this.uploader.queue[index].remove();
+	}
+
+	private completeOnLoadPhoto( e: any ): void
+	{
+		this.profileImages.push( e.target.result );
+	}
+
 	private save(): void
 	{
 		this.submitted = true;
@@ -103,6 +145,12 @@ export class ProductComponent implements OnInit
 				{
 					this.product = new Product( product );
 					this.createdProduct = true;
+					this.uploader = new FileUploader( {
+						url: `${this.photoURL}/${this.product.id}/photos`,
+						allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+						maxFileSize: 5242880,
+						authToken: this.user.token
+					} );
 					this.loaderService.hide();
 				} )
 				.catch( error =>
