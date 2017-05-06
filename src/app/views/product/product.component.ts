@@ -8,6 +8,7 @@ import { User } from "../../models/user";
 
 import { ProductService } from "../../services/product.service";
 import { UserService } from "../../services/user.service";
+import { LoaderService } from "../../services/loader.service";
 
 @Component(
 {
@@ -30,12 +31,14 @@ export class ProductComponent implements OnInit
 	typeTexts: any;
 	types: Array<string>;
 	submitted: boolean;
+	createdProduct: boolean;
 
 	constructor( private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
 		private productService: ProductService,
-		private userService: UserService )
+		private userService: UserService,
+		private loaderService: LoaderService )
 	{
 		this.product = new Product( {} );
 		this.genres = [];
@@ -54,6 +57,7 @@ export class ProductComponent implements OnInit
 			collection: "Colección"
 		};
 		this.submitted = false;
+		this.createdProduct = false;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -74,7 +78,6 @@ export class ProductComponent implements OnInit
 		return this.formBuilder.group(
 			{
 				name: ["", [Validators.required]],
-				description: ["", [Validators.maxLength( 1000 )]],
 				cover: [null, [Validators.required]],
 				status: [null, [Validators.required]],
 				author: ["", [Validators.required]],
@@ -93,17 +96,18 @@ export class ProductComponent implements OnInit
 		this.submitted = true;
 		if( this.productForm.invalid )
 			return;
+		this.loaderService.show();
 		if( this.mode === "create" )
 			this.productService.create( this.user.id, this.product )
 				.then( product =>
 				{
 					this.product = new Product( product );
-					console.log( this.product );
-					
-					//this.router.navigate( ["/products"] );
+					this.createdProduct = true;
+					this.loaderService.hide();
 				} )
 				.catch( error =>
 				{
+					this.loaderService.hide();
 					console.log( error );
 				} );
 		else
@@ -111,11 +115,13 @@ export class ProductComponent implements OnInit
 				.then( product =>
 				{
 					this.product = new Product( product );
-					
-					//this.router.navigate( ["/products"] );
+					this.loaderService.hide();
+					this.router.navigate( ["/home"] );
+					//this.router.navigate( ["/profile"] );
 				} )
 				.catch( error =>
 				{
+					this.loaderService.hide();
 					console.log( error );
 				} );
 	}

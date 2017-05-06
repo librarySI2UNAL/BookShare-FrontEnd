@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { FileUploader } from "ng2-file-upload";
@@ -8,7 +8,6 @@ import { Interest } from "../../models/interest";
 
 import { UserService } from "../../services/user.service";
 import { ProductService } from "../../services/product.service";
-import { PhotoService } from "../../services/photo.service";
 import { LoaderService } from "../../services/loader.service";
 import { AppSettings } from "../../app.settings";
 
@@ -33,12 +32,12 @@ export class SignUpComponent implements OnInit
 	photoURL: string;
 	hasPhoto: boolean;
 	profileImage: string;
-	photosToRemove: Array<number>;
 	server: string;
+
+	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
-		private photoService: PhotoService,
 		private loaderService: LoaderService,
 		private router: Router,
 		private formBuilder: FormBuilder )
@@ -54,7 +53,6 @@ export class SignUpComponent implements OnInit
 		this.registeredUser = false;
 		this.hasPhoto = false;
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
-		this.photosToRemove = [];
 		this.server = AppSettings.SERVER;
 	}
 
@@ -116,9 +114,27 @@ export class SignUpComponent implements OnInit
 			this.user.interests.push( this.interests[index] );
 	}
 
+	private showInputFileDialog( fileInput: any ): void
+	{
+		this.fileInput.nativeElement.click();
+	}
+
 	private photoOver( e: boolean ): void
 	{
 		this.hasPhoto = e;
+	}
+
+	private updatePhoto(): void
+	{
+		let fileReader: FileReader = new FileReader();
+		
+		fileReader.onload = this.completeOnLoadPhoto.bind( this );
+		fileReader.readAsDataURL( this.uploader.queue[this.uploader.queue.length - 1]._file );
+	}
+
+	private completeOnLoadPhoto( e: any ): void
+	{
+		this.profileImage = e.target.result;
 	}
 
 	private signUp(): void
@@ -136,22 +152,9 @@ export class SignUpComponent implements OnInit
 					url: `${this.photoURL}/${this.user.id}/photos`,
 					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
 					maxFileSize: 5242880,
-					autoUpload: true,
 					authToken: this.user.token
 				} );
 				AppSettings.HEADERS.append( "Authorization", this.user.token );
-				this.uploader.onCompleteItem = ( fileItem, response, status, headers ) =>
-				{
-					let data: any;
-					if( status === 200 )
-					{
-						data = JSON.parse( response );
-						this.photosToRemove.push( data.photo.id );
-						this.profileImage = AppSettings.SERVER + data.photo.image.url;
-					}
-					else
-						console.log( response );
-				};
 				this.registeredUser = true;
 				this.loaderService.hide();
 			} )
@@ -162,23 +165,13 @@ export class SignUpComponent implements OnInit
 			} );
 	}
 
-	private skip(): void
-	{
-		if( this.photosToRemove.length > 0 )
-			this.photoService.deleteArray( this.photosToRemove, "users" );
-		this.router.navigate( ["/home"] );
-	}
-
 	private updateUser(): void
 	{
-		this.loaderService.show();
-		if( this.photosToRemove.length > 1 )
-		{
-			this.photosToRemove = this.photosToRemove.slice( 0, this.photosToRemove.length - 1 )
-			this.photoService.deleteArray( this.photosToRemove, "users" );
-			this.router.navigate( ["/home"] );
-		}
+		if( this.uploader.queue.length > 0 )
+			this.uploader.queue[this.uploader.queue.length - 1].upload();
 		if( this.user.interests.length > 0 )
+		{
+			this.loaderService.show();
 			this.userService.update( this.user )
 				.then( user =>
 				{
@@ -192,6 +185,9 @@ export class SignUpComponent implements OnInit
 					this.loaderService.hide();
 					console.log( response );
 				} );
+		}
+		else
+			this.router.navigate( ["/home"] );
 	}
 
 	private createSignUpForm(): FormGroup

@@ -96,15 +96,15 @@
 				</label>
 
 				<h3>Carga tu foto de perfil</h3>
-				<div class = "center-block" ng2FileDrop (fileOver) = "photoOver( $event )" [uploader] = "uploader">
+				<div class = "flex-items-xs-center custom-pointer" ng2FileDrop (fileOver) = "photoOver( $event )" [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
 					<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
+					<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 				</div>
-				<input type = "file" ng2FileSelect [uploader] = "uploader"/>
 
 				<br>
 				<br>
 
-				<a class = "signup" (click) = "skip()">Saltar este paso</a>
+				<button class = "btn btn-link" routerLink = "/home">Saltar este paso</button>
 				<button class = "btn btn-primary" (click) = "updateUser()">Aceptar</button>
 			</form>
 		</div>

@@ -21,7 +21,6 @@ import { LoaderComponent } from "./views/loader/loader.component";
 
 import { UserService } from "./services/user.service";
 import { ProductService } from "./services/product.service";
-import { PhotoService } from "./services/photo.service";
 import { LoaderService } from "./services/loader.service";
 
 import { AppRoutingModule } from "./app.routes";
@@ -57,7 +56,6 @@ import { AppRoutingModule } from "./app.routes";
 	providers: [
 		UserService,
 		ProductService,
-		PhotoService,
 		LoaderService
 	],
 	bootstrap: [

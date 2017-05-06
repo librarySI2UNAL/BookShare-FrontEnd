@@ -1,9 +1,23 @@
 <div class = "row flex-items-xs-center">
 	<h1>Crea tu producto</h1>
 </div>
-<div class = "row">
+<div *ngIf = "!createdProduct">
+	<div class = "row flex-items-xs-center">
+		<button class = "btn">Agregar foto</button>
+	</div>
+
+	<br>
+
+	<div class = "row flex-items-xs-center">
+		<section class = "form-block">
+			<div class = "form-group">
+				<label>¿Puedes darnos una descripción más detallada del producto?</label>
+				<textarea rows = "5" [(ngModel)] = "product.description"></textarea>
+			</div>
+		</section>
+	</div>
 </div>
-<div>
+<div *ngIf = "createdProduct">
 	<form [formGroup] = "productForm" (ngSubmit) = "save()">
 		<div class = "row">
 			<div class = "col-xs-6 offset-xs-1">
@@ -121,20 +135,6 @@
 						<span *ngIf = "productForm.controls.code.errors" class = "tooltip-content">
 							<div [hidden] = "!productForm.controls.code.errors.required">
 								El código es requerido
-							</div>
-						</span>
-					</label>
-				</div>
-
-				<div class = "form-group">
-					<label>Descripción</label>
-					<span *ngIf = "mode === 'view'">{{ product.description }}</span>
-					<label *ngIf = "mode !== 'view'">
-						<textarea rows = "5" formControlName = "description" [(ngModel)] = "product.description"></textarea>
-
-						<span *ngIf = "productForm.controls.description.errors" class = "tooltip-content">
-							<div [hidden] = "!productForm.controls.description.errors.maxlength">
-								La descripción sólo puede tener 1000 caracteres
 							</div>
 						</span>
 					</label>
