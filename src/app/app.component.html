@@ -28,8 +28,8 @@
 				<clr-icon shape = "caret down"></clr-icon>
 			</button>
 			<clr-dropdown-menu>
-				<a href = "..." clrDropdownItem>Perfil</a>
-				<a clrDropdownItem (click) = "logOut()">Salir</a>
+				<a routerLink = "/profile" clrDropdownItem>Perfil</a>
+				<a class = "custom-pointer" clrDropdownItem (click) = "logOut()">Salir</a>
 			</clr-dropdown-menu>
 		</clr-dropdown>
 		<clr-dropdown clrMenuPosition="bottom-right">

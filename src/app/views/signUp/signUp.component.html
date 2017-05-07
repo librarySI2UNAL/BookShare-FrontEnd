@@ -96,7 +96,7 @@
 				</label>
 
 				<h3>Carga tu foto de perfil</h3>
-				<div class = "flex-items-xs-center custom-pointer" ng2FileDrop (fileOver) = "photoOver( $event )" [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+				<div class = "flex-items-xs-center custom-pointer" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
 					<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
 					<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 				</div>

@@ -30,7 +30,6 @@ export class SignUpComponent implements OnInit
 	submitted: boolean;
 	registeredUser: boolean;
 	photoURL: string;
-	hasPhoto: boolean;
 	profileImage: string;
 	server: string;
 
@@ -51,7 +50,6 @@ export class SignUpComponent implements OnInit
 		this.signUpForm = this.createSignUpForm();
 		this.submitted = false;
 		this.registeredUser = false;
-		this.hasPhoto = false;
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 		this.server = AppSettings.SERVER;
 	}
@@ -117,11 +115,6 @@ export class SignUpComponent implements OnInit
 	private showInputFileDialog( fileInput: any ): void
 	{
 		this.fileInput.nativeElement.click();
-	}
-
-	private photoOver( e: boolean ): void
-	{
-		this.hasPhoto = e;
 	}
 
 	private updatePhoto(): void
