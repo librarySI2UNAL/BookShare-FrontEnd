@@ -89,7 +89,7 @@
 		</form>
 	</div>
 	<div *ngIf = "registeredUser" class = "row custom-width-100">
-		<div class = "col-md-5">
+		<div class = "col-xs-5">
 			<form class = "login">
 				<label class = "title">
 					Registro
@@ -108,7 +108,7 @@
 				<button class = "btn btn-primary" (click) = "updateUser()">Aceptar</button>
 			</form>
 		</div>
-		<div class = "col-md-7">
+		<div class = "col-xs-7">
 			<h3>Selecciona tus intereses</h3>
 			<div class = "custom-display-grid">
 				<a *ngFor = "let interest of interests; let i = index" class = "card clickable card-img custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">

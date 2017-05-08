@@ -1,0 +1,8 @@
+<div>
+	<div class = "row">
+		<div class = "col-xs-4 offset-xs-1 flex-items-xs-center" [ngClass] = "{ 'custom-pointer': edit }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+			<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
+			<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
+		</div>
+	</div>
+</div>

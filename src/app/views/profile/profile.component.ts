@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit
 	photoURL: string;
 	profileImage: string;
 	server: string;
+	edit: boolean;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -48,6 +49,7 @@ export class ProfileComponent implements OnInit
 		this.submitted = false;
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 		this.server = AppSettings.SERVER;
+		this.edit = false;
 	}
 
 	private mismatch(): ValidatorFn
@@ -103,6 +105,8 @@ export class ProfileComponent implements OnInit
 
 	private showInputFileDialog( fileInput: any ): void
 	{
+		if( !this.edit )
+			return;
 		this.fileInput.nativeElement.click();
 	}
 
@@ -150,7 +154,7 @@ export class ProfileComponent implements OnInit
 			.subscribe( user =>
 			{
 				this.user = user;
-				console.log( this.user );
+				this.profileImage = this.server + this.user.photo.image.url;
 			} );
 		this.userService.getSessionStorageUser();
 	}
