@@ -21,7 +21,6 @@ export class UserService
 		this.userState = this.userSubject.asObservable();
 	}
 
-	// Getters
 	public getSessionStorageUser(): void
 	{
 		let userObject: any = sessionStorage.getItem( "user" );
@@ -29,15 +28,14 @@ export class UserService
 		if( userObject )
 		{
 			user = JSON.parse( userObject );
-			if( !AppSettings.HEADERS.get( "Authorization" ) )
-				AppSettings.HEADERS.append( "Authorization", user.token );
+			if( AppSettings.HEADERS.has( "Authorization" ) )
+				AppSettings.HEADERS.set( "Authorization", user.token );
 		}
 		else
 			user = new User( {} );
 		this.setUser( user );
 	}
 
-	// Setters
 	public setUser( user: User ): void
 	{
 		this.userSubject.next( <User>user );

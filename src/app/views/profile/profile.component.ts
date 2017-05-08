@@ -91,7 +91,7 @@ export class ProfileComponent implements OnInit
 			}
 	}
 
-	private selectInterest( index: number ): void
+	private addInterest( index: number ): void
 	{
 		let exists: boolean = false;
 		for( let i = 0; i < this.user.interests.length; ++i )
@@ -103,6 +103,13 @@ export class ProfileComponent implements OnInit
 			}
 		if( !exists )
 			this.user.interests.push( this.interests[index] );
+	}
+
+	private selectInterest( index: number ): void
+	{
+		if( this.mode === "view" )
+			return;
+		this.addInterest( index );
 	}
 
 	private showInputFileDialog( fileInput: any ): void
@@ -142,6 +149,16 @@ export class ProfileComponent implements OnInit
 			} );
 	}
 
+	private markInterests()
+	{
+		if( !this.interests || !this.user )
+			return;
+		for( let i = 0; i < this.user.interests.length; ++i )
+			for( let j = 0; j < this.interests.length; ++j )
+				if( this.user.interests[i].id === this.interests[j].id )
+					this.addInterest( j );
+	}
+
 	public ngOnInit()
 	{
 		for( let view in AppSettings.ACTIVES )
@@ -150,12 +167,16 @@ export class ProfileComponent implements OnInit
 			.subscribe( interests =>
 			{
 				this.interests = interests;
+				this.markInterests();
 			} );
 		this.userService.userState
 			.subscribe( user =>
 			{
 				this.user = user;
-				this.profileImage = this.server + this.user.photo.image.url;
+				console.log( this.user );
+				if( this.user.photo )
+					this.profileImage = this.server + this.user.photo.image.url;
+				this.markInterests();
 			} );
 		this.userService.getSessionStorageUser();
 	}

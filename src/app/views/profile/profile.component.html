@@ -3,8 +3,8 @@
 		<h1>Perfil</h1>
 	</div>
 
-	<div class = "row">
-		<div class = "col-xs-4 offset-xs-1 flex-items-xs-center" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+	<div class = "row flex-items-xs-center">
+		<div class = "col-xs-4 offset-xs-1" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
 			<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
 			<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 		</div>
@@ -77,6 +77,20 @@
 					</label>
 				</div>
 			</form>
+		</div>
+	</div>
+
+	<div class = "row flex-items-xs-center">
+		<div class = "col-xs-10 offset-xs-1">
+			<h3>Intereses</h3>
+			<div class = "custom-display-grid">
+				<a *ngFor = "let interest of interests; let i = index" class = "card card-img" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0, 'clickable custom-pointer': mode !== 'view' }" (click) = "selectInterest( i )">
+					<img [src] = "server + interest.photo.image.url">
+					<div class = "custom-over">
+						<div class = "custom-over-text">{{ interest.name }}</div>
+					</div>
+				</a>
+			</div>
 		</div>
 	</div>
 </div>
