@@ -173,7 +173,6 @@ export class ProfileComponent implements OnInit
 			.subscribe( user =>
 			{
 				this.user = user;
-				console.log( this.user );
 				if( this.user.photo )
 					this.profileImage = this.server + this.user.photo.image.url;
 				this.markInterests();
