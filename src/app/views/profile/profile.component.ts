@@ -30,7 +30,8 @@ export class ProfileComponent implements OnInit
 	photoURL: string;
 	profileImage: string;
 	server: string;
-	edit: boolean;
+	mode: string;
+	ownProfile:  boolean;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -49,7 +50,8 @@ export class ProfileComponent implements OnInit
 		this.submitted = false;
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 		this.server = AppSettings.SERVER;
-		this.edit = false;
+		this.mode = "view";
+		this.ownProfile = false;
 	}
 
 	private mismatch(): ValidatorFn
@@ -105,7 +107,7 @@ export class ProfileComponent implements OnInit
 
 	private showInputFileDialog( fileInput: any ): void
 	{
-		if( !this.edit )
+		if( this.mode === "view" )
 			return;
 		this.fileInput.nativeElement.click();
 	}
@@ -136,8 +138,7 @@ export class ProfileComponent implements OnInit
 				lastName: ["", [Validators.required]],
 				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )],
 					[this.emailExists()]],
-				password: ["", [Validators.required, Validators.minLength( 8 )]],
-				passwordConfirmation: ["", [Validators.required, Validators.minLength( 8 ), this.mismatch()]]
+				city: ["", [Validators.required]]
 			} );
 	}
 
