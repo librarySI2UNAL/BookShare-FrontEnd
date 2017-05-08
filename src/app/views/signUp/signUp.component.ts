@@ -30,7 +30,6 @@ export class SignUpComponent implements OnInit
 	submitted: boolean;
 	registeredUser: boolean;
 	photoURL: string;
-	hasPhoto: boolean;
 	profileImage: string;
 	server: string;
 
@@ -51,7 +50,6 @@ export class SignUpComponent implements OnInit
 		this.signUpForm = this.createSignUpForm();
 		this.submitted = false;
 		this.registeredUser = false;
-		this.hasPhoto = false;
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 		this.server = AppSettings.SERVER;
 	}
@@ -119,11 +117,6 @@ export class SignUpComponent implements OnInit
 		this.fileInput.nativeElement.click();
 	}
 
-	private photoOver( e: boolean ): void
-	{
-		this.hasPhoto = e;
-	}
-
 	private updatePhoto(): void
 	{
 		let fileReader: FileReader = new FileReader();
@@ -154,7 +147,7 @@ export class SignUpComponent implements OnInit
 					maxFileSize: 5242880,
 					authToken: this.user.token
 				} );
-				AppSettings.HEADERS.append( "Authorization", this.user.token );
+				AppSettings.HEADERS.set( "Authorization", this.user.token );
 				this.registeredUser = true;
 				this.loaderService.hide();
 			} )
@@ -176,9 +169,12 @@ export class SignUpComponent implements OnInit
 				.then( user =>
 				{
 					user.token = this.user.token;
+					user.latitude = +user.latitude;
+					user.longitude = +user.longitude;
+					user.qualification = +user.qualification;
 					this.userService.setUser( user );
 					this.loaderService.hide();
-					this.router.navigate( ["/home"] );
+					this.router.navigate( ["/profile"] );
 				} )
 				.catch( response =>
 				{
@@ -187,7 +183,7 @@ export class SignUpComponent implements OnInit
 				} );
 		}
 		else
-			this.router.navigate( ["/home"] );
+			this.router.navigate( ["/profile"] );
 	}
 
 	private createSignUpForm(): FormGroup

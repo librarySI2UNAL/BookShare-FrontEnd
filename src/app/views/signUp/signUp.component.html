@@ -89,14 +89,14 @@
 		</form>
 	</div>
 	<div *ngIf = "registeredUser" class = "row custom-width-100">
-		<div class = "col-md-5">
+		<div class = "col-xs-5">
 			<form class = "login">
 				<label class = "title">
 					Registro
 				</label>
 
 				<h3>Carga tu foto de perfil</h3>
-				<div class = "flex-items-xs-center custom-pointer" ng2FileDrop (fileOver) = "photoOver( $event )" [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+				<div class = "flex-items-xs-center custom-pointer" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
 					<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
 					<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 				</div>
@@ -108,7 +108,7 @@
 				<button class = "btn btn-primary" (click) = "updateUser()">Aceptar</button>
 			</form>
 		</div>
-		<div class = "col-md-7">
+		<div class = "col-xs-7">
 			<h3>Selecciona tus intereses</h3>
 			<div class = "custom-display-grid">
 				<a *ngFor = "let interest of interests; let i = index" class = "card clickable card-img custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">

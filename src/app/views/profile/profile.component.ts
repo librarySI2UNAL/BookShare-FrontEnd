@@ -1,8 +1,15 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
+import { FileUploader } from "ng2-file-upload";
+
 import { User } from "../../models/user";
+import { Interest } from "../../models/interest";
+
 import { UserService } from "../../services/user.service";
+import { ProductService } from "../../services/product.service";
+import { LoaderService } from "../../services/loader.service";
+import { AppSettings } from "../../app.settings";
 
 @Component(
 {
@@ -12,28 +19,39 @@ import { UserService } from "../../services/user.service";
 	encapsulation: ViewEncapsulation.None
 } )
 
-export class ProfileComponent {
+export class ProfileComponent implements OnInit
+{
+	uploader: FileUploader;
 	profileForm: FormGroup;
 	user: User;
-	mode: string;
 	password: any;
-	position: any;
+	interests: Array<Interest>;
+	submitted: boolean;
+	photoURL: string;
+	profileImage: string;
+	server: string;
+	mode: string;
+	ownProfile:  boolean;
+
+	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
 	constructor( private userService: UserService,
-		private route: ActivatedRoute,
+		private productService: ProductService,
+		private loaderService: LoaderService,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
+		this.photoURL = `${AppSettings.API_ENDPOINT}/users`;
 		this.password = {
 			value: "",
 			confirmation: ""
 		};
 		this.profileForm = this.createProfileForm();
-		this.user = new User( {} );
-		this.position = {
-			latitude: 4.6482836,
-			longitude: -74.1256726
-		};
+		this.submitted = false;
+		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
+		this.server = AppSettings.SERVER;
+		this.mode = "view";
+		this.ownProfile = false;
 	}
 
 	private mismatch(): ValidatorFn
@@ -42,35 +60,81 @@ export class ProfileComponent {
 			{
 				let input: string = control.value;
 				let password: string = this.password.value;
-				let isValid: boolean = this.password.value !== input;
+				let isValid: boolean = password !== input;
 				if( isValid )
-					return { "mismatch": { password } }
+					return { mismatch: { password } }
 				else
 					return null;
 			};
 	}
 
-	private setPosition( position )
+	private emailExists(): ValidatorFn
 	{
-		this.position = position.coords;
+		return ( control: AbstractControl ): { [key: string]: any } =>
+			{
+				return new Promise( resolve =>
+				{
+					let input: string = control.value;
+					this.userService.existsWithEmail( input )
+						.then( data =>
+						{
+							if( data.exists )
+								resolve( { emailExists: true } );
+							else
+								resolve( null );
+						} )
+						.catch( response =>
+						{
+							resolve( null );
+						} );
+				} );
+			}
 	}
 
-	private profile()
+	private addInterest( index: number ): void
 	{
-		if( this.profileForm.invalid )
-		{
+		let exists: boolean = false;
+		for( let i = 0; i < this.user.interests.length; ++i )
+			if( this.user.interests[i].id === this.interests[index].id )
+			{
+				this.user.interests.splice( i, 1 );
+				exists = true;
+				break;
+			}
+		if( !exists )
+			this.user.interests.push( this.interests[index] );
+	}
+
+	private selectInterest( index: number ): void
+	{
+		if( this.mode === "view" )
 			return;
-		}
-		this.userService.create( this.user, this.password.value )
-			.then( data =>
-			{
-				this.user = new User( data );
-				this.router.navigate( ["/home"] );
-			} )
-			.catch( error =>
-			{
-				console.log( error );
-			} );
+		this.addInterest( index );
+	}
+
+	private showInputFileDialog( fileInput: any ): void
+	{
+		if( this.mode === "view" )
+			return;
+		this.fileInput.nativeElement.click();
+	}
+
+	private updatePhoto(): void
+	{
+		let fileReader: FileReader = new FileReader();
+		
+		fileReader.onload = this.completeOnLoadPhoto.bind( this );
+		fileReader.readAsDataURL( this.uploader.queue[this.uploader.queue.length - 1]._file );
+	}
+
+	private completeOnLoadPhoto( e: any ): void
+	{
+		this.profileImage = e.target.result;
+	}
+
+	private save(): void
+	{
+		
 	}
 
 	private createProfileForm(): FormGroup
@@ -79,41 +143,40 @@ export class ProfileComponent {
 			{
 				name: ["", [Validators.required]],
 				lastName: ["", [Validators.required]],
-				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )]]
+				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )],
+					[this.emailExists()]],
+				city: ["", [Validators.required]]
 			} );
+	}
+
+	private markInterests()
+	{
+		if( !this.interests || !this.user )
+			return;
+		for( let i = 0; i < this.user.interests.length; ++i )
+			for( let j = 0; j < this.interests.length; ++j )
+				if( this.user.interests[i].id === this.interests[j].id )
+					this.addInterest( j );
 	}
 
 	public ngOnInit()
 	{
-		this.user.qualification = 0.0;
-		this.user.interests = [];
-		if( navigator.geolocation )
-			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
-		this.user.latitude = this.position.latitude;
-		this.user.longitude = this.position.longitude;
-
-		this.route.params.subscribe( params =>
-		{
-			if( params["mode"] === "view" || params["mode"] === "edit" )
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+		this.productService.getInterests()
+			.subscribe( interests =>
 			{
-				let id: number = +params["id"];
-				if( !id )
-					this.router.navigate( ["/home"] );
-				this.mode = params["mode"];
-
-				this.userService.get( id )
-					.then( data =>
-					{
-						this.user = new User( data );
-						console.log( this.user );
-					} )
-					.catch( error =>
-					{
-						console.log( error );
-					} );
-			}
-			else
-				this.router.navigate( ["/home"] );
-		} );
+				this.interests = interests;
+				this.markInterests();
+			} );
+		this.userService.userState
+			.subscribe( user =>
+			{
+				this.user = user;
+				if( this.user.photo )
+					this.profileImage = this.server + this.user.photo.image.url;
+				this.markInterests();
+			} );
+		this.userService.getSessionStorageUser();
 	}
 }

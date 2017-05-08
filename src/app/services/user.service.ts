@@ -21,28 +21,28 @@ export class UserService
 		this.userState = this.userSubject.asObservable();
 	}
 
-	// Getters
 	public getSessionStorageUser(): void
 	{
-		let userObject: any = sessionStorage.getItem( "user" );
+		let userObject: string = sessionStorage.getItem( "user" );
+		console.log( userObject );
 		let user: User;
 		if( userObject )
 		{
 			user = JSON.parse( userObject );
-			if( !AppSettings.HEADERS.get( "Authorization" ) )
-				AppSettings.HEADERS.append( "Authorization", user.token );
+			console.log( user );
+			AppSettings.HEADERS.set( "Authorization", user.token );
 		}
 		else
 			user = new User( {} );
 		this.setUser( user );
 	}
 
-	// Setters
 	public setUser( user: User ): void
 	{
-		this.userSubject.next( <User>user );
+		//console.log( user );
 		if( user.token )
 			sessionStorage.setItem( "user", JSON.stringify( user ) );
+		this.userSubject.next( <User>user );
 	}
 
 	public logOut(): void
