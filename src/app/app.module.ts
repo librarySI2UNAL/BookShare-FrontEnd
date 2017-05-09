@@ -19,6 +19,8 @@ import { ProductComponent }	from "./views/product/product.component";
 import { NearProductsComponent } from "./views/nearProducts/nearProducts.component";
 import { LoaderComponent } from "./views/loader/loader.component";
 
+import { NguiMapModule} from '@ngui/map';
+
 import { UserService } from "./services/user.service";
 import { ProductService } from "./services/product.service";
 import { LoaderService } from "./services/loader.service";
@@ -44,6 +46,7 @@ import { AppRoutingModule } from "./app.routes";
 		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule,
+		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=[API_KEY_GOES_HERE]&libraries=visualization&callback=initMap'}),
 		HttpModule,
 		ClarityModule.forRoot(),
 		FileUploadModule,

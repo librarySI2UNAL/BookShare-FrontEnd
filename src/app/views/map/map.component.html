@@ -1,0 +1,19 @@
+<!--docs are here 
+https://rawgit.com/ng2-ui/map/master/app/index.html
+-->
+
+<ngui-map 
+  [zoom]="zoom" 
+  [center]="coords"
+  [scrollwheel]="scrollmap">
+    <marker 
+        [position]="coords"
+        [icon]="{
+           url: 'https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_school_black_48px.svg',
+           anchor: [16,16],
+           size: [32,32],
+           scaledSize: [32,32]
+         }"
+        draggable="false"
+      ></marker>
+</ngui-map>
