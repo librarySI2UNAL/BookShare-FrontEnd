@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class MapComponent{
     latitude: number = 41.8708;
-    logitude: number = -87.6505;
+    longitude: number = -87.6505;
     coords: number[] = [this.latitude, this.longitude];
     zoom: number = 12;
     scrollmap: boolean = false;
