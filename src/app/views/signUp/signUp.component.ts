@@ -166,13 +166,12 @@ export class SignUpComponent implements OnInit
 		{
 			this.loaderService.show();
 			this.userService.update( this.user )
-				.then( user =>
+				.then( userObject =>
 				{
-					user.token = this.user.token;
-					user.latitude = +user.latitude;
-					user.longitude = +user.longitude;
-					user.qualification = +user.qualification;
-					this.userService.setUser( user );
+					let data: any = {};
+					data.token = this.user.token;
+					data.data = userObject;
+					this.userService.setUser( new User( data ) );
 					this.loaderService.hide();
 					this.router.navigate( ["/profile"] );
 				} )

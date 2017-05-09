@@ -30,7 +30,8 @@ export class UserService
 		{
 			user = JSON.parse( userObject );
 			console.log( user );
-			AppSettings.HEADERS.set( "Authorization", user.token );
+			if( !AppSettings.HEADERS.has( "Authorization" ) )
+				AppSettings.HEADERS.set( "Authorization", user.token );
 		}
 		else
 			user = new User( {} );
