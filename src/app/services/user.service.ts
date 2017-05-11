@@ -80,6 +80,9 @@ export class UserService
 		userAux.password = password;
 		userAux.last_name = user.lastName;
 		delete userAux.lastName;
+		delete userAux.id;
+		delete userAux.token;
+		delete userAux.city;
 		return this.http.post( `${AppSettings.API_ENDPOINT}/users`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
@@ -89,6 +92,11 @@ export class UserService
 	{
 		let userAux: any = Object.assign( {}, user );
 		userAux.interests = user.interests.map( ( interest: Interest ) => interest.id );
+		userAux.last_name = user.lastName;
+		delete userAux.lastName;
+		delete userAux.id;
+		delete userAux.token;
+		delete userAux.city;
 		return this.http.put( `${AppSettings.API_ENDPOINT}/users/${user.id}`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
