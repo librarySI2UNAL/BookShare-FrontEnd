@@ -66,7 +66,7 @@
 					<label>Género</label>
 					<span *ngIf = "mode === 'view'">{{ product.productItem.genre.name }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
-						<input type = "text" formControlName = "genre" [(ngModel)] = "product.productItem.genre.name" disabled>
+						<input type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" [(ngModel)] = "product.productItem.genre">
 
 						<span *ngIf = "productForm.controls.genre.errors" class = "tooltip-content">
 							<div [hidden] = "!productForm.controls.genre.errors.required">

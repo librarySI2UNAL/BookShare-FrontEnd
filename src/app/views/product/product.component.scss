@@ -5,4 +5,13 @@ product
 		max-width: 256px;
 		max-heigth: 256px;
 	}
+
+	.ngui-auto-complete-wrapper
+	{
+		ul
+		{
+			max-height: 200px;
+			overflow-y: overlay;
+		}
+	}
 }

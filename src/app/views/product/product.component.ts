@@ -204,39 +204,38 @@ export class ProductComponent implements OnInit
 			} );
 		this.userService.getSessionStorageUser();
 		this.route.params.subscribe( params =>
+		{
+			if( Object.keys( params ).length > 1 )
+				this.router.navigate( ["/home"] );
+			else if( Object.keys( params ).length === 0 )
 			{
-				if( Object.keys( params ).length > 1 )
+				this.mode = "create";
+				this.product = new Product( {} );
+				this.product.available = true;
+				this.product.special = true;
+			}
+			else
+			{
+				let id: number = +params["id"];
+				if( !id )
 					this.router.navigate( ["/home"] );
-				else if( Object.keys( params ).length === 0 )
-				{
-					this.mode = "create";
-					this.product = new Product( {} );
-					this.product.available = true;
-					this.product.special = true;
-				}
-				else
-				{
-					let id: number = +params["id"];
-					if( !id )
-						this.router.navigate( ["/home"] );
-					this.mode = "view";
+				this.mode = "view";
 
-					this.productService.get( id )
-						.then( product =>
-						{
-							this.product = new Product( product );
-						} )
-						.catch( error =>
-						{
-							console.log( error );
-						} );
-				}
-
-				this.productService.getGenres().subscribe( response =>
+				this.productService.get( id )
+					.then( product =>
 					{
-						this.genres = response;
-						this.product.productItem.genre = this.genres[0];
+						this.product = new Product( product );
+					} )
+					.catch( error =>
+					{
+						console.log( error );
 					} );
+			}
+
+			this.productService.getGenres().subscribe( response =>
+			{
+				this.genres = response;
 			} );
+		} );
 	}
 }

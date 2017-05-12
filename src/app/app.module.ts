@@ -5,10 +5,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
 import { ClarityModule } from "clarity-angular";
-import { NglModule } from "ng-lightning/ng-lightning";
 import { AgmCoreModule } from "@agm/core";
 import { FileUploadModule } from "ng2-file-upload";
 import { SwiperModule } from "angular2-useful-swiper";
+import { NguiAutoCompleteModule } from "@ngui/auto-complete";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -47,13 +47,13 @@ import { AppRoutingModule } from "./app.routes";
 		ReactiveFormsModule,
 		HttpModule,
 		ClarityModule.forRoot(),
-		NglModule.forRoot(),
 		FileUploadModule,
 		AgmCoreModule.forRoot(
 		{
 			apiKey: "AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg"
 		} ),
-		SwiperModule
+		SwiperModule,
+		NguiAutoCompleteModule
 	],
 	providers: [
 		UserService,

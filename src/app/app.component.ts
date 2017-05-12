@@ -97,7 +97,7 @@ export class AppComponent implements OnInit
 		this.userService.logIn( this.credentials )
 			.then( user =>
 			{
-				this.userService.setUser( new User( user ) );
+				this.userService.setUser( new User( user ), true );
 				this.logInError = false;
 				this.loading = false;
 				this.showLogInModal( false );
