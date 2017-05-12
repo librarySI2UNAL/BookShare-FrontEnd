@@ -84,7 +84,7 @@
 		<div class = "col-xs-10 offset-xs-1">
 			<h3>Intereses</h3>
 			<div class = "custom-display-grid">
-				<a *ngFor = "let interest of interests; let i = index" class = "card card-img" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0, 'clickable custom-pointer': mode !== 'view' }" (click) = "selectInterest( i )">
+				<a *ngFor = "let interest of interests; let i = index" class = "card card-img" [ngClass] = "{ 'custom-item-selected': checkContainsInterest( interest ), 'clickable custom-pointer': mode !== 'view' }" (click) = "selectInterest( i )">
 					<img [src] = "server + interest.photo.image.url">
 					<div class = "custom-over">
 						<div class = "custom-over-text">{{ interest.name }}</div>
