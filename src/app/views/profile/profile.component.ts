@@ -144,6 +144,11 @@ export class ProfileComponent implements OnInit
 			} );
 	}
 
+	private checkContainsInterest( interest: Interest )
+	{
+		return this.user.interests.some( userInterest => userInterest.id === interest.id );
+	}
+
 	public ngOnInit()
 	{
 		for( let view in AppSettings.ACTIVES )
