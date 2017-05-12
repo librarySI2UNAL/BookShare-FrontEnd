@@ -140,7 +140,7 @@ export class SignUpComponent implements OnInit
 			.then( data =>
 			{
 				this.user = new User( data );
-				this.userService.setUser( this.user );
+				this.userService.setUser( this.user, true );
 				this.uploader = new FileUploader( {
 					url: `${this.photoURL}/${this.user.id}/photos`,
 					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
@@ -171,7 +171,7 @@ export class SignUpComponent implements OnInit
 					let data: any = {};
 					data.token = this.user.token;
 					data.data = userObject;
-					this.userService.setUser( new User( data ) );
+					this.userService.setUser( new User( data ), true );
 					this.loaderService.hide();
 					this.router.navigate( ["/profile"] );
 				} )

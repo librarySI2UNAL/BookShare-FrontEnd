@@ -28,8 +28,7 @@
         "../node_modules/mutationobserver-shim/dist/mutationobserver.min.js",
         "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
         "../node_modules/clarity-icons/clarity-icons.min.js",
-        "../node_modules/swiper/dist/js/swiper.min.js",
-        "../node_modules/angular2-useful-swiper/lib/swiper.module.js"
+        "../node_modules/swiper/dist/js/swiper.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

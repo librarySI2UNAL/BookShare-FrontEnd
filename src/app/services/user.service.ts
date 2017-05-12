@@ -23,13 +23,14 @@ export class UserService
 
 	public getSessionStorageUser(): void
 	{
-		let userObject: string = sessionStorage.getItem( "user" );
-		console.log( userObject );
+		let userString: string = sessionStorage.getItem( "user" );
 		let user: User;
-		if( userObject )
+		if( userString )
 		{
-			user = JSON.parse( userObject );
-			console.log( user );
+			let data: any = { data: JSON.parse( userString ) };
+			data.token = data.data.token;
+			delete data.data.token;
+			user = new User( data );
 			if( !AppSettings.HEADERS.has( "Authorization" ) )
 				AppSettings.HEADERS.set( "Authorization", user.token );
 		}
@@ -38,10 +39,10 @@ export class UserService
 		this.setUser( user );
 	}
 
-	public setUser( user: User ): void
+	public setUser( user: User, save: boolean = false ): void
 	{
 		//console.log( user );
-		if( user.token )
+		if( user.token && save )
 			sessionStorage.setItem( "user", JSON.stringify( user ) );
 		this.userSubject.next( <User>user );
 	}
