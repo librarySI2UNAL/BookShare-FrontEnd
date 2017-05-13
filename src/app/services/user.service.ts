@@ -106,4 +106,11 @@ export class UserService
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
+	
+	public getNear( dist: number ): Observable<User>{
+		let url: any = dist>1?`${AppSettings.API_ENDPOINT}/users/near`:`${AppSettings.API_ENDPOINT}/users/near?dist=${dist}`
+		return this.http.get( url,  { headers: AppSettings.HEADERS } )
+			.map( response => response.json().data )
+			.catch( this.handleError );
+	}
 }

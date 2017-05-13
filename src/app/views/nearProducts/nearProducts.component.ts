@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 
 @Component(
 {
@@ -8,18 +8,10 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 	encapsulation: ViewEncapsulation.None
 } )
 
-export class NearProductsComponent implements OnInit
+export class NearProductsComponent
 {
-	lat: number =  4.7524465035945;
-	lng: number = -74.08623508554138;
-
 	constructor()
 	{
 		
-	}
-
-	ngOnInit()
-	{
-
 	}
 }
