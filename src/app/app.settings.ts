@@ -7,6 +7,7 @@ export class AppSettings
 	public static ACTIVES: any = {
 		home: false,
 		products: false,
+		nearProducts: false,
 		signUp: false
 	};
 	public static HEADERS: Headers = new Headers( { "Content-Type": "application/json", "Accept": "application/json" } );
