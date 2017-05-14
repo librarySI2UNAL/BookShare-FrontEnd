@@ -41,7 +41,6 @@ export class UserService
 
 	public setUser( user: User, save: boolean = false ): void
 	{
-		//console.log( user );
 		if( user.token && save )
 			sessionStorage.setItem( "user", JSON.stringify( user ) );
 		this.userSubject.next( <User>user );

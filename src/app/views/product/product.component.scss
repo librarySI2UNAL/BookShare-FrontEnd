@@ -5,4 +5,20 @@ product
 		max-width: 256px;
 		max-heigth: 256px;
 	}
+
+	.custom-input-error
+	{
+		border-bottom: 1px solid #c92100;
+		background: linear-gradient( to bottom, transparent 95%, #c92100 95% );
+		transition: none;
+	}
+
+	.ngui-auto-complete-wrapper
+	{
+		ul
+		{
+			max-height: 200px;
+			overflow-y: overlay;
+		}
+	}
 }

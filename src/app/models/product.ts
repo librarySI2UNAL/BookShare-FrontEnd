@@ -1,5 +1,6 @@
 import { ProductItem } from "./productItem";
 import { User } from "./user";
+import { Photo } from "./photo";
 
 export class Product
 {
@@ -12,6 +13,7 @@ export class Product
 	value: number;
 	code: string;
 	codeType: string;
+	photos: Array<Photo>;
 	productItem: ProductItem;
 	user: User;
 
@@ -28,6 +30,7 @@ export class Product
 			this.value = null;
 			this.code = null;
 			this.codeType = null;
+			this.photos = [];
 			this.productItem = new ProductItem( {} );
 			this.user = null;
 		}
@@ -42,6 +45,7 @@ export class Product
 			this.value = data.value;
 			this.code = data.code;
 			this.codeType = data.codeType;
+			this.photos = data.photos;
 			this.productItem = new ProductItem( data.productItem );
 			this.user = data.user;
 		}

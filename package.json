@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^4.1.0",
     "@angular/platform-server": "^4.1.0",
     "@angular/router": "^4.1.0",
+    "@ngui/auto-complete": "^0.13.2",
     "@webcomponents/custom-elements": "^1.0.0-alpha.3",
     "angular2-useful-swiper": "^4.0.3",
     "clarity-angular": "^0.9.2",

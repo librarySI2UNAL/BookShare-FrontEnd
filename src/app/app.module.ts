@@ -8,6 +8,7 @@ import { ClarityModule } from "clarity-angular";
 import { AgmCoreModule } from "@agm/core";
 import { FileUploadModule } from "ng2-file-upload";
 import { SwiperModule } from "angular2-useful-swiper";
+import { NguiAutoCompleteModule } from "@ngui/auto-complete";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -51,7 +52,8 @@ import { AppRoutingModule } from "./app.routes";
 		{
 			apiKey: "AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg"
 		} ),
-		SwiperModule
+		SwiperModule,
+		NguiAutoCompleteModule
 	],
 	providers: [
 		UserService,
