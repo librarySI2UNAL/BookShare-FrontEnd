@@ -1,12 +1,20 @@
-<div>
-	<div class = "card" *ngFor = "let product of products">
-		<div class = "card-img">
-			<img src = "...">
-		</div>
-		<div class = "card-block">
-			<p class = "card-text">
-				{{ product.value }}
-			</p>
-		</div>
-	</div>
-</div>
+	<div class = "custom-display-grid">
+								<div class = "card" *ngFor = "let product of products">
+									<div class = "card-img">
+										<img src = "...">
+									</div>
+									<div class="card clickable">
+										<p class = "card-text" *ngIf="product.user == user">
+
+											Título: {{ product.productItem.name}} <br>
+											Autor: {{ product.productItem.author}}<br>
+											Editorial: {{ product.productItem.editorial}}<br>
+
+											</p>
+									</div>
+								</div>
+							</div>
+
+
+
+			
