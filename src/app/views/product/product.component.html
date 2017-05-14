@@ -65,15 +65,25 @@
 				<div class = "form-group">
 					<label>Género</label>
 					<span *ngIf = "mode === 'view'">{{ product.productItem.genre.name }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
-						<input type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" [(ngModel)] = "product.productItem.genre">
-
+					<!--<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" [(ngModel)] = "product.productItem.genre">
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
 						<span *ngIf = "productForm.controls.genre.errors" class = "tooltip-content">
 							<div [hidden] = "!productForm.controls.genre.errors.required">
 								El género es requerido
 							</div>
 						</span>
-					</label>
+					</label>-->
+					<div *ngIf = "mode !== 'view'" class = "col-xs">
+						<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" (valueChanged) = "product.productItem.genre = $event" no-match-found-text = "No existe este género">
+						
+						<div *ngIf = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
+							<span *ngIf = "productForm.controls.genre.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.genre.errors.required">
+									El género es requerido
+								</div>
+							</span>
+						</div>
+					</div>
 				</div>
 
 				<div class = "form-group">
@@ -112,17 +122,19 @@
 				<div class = "form-group">
 					<label>Tipo de producto</label>
 					<span *ngIf = "mode === 'view'">{{ typeTexts[product.productItem.type] }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.type.touched ) && productForm.controls.type.invalid">
+					<div *ngIf = "mode !== 'view'" class = "col-xs">
 						<select formControlName = "type" [(ngModel)] = "product.productItem.type">
 							<option *ngFor = "let type of types" [ngValue] = "typeValues[type]">{{ type }}</option>
 						</select>
-
-						<span *ngIf = "productForm.controls.type.errors" class = "tooltip-content">
-							<div [hidden] = "!productForm.controls.type.errors.required">
-								El tipo de producto es requerido
-							</div>
-						</span>
-					</label>
+						
+						<div *ngIf = "( submitted || productForm.controls.type.touched ) && productForm.controls.type.invalid">
+							<span *ngIf = "productForm.controls.type.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.type.errors.required">
+									El tipo de producto es requerido
+								</div>
+							</span>
+						</div>
+					</div>
 				</div>
 
 				<div class = "form-group">
@@ -156,33 +168,37 @@
 				<div class = "form-group">
 					<label>Cubierta</label>
 					<span *ngIf = "mode === 'view'">{{ covers[product.cover - 1] }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.cover.touched ) && productForm.controls.cover.invalid">
+					<div *ngIf = "mode !== 'view'" class = "col-xs">
 						<select formControlName = "cover" [(ngModel)] = "product.cover">
 							<option *ngFor = "let cover of covers; let i = index" [ngValue] = "i + 1">{{ cover }}</option>
 						</select>
-
-						<span *ngIf = "productForm.controls.cover.errors" class = "tooltip-content">
-							<div [hidden] = "!productForm.controls.cover.errors.required">
-								La cubierta es requerida
-							</div>
-						</span>
-					</label>
+						
+						<div *ngIf = "( submitted || productForm.controls.cover.touched ) && productForm.controls.cover.invalid">
+							<span *ngIf = "productForm.controls.cover.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.cover.errors.required">
+									La cubierta es requerida
+								</div>
+							</span>
+						</div>
+					</div>
 				</div>
 
 				<div class = "form-group">
 					<label>Estado</label>
 					<span *ngIf = "mode === 'view'">{{ statuses[product.status - 1] }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.status.touched ) && productForm.controls.status.invalid">
+					<div *ngIf = "mode !== 'view'" class = "col-xs">
 						<select formControlName = "status" [(ngModel)] = "product.status">
 							<option *ngFor = "let status of statuses; let i = index" [ngValue] = "i + 1">{{ status }}</option>
 						</select>
-
-						<span *ngIf = "productForm.controls.status.errors" class = "tooltip-content">
-							<div [hidden] = "!productForm.controls.status.errors.required">
-								El estado es requerido
-							</div>
-						</span>
-					</label>
+						
+						<div *ngIf = "( submitted || productForm.controls.status.touched ) && productForm.controls.status.invalid">
+							<span *ngIf = "productForm.controls.status.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.status.errors.required">
+									El estado es requerido
+								</div>
+							</span>
+						</div>
+					</div>
 				</div>
 
 				<div class = "form-group">
