@@ -4,11 +4,11 @@
 </div>
 
 <div *ngIf = "mode !== 'create'">
-	<div *ngIf = "mode === 'edit' && product.photos.length < 5" class = "row flex-items-xs-center">
+	<div *ngIf = "mode === 'edit' && product.photos.length < 5" class = "row flex-items-xs-center custom-width">
 		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
 		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
 	</div>
-	<div class = "row flex-items-xs-center">
+	<div class = "row flex-items-xs-center custom-width">
 		<div *ngFor = "let photo of product.photos; let i = index">
 			<button *ngIf = "mode === 'edit'" class = "close" (click) = "deletePhoto( i )">
 				<clr-icon shape = "close"></clr-icon>
@@ -18,13 +18,13 @@
 	</div>
 </div>
 
-<div *ngIf = "createdProduct" class = "custom-width">
-	<div *ngIf = "productImages.length < 5" class = "row flex-items-xs-center">
+<div *ngIf = "createdProduct">
+	<div *ngIf = "productImages.length < 5" class = "row flex-items-xs-center custom-width">
 		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
 		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
 	</div>
 
-	<div class = "row flex-items-xs-center">
+	<div class = "row flex-items-xs-center custom-width">
 		<div *ngFor = "let productImage of productImages; let i = index">
 			<button class = "close" (click) = "deletePhoto( i )">
 				<clr-icon shape = "close"></clr-icon>
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 
-	<div class = "row flex-items-xs-center">
+	<div class = "row flex-items-xs-center custom-width">
 		<section class = "form-block">
 			<div class = "form-group">
 				<label>¿Puedes darnos una descripción más detallada del producto?</label>
@@ -42,7 +42,7 @@
 		</section>
 	</div>
 
-	<div class = "row flex-items-xs-center">
+	<div class = "row flex-items-xs-center custom-width">
 		<button class = "btn btn-link" routerLink = "/home">Saltar este paso</button>
 		<button class = "btn btn-primary" (click) = "updateProduct()">Aceptar</button>
 	</div>
