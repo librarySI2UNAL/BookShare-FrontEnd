@@ -33,6 +33,12 @@
 <div *ngIf = "!createdProduct">
 	<form [formGroup] = "productForm" (ngSubmit) = "save()">
 		<div class = "row custom-width">
+			<img class = "custom-image-bookshare" src = "assets/images/BookShare.jpg">
+		</div>
+
+		<br>
+
+		<div class = "row custom-width">
 			<div class = "col-xs-6 offset-xs-1">
 				<div class = "form-group">
 					<label>Nombre</label>
@@ -90,11 +96,14 @@
 					<label>Año de publicación</label>
 					<span *ngIf = "mode === 'view'">{{ product.productItem.yearOfPublication }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.yearOfPublication.touched ) && productForm.controls.yearOfPublication.invalid">
-						<input type = "text" formControlName = "yearOfPublication" [(ngModel)] = "product.productItem.yearOfPublication">
+						<input type = "number" formControlName = "yearOfPublication" [(ngModel)] = "product.productItem.yearOfPublication">
 
 						<span *ngIf = "productForm.controls.yearOfPublication.errors" class = "tooltip-content">
 							<div [hidden] = "!productForm.controls.yearOfPublication.errors.required">
 								El año de publicación es requerido
+							</div>
+							<div [hidden] = "!productForm.controls.yearOfPublication.errors.pattern">
+								El formato para el año no es válido
 							</div>
 							<div [hidden] = "!productForm.controls.yearOfPublication.errors.maxValue">
 								El año de publicación no puede ser mayor al año actual

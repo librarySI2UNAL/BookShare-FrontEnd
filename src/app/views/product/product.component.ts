@@ -152,7 +152,6 @@ export class ProductComponent implements OnInit
 
 	private save(): void
 	{
-		console.log( this.product.productItem.genre );
 		this.submitted = true;
 		if( this.productForm.invalid )
 			return;
