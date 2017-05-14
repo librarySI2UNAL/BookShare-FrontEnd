@@ -36,7 +36,8 @@ export class ProductComponent implements OnInit
 	submitted: boolean;
 	createdProduct: boolean;
 	photoURL: string;
-	profileImages: Array<string>;
+	productImages: Array<string>;
+	server: string;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -66,7 +67,8 @@ export class ProductComponent implements OnInit
 		};
 		this.submitted = false;
 		this.createdProduct = false;
-		this.profileImages = [];
+		this.productImages = [];
+		this.server = AppSettings.SERVER;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -107,6 +109,8 @@ export class ProductComponent implements OnInit
 
 	private addPhoto(): void
 	{
+		if( this.productImages.length === 5 )
+			return;
 		let fileReader: FileReader = new FileReader();
 
 		fileReader.onload = this.completeOnLoadPhoto.bind( this );
@@ -115,23 +119,23 @@ export class ProductComponent implements OnInit
 
 	private deletePhoto( index: number ): void
 	{
-		this.profileImages.splice( index, 1 );
+		this.productImages.splice( index, 1 );
 		this.uploader.queue[index].remove();
 	}
 
 	private completeOnLoadPhoto( e: any ): void
 	{
-		this.profileImages.push( e.target.result );
+		this.productImages.push( e.target.result );
 	}
 
 	private updateProduct(): void
 	{
 		if( this.uploader.queue.length > 0 )
 		{
+			this.loaderService.show();
 			this.uploader.uploadAll();
-			this.router.navigate( ["/home"] );
 		}
-		if( this.product.description && this.product.description.length > 0 )
+		else if( this.product.description && this.product.description.length > 0 )
 		{
 			this.loaderService.show();
 			this.productService.update( this.user.id, this.product.id, this.product )
@@ -139,15 +143,16 @@ export class ProductComponent implements OnInit
 				{
 					this.loaderService.hide();
 					this.router.navigate( ["/home"] );
-					//this.router.navigate( ["/profile"] );
 				} )
 				.catch( error =>
 				{
 					this.loaderService.hide();
-					this.router.navigate( ["/home"] );
 					console.log( error );
+					this.router.navigate( ["/home"] );
 				} );
 		}
+		else
+			this.router.navigate( ["/home"] );
 	}
 
 	private save(): void
@@ -172,6 +177,29 @@ export class ProductComponent implements OnInit
 					{
 						this.addPhoto();
 					};
+					this.uploader.onCompleteAll = () =>
+					{
+						if( this.product.description && this.product.description.length > 0 )
+						{
+							this.productService.update( this.user.id, this.product.id, this.product )
+								.then( product =>
+								{
+									this.loaderService.hide();
+									this.router.navigate( ["/home"] );
+								} )
+								.catch( error =>
+								{
+									this.loaderService.hide();
+									console.log( error );
+									this.router.navigate( ["/home"] );
+								} );
+						}
+						else
+						{
+							this.loaderService.hide();
+							this.router.navigate( ["/home"] );
+						}
+					};
 					this.loaderService.hide();
 				} )
 				.catch( error =>
@@ -186,7 +214,6 @@ export class ProductComponent implements OnInit
 					this.product = new Product( product );
 					this.loaderService.hide();
 					this.router.navigate( ["/home"] );
-					//this.router.navigate( ["/profile"] );
 				} )
 				.catch( error =>
 				{
@@ -219,17 +246,18 @@ export class ProductComponent implements OnInit
 				let id: number = +params["id"];
 				if( !id )
 					this.router.navigate( ["/home"] );
-				this.mode = "view";
 
 				this.productService.get( id )
 					.then( product =>
 					{
 						this.product = new Product( product );
+						console.log( this.product );
 					} )
 					.catch( error =>
 					{
 						console.log( error );
 					} );
+				this.mode = "view";
 			}
 
 			this.productService.getGenres().subscribe( response =>

@@ -1,18 +1,35 @@
 <div class = "row flex-items-xs-center custom-width">
-	<h1>Crea tu producto</h1>
+	<h1 *ngIf = "mode === 'view'">{{ product.productItem.name }}</h1>
+	<h1 *ngIf = "mode !== 'view'">Crea tu producto</h1>
 </div>
-<div *ngIf = "createdProduct" class = "custom-width">
+
+<div *ngIf = "mode !== 'create'">
+	<div *ngIf = "mode === 'edit' && product.photos.length < 5" class = "row flex-items-xs-center">
+		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
+		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
+	</div>
 	<div class = "row flex-items-xs-center">
+		<div *ngFor = "let photo of product.photos; let i = index">
+			<button *ngIf = "mode === 'edit'" class = "close" (click) = "deletePhoto( i )">
+				<clr-icon shape = "close"></clr-icon>
+			</button>
+			<img class = "img-thumbnail custom-product-image" [src] = "server + photo.image.url">
+		</div>
+	</div>
+</div>
+
+<div *ngIf = "createdProduct" class = "custom-width">
+	<div *ngIf = "productImages.length < 5" class = "row flex-items-xs-center">
 		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
 		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
 	</div>
 
 	<div class = "row flex-items-xs-center">
-		<div *ngFor = "let profileImage of profileImages; let i = index">
+		<div *ngFor = "let productImage of productImages; let i = index">
 			<button class = "close" (click) = "deletePhoto( i )">
 				<clr-icon shape = "close"></clr-icon>
 			</button>
-			<img class = "img-thumbnail custom-product-image" [src] = "profileImage">
+			<img class = "img-thumbnail custom-product-image" [src] = "productImage">
 		</div>
 	</div>
 
@@ -30,9 +47,9 @@
 		<button class = "btn btn-primary" (click) = "updateProduct()">Aceptar</button>
 	</div>
 </div>
-<div *ngIf = "!createdProduct">
+<div *ngIf = "!createdProduct && product">
 	<form [formGroup] = "productForm" (ngSubmit) = "save()">
-		<div class = "row custom-width">
+		<div *ngIf = "mode === 'create'" class = "row custom-width">
 			<img class = "custom-image-bookshare" src = "assets/images/BookShare.jpg">
 		</div>
 
@@ -70,7 +87,7 @@
 
 				<div class = "form-group">
 					<label>Género</label>
-					<span *ngIf = "mode === 'view'">{{ product.productItem.genre.name }}</span>
+					<span *ngIf = "mode === 'view' && product.productItem.genre">{{ product.productItem.genre.name }}</span>
 					<!--<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" [(ngModel)] = "product.productItem.genre">
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
 						<span *ngIf = "productForm.controls.genre.errors" class = "tooltip-content">
