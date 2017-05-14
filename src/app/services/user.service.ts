@@ -113,7 +113,7 @@ export class UserService
 			url += "?dist="+String(dist);
 		}
 		return this.http.get( url,  { headers: AppSettings.HEADERS } )
-			.map( response => response.json().data )
+			.map( response => response.json().data || { } )
 			.catch( this.handleError );
 	}
 }

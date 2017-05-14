@@ -1,18 +1,32 @@
 <!--docs are here 
 https://rawgit.com/ng2-ui/map/master/app/index.html
 -->
+
 <ngui-map 
-  [zoom]="zoom" 
+  (mapReady$)="initMap($event)"
+  (window:resize)="onResize($event)"
+  [zoom]="zoom"
   [center]="coords"
   [scrollwheel]="scrollmap">
-    <marker 
-        [position]="coords"
-        [icon]="{
-           url: 'https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_school_black_48px.svg',
-           anchor: [16,16],
-           size: [32,32],
-           scaledSize: [32,32]
-         }"
-        draggable="false"
-      ></marker>
+    <circle (initialized$)="initCircle($event)" [center]="coords" [strokeColor]="'#FFFFFF'" [strokeOpacity]="0.4"
+            [strokeWeight]="1" [editable]="false" [radius]="getRadius(dist)" draggable="false">
+        
+    </circle>
 </ngui-map>
+
+
+<!--
+<div *ngFor="let user of nearUsers">
+    <p>{{user.id}}</p>
+    <p>{{user.name}}</p>
+    <p>{{user.lastName}}</p>
+    <p>{{user.email}}</p>
+    <p>{{user.qualification}}</p>
+    <p>{{user.latitude}}</p>
+    <p>{{user.longitude}}</p>
+    <p>{{user.photo}}</p>
+    <p>{{user.city.id}}</p>
+    <p>{{user.city.name}}</p>
+    <p>{{user.city.placeId}}</p>
+</div>
+-->

@@ -12,12 +12,11 @@ import { UserService } from "../../services/user.service";
 	encapsulation: ViewEncapsulation.None
 })
 export class MapComponent implements OnInit{
-    latitude: number = 41.8708;
-    longitude: number = -87.6505;
-    coords: any = { lat: this.latitude, lng: this.longitude };
-    zoom: number = 12;
-    dist: number = 500;
-    radius: number = this.dist*1000;
+    map: any;
+    circle: any;
+    coords: any;
+    zoom: number = 8;
+    dist: number = 2;
     scrollmap: boolean = false;
     user: User;
     nearUsers: User[];
@@ -30,8 +29,27 @@ export class MapComponent implements OnInit{
 	ngOnInit()
 	{
         this.getCurrentUser();
-        this.getNearUsers();
+        this.getNearUsers(this.dist);
+        this.coords = { lat: this.user.latitude, lng: this.user.longitude }
 	}
+	
+    initMap(event: any) {
+        this.map = event;
+    }
+    
+    initCircle(event: any){
+        this.circle = event;
+        this.map.fitBounds(this.circle.getBounds());
+    }
+	
+	getRadius(distanceInKilometers: number){
+	    return distanceInKilometers*1000;
+	}
+    
+    onResize(event) {
+        this.map.setCenter(this.coords);
+        this.map.fitBounds(this.circle.getBounds());
+    }
 	
 	getCurrentUser(){
 	    this.userService.userState
@@ -39,8 +57,8 @@ export class MapComponent implements OnInit{
 		this.userService.getSessionStorageUser();
 	}
 	
-	getNearUsers(){
-	    this.userService.getNear(this.dist).subscribe(
+	getNearUsers(distance: number){
+	    this.userService.getNear(distance).subscribe(
             nearUsers => this.nearUsers = nearUsers,
             error =>  this.errorMessage = <any>error);
 	}
