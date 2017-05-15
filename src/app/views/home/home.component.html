@@ -9,8 +9,8 @@
 		<div class = "swiper-wrapper">
 			<div *ngFor = "let interest of interests; let i = index" class = "swiper-slide custom-image-size" (click) = "selectInterest( i )">
 				<img [src] = "server + interest.photo.image.url">
-				<div class = "custom-over">
-					<div class = "custom-over-text">{{ interest.name }}</div>
+				<div class = "custom-hover">
+					<div class = "custom-hover-text">{{ interest.name }}</div>
 				</div>
 			</div>
 		</div>
