@@ -46,7 +46,7 @@ import { AppRoutingModule } from "./app.routes";
 		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule,
-		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg&libraries=visualization&callback=initMap'}),
+		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyC-f5ER_apawz40mq9fOyXchgZQiuiE_n8&libraries=visualization&callback=initMap'}),
 		HttpModule,
 		ClarityModule.forRoot(),
 		FileUploadModule,

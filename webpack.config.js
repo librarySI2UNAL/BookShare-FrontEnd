@@ -1,6 +1,10 @@
 var webpack = require( "webpack" );
 
 module.exports = {
+    devServer: {
+	  host: '0.0.0.0', 
+	  port: 8080
+	},
 	entry: "./src/main.ts",
 	output: {
 		path: "./dist",
@@ -15,4 +19,5 @@ module.exports = {
 			}
 		]
 	}
+	
 };

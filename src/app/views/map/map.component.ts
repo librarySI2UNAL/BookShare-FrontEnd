@@ -62,4 +62,10 @@ export class MapComponent implements OnInit{
             nearUsers => this.nearUsers = nearUsers,
             error =>  this.errorMessage = <any>error);
 	}
+	
+	nearUserClicked(event: any, user: User){
+	    let marker = event;
+	    console.log(marker);
+	    console.log(user.product.length);
+	}
 }
