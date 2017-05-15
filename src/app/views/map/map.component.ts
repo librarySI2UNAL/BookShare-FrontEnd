@@ -16,7 +16,7 @@ export class MapComponent implements OnInit{
     circle: any;
     coords: any;
     zoom: number = 8;
-    dist: number = 2;
+    dist: number = 15;
     scrollmap: boolean = false;
     user: User;
     nearUsers: User[];
