@@ -36,13 +36,16 @@
 					</div>
 				</section>
 
-				<section class = "nav-group collapsible" *ngFor = "let interest of interests">
-					<input id = "interest{{ interest.id }}" type = "checkbox">
-					<label for = "interest{{ interest.id }}">{{ interest.name }}</label>
-					<ul class = "nav-list">
-						<li *ngFor = "let genre of interest.genres"><a class = "nav-link" [ngClass] = "{ 'active': selectedGenre.id === genre.id }">{{ genre.name }}</a></li>
-					</ul>
-				</section>
+				<br>
+
+				<clr-tree [(clrTreeSelected)] = "filters.selection">
+					<clr-tree-node [clrTreeModel] = "interest.id" [clrTreeNodeExpanded] = "false" *ngFor = "let interest of interests">
+						{{ interest.name }}
+						<clr-tree-node [clrTreeModel] = "genre.id" *ngFor = "let genre of interest.genres">
+							{{ genre.name }}
+						</clr-tree-node>
+					</clr-tree-node>
+				</clr-tree>
 			</section>
 		</nav>
 	</div>

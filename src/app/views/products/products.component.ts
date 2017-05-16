@@ -41,7 +41,8 @@ export class ProductsComponent implements OnInit
 		this.search = "";
 		this.filters = {
 			name: false,
-			author: false
+			author: false,
+			selection: []
 		};
 		this.selectedInterest = new Interest();
 		this.selectedGenre = new Genre();
