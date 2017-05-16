@@ -23,6 +23,8 @@ export class ProductsComponent implements OnInit
 	products: Array<Product>;
 	totalProducts: number;
 	user: User;
+	search: string;
+	filters: any;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -30,6 +32,11 @@ export class ProductsComponent implements OnInit
 	{
 		this.perPage = 10;
 		this.products = [];
+		this.search = "";
+		this.filters = {
+			name: false,
+			author: false
+		};
 	}
 
 	ngOnInit()

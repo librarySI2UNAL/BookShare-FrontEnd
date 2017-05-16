@@ -14,7 +14,21 @@
 		</div>
 		<nav class = "sidenav">
 			<section class = "sidenav-content">
-				
+				<section class = "nav-group">
+					<div class = "col-xs">
+						<clr-icon shape = "search"></clr-icon>
+						<input type = "text" [(ngModel)] = "search" placeholder = "Buscar">
+					</div>
+				</section>
+
+				<section class = "nav-group">
+					<div class = "col-xs">
+						<div class = "form-group">
+							<clr-checkbox type = "checkbox" [(ngModel)] = "filters.name">Nombre del producto</clr-checkbox>
+							<clr-checkbox type = "checkbox" [(ngModel)] = "filters.author">Autor</clr-checkbox>
+						</div>
+					</div>
+				</section>
 			</section>
 		</nav>
 	</div>
