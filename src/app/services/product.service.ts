@@ -67,9 +67,9 @@ export class ProductService
 			.catch( this.handleError );
 	}
 
-	availables( page: number, perPage: number ): Observable<any>
+	getAvailables( userId: number, page: number, perPage: number ): Observable<any>
 	{
-		return this.http.get( `${this.productsURL}?page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
+		return this.http.get( `${this.productsURL}?user_id=${userId}&page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
 			.map( ( r: Response ) => r.json() )
 			.catch( this.handleError );
 	}

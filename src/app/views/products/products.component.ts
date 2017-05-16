@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
 import { Product } from "../../models/product";
+import { User } from "../../models/user";
 
 import { ProductService } from "../../services/product.service";
+import { UserService } from "../../services/user.service";
 import { LoaderService } from "../../services/loader.service";
 import { AppSettings } from "../../app.settings";
 
@@ -20,8 +22,10 @@ export class ProductsComponent implements OnInit
 	perPage: number;
 	products: Array<Product>;
 	totalProducts: number;
+	user: User;
 
-	constructor( private productService: ProductService,
+	constructor( private userService: UserService,
+		private productService: ProductService,
 		private loaderService: LoaderService )
 	{
 		this.perPage = 10;
@@ -35,14 +39,21 @@ export class ProductsComponent implements OnInit
 		AppSettings.ACTIVES.products = true;
 		
 		this.loaderService.show();
-		this.productService.availables( 1, this.perPage ).subscribe( response =>
+		this.userService.userState
+			.subscribe( user =>
 			{
-				this.totalProducts = response.count;
-				let products: Array<any> = response.data;
-				for( let i = 0; i < products.length; ++i )
-					this.products.push( new Product( products[i] ) );
-				console.log( this.products );
-				this.loaderService.hide();
+				this.user = user;
+				this.productService.getAvailables( this.user.id, 1, this.perPage )
+					.subscribe( response =>
+					{
+						this.totalProducts = response.count;
+						let products: Array<any> = response.data;
+						for( let i = 0; i < products.length; ++i )
+							this.products.push( new Product( products[i] ) );
+						console.log( this.products );
+						this.loaderService.hide();
+					} );
 			} );
+		this.userService.getSessionStorageUser();
 	}
 }
