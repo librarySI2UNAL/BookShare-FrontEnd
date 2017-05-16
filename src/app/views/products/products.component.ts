@@ -26,7 +26,6 @@ export class ProductsComponent implements OnInit
 	interests: Array<Interest>;
 	totalProducts: number;
 	user: User;
-	search: string;
 	filters: any;
 	selectedInterest: Interest;
 	selectedGenre: Genre;
@@ -38,8 +37,8 @@ export class ProductsComponent implements OnInit
 		this.perPage = 10;
 		this.products = [];
 		this.interests = [];
-		this.search = "";
 		this.filters = {
+			search: "",
 			name: false,
 			author: false,
 			selection: []
