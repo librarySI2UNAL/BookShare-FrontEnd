@@ -29,6 +29,20 @@
 						</div>
 					</div>
 				</section>
+
+				<section class = "nav-group">
+					<div class = "col-xs">
+						<h4>Intereses y géneros</h4>
+					</div>
+				</section>
+
+				<section class = "nav-group collapsible" *ngFor = "let interest of interests">
+					<input id = "interest{{ interest.id }}" type = "checkbox">
+					<label for = "interest{{ interest.id }}">{{ interest.name }}</label>
+					<ul class = "nav-list">
+						<li *ngFor = "let genre of interest.genres"><a class = "nav-link" [ngClass] = "{ 'active': selectedGenre.id === genre.id }">{{ genre.name }}</a></li>
+					</ul>
+				</section>
 			</section>
 		</nav>
 	</div>

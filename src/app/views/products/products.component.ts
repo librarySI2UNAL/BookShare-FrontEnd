@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
 import { Product } from "../../models/product";
 import { User } from "../../models/user";
+import { Interest } from "../../models/interest";
+import { Genre } from "../../models/genre";
 
 import { ProductService } from "../../services/product.service";
 import { UserService } from "../../services/user.service";
@@ -21,10 +23,13 @@ export class ProductsComponent implements OnInit
 	page: number;
 	perPage: number;
 	products: Array<Product>;
+	interests: Array<Interest>;
 	totalProducts: number;
 	user: User;
 	search: string;
 	filters: any;
+	selectedInterest: Interest;
+	selectedGenre: Genre;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -32,11 +37,14 @@ export class ProductsComponent implements OnInit
 	{
 		this.perPage = 10;
 		this.products = [];
+		this.interests = [];
 		this.search = "";
 		this.filters = {
 			name: false,
 			author: false
 		};
+		this.selectedInterest = new Interest();
+		this.selectedGenre = new Genre();
 	}
 
 	ngOnInit()
@@ -46,6 +54,12 @@ export class ProductsComponent implements OnInit
 		AppSettings.ACTIVES.products = true;
 		
 		this.loaderService.show();
+		this.productService.getInterests()
+			.subscribe( interests =>
+			{
+				this.interests = interests;
+				console.log( this.interests );
+			} );
 		this.userService.userState
 			.subscribe( user =>
 			{
@@ -57,7 +71,6 @@ export class ProductsComponent implements OnInit
 						let products: Array<any> = response.data;
 						for( let i = 0; i < products.length; ++i )
 							this.products.push( new Product( products[i] ) );
-						console.log( this.products );
 						this.loaderService.hide();
 					} );
 			} );

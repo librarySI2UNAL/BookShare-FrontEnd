@@ -6,5 +6,5 @@ export class Interest
 	id: number;
 	name: string;
 	photo: Photo;
-	genre: Array<Genre>
+	genre: Array<Genre>;
 }
