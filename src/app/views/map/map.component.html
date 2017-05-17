@@ -39,6 +39,31 @@ https://rawgit.com/ng2-ui/map/master/app/index.html
     </ng-container>
 </ngui-map>
 
+<clr-modal [(clrModalOpen)]="showUserProducts">
+    <h3 class="modal-title">Productos que tiene este usuario</h3>
+      <div class="modal-body">
+      <div *ngIf = "loading" class = "progress loop">
+      <progress></progress>
+      </div>
+      <div *ngIf = "!loading">
+        <ng-container *ngFor="let prod of userProducts">
+          <div>
+            <p>{{prod.productItem.id}}</p>
+            <p>{{prod.productItem.type}}</p>
+            <p>{{prod.productItem.name}}</p>
+            <p>{{prod.productItem.author}}</p>
+            <p>{{prod.productItem.genre}}</p>
+            <p>{{prod.productItem.editorial}}</p>
+            <p>{{prod.productItem.yearOfPublication}}</p>
+            <button type="button" class="btn btn-primary" (click)="redirect(prod.id)">ver</button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="showUserProducts = false">Ok</button>
+    </div>
+</clr-modal>
 
 <!--
 <div *ngFor="let user of nearUsers">

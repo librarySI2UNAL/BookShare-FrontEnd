@@ -6,6 +6,7 @@ import "rxjs/add/operator/toPromise";
 import "rxjs/add/operator/catch";
 
 import { User } from "../models/user";
+import { Product } from "../models/product";
 import { Interest } from "../models/interest";
 import { AppSettings } from "../app.settings";
 
@@ -114,6 +115,12 @@ export class UserService
 		}
 		return this.http.get( url,  { headers: AppSettings.HEADERS } )
 			.map( response => response.json().data || { } )
+			.catch( this.handleError );
+	}
+	
+	public getAllProductsForUser( id: number ): Observable<Product[]>{
+		return this.http.get( `${AppSettings.API_ENDPOINT}/users/products?id=${id}`,  { headers: AppSettings.HEADERS } )
+			.map( response => response.json().results || { } )
 			.catch( this.handleError );
 	}
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router } from '@angular/router';
 
 import { User } from "../../models/user";
+import { Product } from "../../models/product";
 import { AppSettings } from "../../app.settings";
 import { UserService } from "../../services/user.service";
 
@@ -20,9 +22,12 @@ export class MapComponent implements OnInit{
     scrollmap: boolean = false;
     user: User;
     nearUsers: User[];
+    showUserProducts: boolean = false;
     errorMessage: string;
+    userProducts: Product[];
+    loading: boolean = true;
 
-	constructor(private userService: UserService)
+	constructor(private router: Router, private userService: UserService)
 	{
 	}
 
@@ -63,9 +68,30 @@ export class MapComponent implements OnInit{
             error =>  this.errorMessage = <any>error);
 	}
 	
+    getAllProductsForUser(id : number){
+        this.userService.getAllProductsForUser(id).subscribe(
+                userProducts => {
+                    this.userProducts = userProducts;
+                    console.log(this.userProducts);
+                    this.loading = false;
+                },
+                error =>  this.errorMessage = <any>error);
+    }
+	
+	
 	nearUserClicked(event: any, user: User){
 	    let marker = event;
-	    console.log(marker);
-	    console.log(user.product.length);
+	    this.getAllProductsForUser(user.id);
+	    this.loading = true;
+	    this.showUserProductsModal(true);
 	}
+	
+	showUserProductsModal( state: boolean ): void
+	{
+		this.showUserProducts = state;
+	}
+	
+	goToProductDetail(id : number) {
+      this.router.navigate(['/product', id]);
+    }
 }
