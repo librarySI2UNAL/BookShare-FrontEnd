@@ -29,6 +29,7 @@ export class ProductsComponent implements OnInit
 	filters: any;
 	selectedInterest: Interest;
 	selectedGenre: Genre;
+	server: string;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -46,6 +47,7 @@ export class ProductsComponent implements OnInit
 		};
 		this.selectedInterest = new Interest();
 		this.selectedGenre = new Genre();
+		this.server = AppSettings.SERVER;
 	}
 
 	private reset(): void
@@ -116,7 +118,6 @@ export class ProductsComponent implements OnInit
 			.subscribe( interests =>
 			{
 				this.interests = interests;
-				console.log( this.interests );
 			} );
 		this.userService.userState
 			.subscribe( user =>
@@ -127,6 +128,7 @@ export class ProductsComponent implements OnInit
 					{
 						this.totalProducts = response.count;
 						this.products = response.data;
+						console.log( this.products );
 						this.loaderService.hide();
 					} );
 			} );

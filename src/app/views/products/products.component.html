@@ -3,12 +3,12 @@
 		<div class = "content-area">
 			<div *ngIf = "products.length === 0">
 				<h1>Lo sentimos. No pudimos encontrar productos con los parámetros solicitados</h1>
-				<img src = "assets/images/Products.png" style = "max-width: 70%; max-height: 70%;">
+				<img class = "custom-products-not-found-image" src = "assets/images/Products.png" style = "">
 			</div>
-			<div *ngIf = "products.length > 0">
-				<div class = "card" *ngFor = "let product of products">
+			<div *ngIf = "products.length > 0" class = "custom-product-grid">
+				<div class = "card custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products">
 					<div class = "card-img">
-						<img src = "...">
+						<img [src] = "server + product.photos[0].image.url">
 					</div>
 					<div class = "card-block">
 						<p class = "card-text">
