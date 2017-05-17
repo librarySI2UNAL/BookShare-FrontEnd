@@ -78,7 +78,7 @@ export class ProductsComponent implements OnInit
 				let products: Array<any> = response.data;
 				for( let i = 0; i < products.length; ++i )
 					this.products.push( new Product( products[i] ) );
-					this.loaderService.hide();
+				this.loaderService.hide();
 			} );
 	}
 

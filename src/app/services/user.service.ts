@@ -15,11 +15,15 @@ export class UserService
 {
 	private userSubject: Subject<User>;
 	public userState: Observable<User>;
+	private logInURL: string;
+	private usersURL: string;
 
 	constructor( private http: Http )
 	{
 		this.userSubject = new Subject<User>();
 		this.userState = this.userSubject.asObservable();
+		this.logInURL = `${AppSettings.API_ENDPOINT}/login`;
+		this.usersURL = `${AppSettings.API_ENDPOINT}/users`;
 	}
 
 	public getSessionStorageUser(): void
@@ -62,14 +66,14 @@ export class UserService
 
 	public logIn( credentials: any ): Promise<any>
 	{
-		return this.http.post( `${AppSettings.API_ENDPOINT}/login`, credentials, { headers: AppSettings.HEADERS } ).toPromise()
+		return this.http.post( this.logInURL, credentials, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
 
 	public get( id: number ): Promise<any>
 	{
-		return this.http.get( `${AppSettings.API_ENDPOINT}/users/${id}` ).toPromise()
+		return this.http.get( `${this.usersURL}/${id}` ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
@@ -84,7 +88,7 @@ export class UserService
 		delete userAux.id;
 		delete userAux.token;
 		delete userAux.city;
-		return this.http.post( `${AppSettings.API_ENDPOINT}/users`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
+		return this.http.post( this.usersURL, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
@@ -98,32 +102,29 @@ export class UserService
 		delete userAux.id;
 		delete userAux.token;
 		delete userAux.city;
-		return this.http.put( `${AppSettings.API_ENDPOINT}/users/${user.id}`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
+		return this.http.put( `${this.usersURL}/${user.id}`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}
 
 	public delete( id: number ): Promise<any>
 	{
-		return this.http.delete( `${AppSettings.API_ENDPOINT}/users/${id}` ).toPromise()
+		return this.http.delete( `${this.usersURL}/${id}` ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
 	}
 
 	public existsWithEmail( email: string ): Promise<any>
 	{
-		return this.http.get( `${AppSettings.API_ENDPOINT}/users/validate?email=${email}` ).toPromise()
+		return this.http.get( `${this.usersURL}/validate?email=${email}` ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
 	}
 	
-	public getNear( dist: number ): Observable<User[]>{
-		let url: string = `${AppSettings.API_ENDPOINT}/users/near`;
-		if(dist>1){
-			url += "?dist="+String(dist);
-		}
-		return this.http.get( url,  { headers: AppSettings.HEADERS } )
-			.map( response => response.json().data || { } )
+	public getNear( userId: number, distance: number ): Observable<Array<User>>
+	{
+		return this.http.get( `${this.usersURL}/${userId}/near?distance=${distance}`, { headers: AppSettings.HEADERS } )
+			.map( response => response.json().data )
 			.catch( this.handleError );
 	}
 }
