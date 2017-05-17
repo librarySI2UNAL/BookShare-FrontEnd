@@ -6,14 +6,15 @@
 				<img class = "custom-products-not-found-image" src = "assets/images/Products.png" style = "">
 			</div>
 			<div *ngIf = "products.length > 0" class = "custom-product-grid">
-				<div class = "card custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products">
+				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products">
 					<div class = "card-img">
 						<img [src] = "server + product.photos[0].image.url">
 					</div>
 					<div class = "card-block">
-						<p class = "card-text">
-							{{ product.value }}
-						</p>
+						<div class = "card-text">
+							<h3>{{ product.productItem.name }}</h3>
+							<h4>{{ product.value | currency: 'COP': true }}</h4>
+						</div>
 					</div>
 				</div>
 			</div>

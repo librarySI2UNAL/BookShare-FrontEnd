@@ -58,7 +58,10 @@ export class ProductsComponent implements OnInit
 			.subscribe( response =>
 			{
 				this.totalProducts = response.count;
-				this.products = response.data;
+				this.products = [];
+				let products: Array<any> = response.data;
+				for( let i = 0; i < products.length; ++i )
+					this.products.push( new Product( products[i] ) );
 				this.loaderService.hide();
 			} );
 	}
@@ -102,7 +105,10 @@ export class ProductsComponent implements OnInit
 			.subscribe( response =>
 			{
 				this.totalProducts = response.count;
-				this.products = response.data;
+				this.products = [];
+				let products: Array<any> = response.data;
+				for( let i = 0; i < products.length; ++i )
+					this.products.push( new Product( products[i] ) );
 				this.loaderService.hide();
 			} );
 	}
@@ -127,7 +133,10 @@ export class ProductsComponent implements OnInit
 					.subscribe( response =>
 					{
 						this.totalProducts = response.count;
-						this.products = response.data;
+						this.products = [];
+						let products: Array<any> = response.data;
+						for( let i = 0; i < products.length; ++i )
+							this.products.push( new Product( products[i] ) );
 						console.log( this.products );
 						this.loaderService.hide();
 					} );
