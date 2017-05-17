@@ -48,14 +48,10 @@ https://rawgit.com/ng2-ui/map/master/app/index.html
       <div *ngIf = "!loading">
         <ng-container *ngFor="let prod of userProducts">
           <div>
-            <p>{{prod.productItem.id}}</p>
             <p>{{prod.productItem.type}}</p>
             <p>{{prod.productItem.name}}</p>
             <p>{{prod.productItem.author}}</p>
-            <p>{{prod.productItem.genre}}</p>
-            <p>{{prod.productItem.editorial}}</p>
-            <p>{{prod.productItem.yearOfPublication}}</p>
-            <button type="button" class="btn btn-primary" (click)="redirect(prod.id)">ver</button>
+            <button class="btn btn-primary" [routerLink] = "['/product', { id: prod.id }]">Ver más</button>
           </div>
         </ng-container>
       </div>

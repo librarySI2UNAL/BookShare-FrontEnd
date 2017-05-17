@@ -48,35 +48,35 @@ export class ProductService
 		return Observable.throw( errMsg );
 	}
 
-	getInterests(): Observable<Array<Interest>>
+	public getInterests(): Observable<Array<Interest>>
 	{
 		return this.http.get( `${this.interestsURL}` )
 			.map( ( response: Response ) => response.json().data as Array<Interest> )
 			.catch( this.handleError );
 	}
 
-	getGenres(): Observable<Array<Genre>>
+	public getGenres(): Observable<Array<Genre>>
 	{
 		return this.http.get( `${this.genresURL}`, { headers: AppSettings.HEADERS } )
 			.map( ( response: Response ) => response.json().data as Array<Genre> )
 			.catch( this.handleError );
 	}
 
-	getByUser( userId: number, available: boolean ): Observable<any>
+	public getByUser( userId: number, available: boolean ): Observable<any>
 	{
-		return this.http.get( `${this.usersURL}/${userId}/products`, { headers: AppSettings.HEADERS } )
+		return this.http.get( `${this.usersURL}/${userId}/products?available=${available}`, { headers: AppSettings.HEADERS } )
 			.map( ( r: Response ) => r.json().data )
 			.catch( this.handleError );
 	}
 
-	getAvailables( userId: number, page: number, perPage: number ): Observable<any>
+	public getAvailables( userId: number, page: number, perPage: number ): Observable<any>
 	{
 		return this.http.get( `${this.productsURL}?user_id=${userId}&page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
 			.map( ( r: Response ) => r.json() )
 			.catch( this.handleError );
 	}
 
-	getFilteredAvailables( userId: number, query: string, interests: string, genres: string, columns: string, page: number, perPage: number ): Observable<any>
+	public getFilteredAvailables( userId: number, query: string, interests: string, genres: string, columns: string, page: number, perPage: number ): Observable<any>
 	{
 		let q: string = "";
 		if( interests.length > 0 )
@@ -92,14 +92,14 @@ export class ProductService
 			.catch( this.handleError );
 	}
 
-	get( id: number ): Promise<any>
+	public get( id: number ): Promise<any>
 	{
 		return this.http.get( `${this.productsURL}/${id}`, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
 
-	create( userId: number, product: Product ): Promise<any>
+	public create( userId: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
 		productAux.product_item = product.productItem;
@@ -115,7 +115,7 @@ export class ProductService
 			.catch( this.handlePromiseError );
 	}
 
-	update( userId: number, id: number, product: Product ): Promise<any>
+	public update( userId: number, id: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
 		productAux.product_item = product.productItem;

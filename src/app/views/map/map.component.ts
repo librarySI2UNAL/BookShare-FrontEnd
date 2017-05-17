@@ -40,8 +40,6 @@ export class MapComponent implements OnInit{
 	ngOnInit()
 	{
 		this.getCurrentUser();
-		this.getNearUsers(this.dist);
-		this.coords = { lat: this.user.latitude, lng: this.user.longitude }
 	}
 	
 	initMap(event: any) {
@@ -62,24 +60,36 @@ export class MapComponent implements OnInit{
 		this.map.fitBounds(this.circle.getBounds());
 	}
 	
-	getCurrentUser(){
+	private getCurrentUser(): void
+	{
 		this.userService.userState
-			.subscribe( user => this.user = user );
+			.subscribe( user =>
+			{
+				this.user = user;
+				this.coords = { lat: this.user.latitude, lng: this.user.longitude };
+				this.getNearUsers();
+			} );
 		this.userService.getSessionStorageUser();
 	}
 	
-	getNearUsers(distance: number){
-		this.userService.getNear(distance).subscribe(
-			nearUsers => this.nearUsers = nearUsers,
-			error =>  this.errorMessage = <any>error);
+	private getNearUsers(): void
+	{
+		this.userService.getNear( this.user.id, this.dist )
+			.subscribe( users =>
+			{
+				this.nearUsers = users;
+			}, error => this.errorMessage = <any>error );
 	}
 
-	getAllProductsForUser( id: number )
+	private getAllProductsForUser( userId: number ): void
 	{
-		this.productService.getByUser( id, true )
+		this.productService.getByUser( userId, true )
 			.subscribe( userProducts =>
 			{
-				this.userProducts = userProducts;
+				this.userProducts = [];
+				let products: Array<any> = userProducts;
+				for( let i = 0; i < products.length; ++i )
+					this.userProducts.push( new Product( products[i] ) );
 				console.log(this.userProducts);
 				this.loading = false;
 			}, error => this.errorMessage = <any>error );
