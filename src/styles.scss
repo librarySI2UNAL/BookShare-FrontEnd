@@ -26,6 +26,11 @@
 	overflow: visible;
 }
 
+.custom-overflow-hidden
+{
+	overflow: hidden;
+}
+
 .custom-display-none
 {
 	display: none;
@@ -79,4 +84,10 @@
 .custom-error-text
 {
 	color: #c92100;
+}
+
+.custom-product-image
+{
+	max-width: 256px;
+	max-heigth: 256px;
 }

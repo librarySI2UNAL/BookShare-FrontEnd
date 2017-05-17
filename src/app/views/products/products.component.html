@@ -1,12 +1,78 @@
-<div>
-	<div class = "card" *ngFor = "let product of products">
-		<div class = "card-img">
-			<img src = "...">
+<div class = "main-container">
+	<div class = "content-container">
+		<div class = "content-area">
+			<div *ngIf = "productsNotFound">
+				<h1>Lo sentimos. No pudimos encontrar productos con los parámetros solicitados</h1>
+				<img class = "custom-products-not-found-image" src = "assets/images/Products.png" style = "">
+			</div>
+			
+			<div *ngIf = "!productsNotFound" class = "custom-product-grid">
+				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products">
+					<div class = "card-img">
+						<img [src] = "server + product.photos[0].image.url">
+					</div>
+					<div class = "card-block">
+						<div class = "card-text">
+							<h3>{{ product.productItem.name }}</h3>
+							<h4>{{ product.value | currency: 'COP': true }}</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br>
+
+			<div class = "row flex-items-xs-center">
+				<div class = "btn-group" *ngIf = "pages().length > 1">
+					<div class = "radio btn" *ngFor = "let i of pages()" (click) = "changePage( i )">
+						<input type = "radio" name = "btn-group-radios" id = "btn-radio-{{ i }}" [attr.checked] = "page === i ? '': null">
+						<label for = "btn-radio-{{ i }}">{{ i }}</label>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class = "card-block">
-			<p class = "card-text">
-				{{ product.value }}
-			</p>
-		</div>
+		<nav class = "sidenav">
+			<section class = "sidenav-content">
+				<section class = "nav-group">
+					<div class = "col-xs">
+						<clr-icon shape = "search"></clr-icon>
+						<input type = "text" [(ngModel)] = "filters.search" placeholder = "Buscar">
+					</div>
+				</section>
+
+				<section class = "nav-group">
+					<div class = "col-xs">
+						<div class = "form-group">
+							<clr-checkbox type = "checkbox" [(ngModel)] = "filters.name">Nombre del producto</clr-checkbox>
+							<clr-checkbox type = "checkbox" [(ngModel)] = "filters.author">Autor</clr-checkbox>
+						</div>
+					</div>
+				</section>
+
+				<section class = "nav-group">
+					<div class = "col-xs">
+						<h4>Intereses y géneros</h4>
+					</div>
+				</section>
+
+				<br>
+
+				<clr-tree [(clrTreeSelected)] = "filters.selection">
+					<clr-tree-node [clrTreeModel] = "interest.id" [clrTreeNodeExpanded] = "false" *ngFor = "let interest of interests">
+						{{ interest.name }}
+						<clr-tree-node [clrTreeModel] = "genre.id" *ngFor = "let genre of interest.genres">
+							{{ genre.name }}
+						</clr-tree-node>
+					</clr-tree-node>
+				</clr-tree>
+
+				<section class = "nav-group">
+					<div class = "row flex-items-xs-center">
+						<button class = "btn btn-primary" (click) = "reset()">Reiniciar</button>
+						<button class = "btn btn-primary" (click) = "filter()">Filtrar</button>
+					</div>
+				</section>
+			</section>
+		</nav>
 	</div>
 </div>
