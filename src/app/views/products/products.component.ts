@@ -47,6 +47,27 @@ export class ProductsComponent implements OnInit
 		this.selectedGenre = new Genre();
 	}
 
+	private filter(): void
+	{
+		if( this.filters.search.length === 0 && this.filters.selection.length === 0 )
+			return;
+		let search: string = this.filters.search;
+		let interests: string = "";
+		let genres: string = "";
+		for( let i = 0; i < this.filters.selection.length; i++ )
+			if( this.filters.selection[i].selected )
+				interests += String( this.filters.selection[i].model ) + ",";
+			else
+				for( let j = 0; j < this.filters.selection[i].children.length; j++ )
+					genres += String( this.filters.selection[i].children[j].model ) + ",";
+		if( interests.length > 0 )
+			interests = interests.substring( 0, interests.length - 1 );
+		if( genres.length > 0 )
+			genres = genres.substring( 0, genres.length - 1 );
+		if( search.length > 0 )
+			search = search.replace( / /g, "+" );
+	}
+
 	ngOnInit()
 	{
 		for( let view in AppSettings.ACTIVES )
