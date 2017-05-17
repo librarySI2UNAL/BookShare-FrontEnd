@@ -20,10 +20,12 @@
 				</div>
 			</div>
 
+			<br>
+
 			<div class = "row flex-items-xs-center">
-				<div class = "btn-group" *ngIf = "pages().length > 0">
+				<div class = "btn-group" *ngIf = "pages().length > 1">
 					<div class = "radio btn" *ngFor = "let i of pages()" (click) = "changePage( i )">
-						<input type = "radio" name="btn-group-radios" id = "btn-radio-{{ i }}">
+						<input type = "radio" name = "btn-group-radios" id = "btn-radio-{{ i }}" [attr.checked] = "page === i ? '': null">
 						<label for = "btn-radio-{{ i }}">{{ i }}</label>
 					</div>
 				</div>

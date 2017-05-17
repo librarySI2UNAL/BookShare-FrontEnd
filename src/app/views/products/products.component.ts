@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit
 		private productService: ProductService,
 		private loaderService: LoaderService )
 	{
-		this.page = 1;
+		this.page = -1;
 		this.perPage = 10;
 		this.products = [];
 		this.interests = [];
@@ -61,19 +61,15 @@ export class ProductsComponent implements OnInit
 		let pages: number = Math.ceil( this.totalProducts / this.perPage );
 		for( let i = 0; i < pages; i++ )
 			array.push( i + 1 );
-		return [1, 2, 3];
+		return array;
 	}
 
 	private changePage( page: number ): void
 	{
 		if( this.page === page )
 			return;
-	}
-
-	private reset(): void
-	{
 		this.loaderService.show();
-		this.page = 1;
+		this.page = page;
 		this.productService.getAvailables( this.user.id, this.page, this.perPage )
 			.subscribe( response =>
 			{
@@ -82,8 +78,14 @@ export class ProductsComponent implements OnInit
 				let products: Array<any> = response.data;
 				for( let i = 0; i < products.length; ++i )
 					this.products.push( new Product( products[i] ) );
-				this.loaderService.hide();
+					this.loaderService.hide();
 			} );
+	}
+
+	private reset(): void
+	{
+		this.page = -1;
+		this.changePage( 1 );
 	}
 
 	private filter(): void
@@ -151,17 +153,7 @@ export class ProductsComponent implements OnInit
 			.subscribe( user =>
 			{
 				this.user = user;
-				this.productService.getAvailables( this.user.id, this.page, this.perPage )
-					.subscribe( response =>
-					{
-						this.totalProducts = response.count;
-						this.products = [];
-						let products: Array<any> = response.data;
-						for( let i = 0; i < products.length; ++i )
-							this.products.push( new Product( products[i] ) );
-						console.log( this.products );
-						this.loaderService.hide();
-					} );
+				this.changePage( 1 );
 			} );
 		this.userService.getSessionStorageUser();
 	}
