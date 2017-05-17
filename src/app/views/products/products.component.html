@@ -1,14 +1,20 @@
 <div class = "main-container">
 	<div class = "content-container">
 		<div class = "content-area">
-			<div class = "card" *ngFor = "let product of products">
-				<div class = "card-img">
-					<img src = "...">
-				</div>
-				<div class = "card-block">
-					<p class = "card-text">
-						{{ product.value }}
-					</p>
+			<div *ngIf = "products.length === 0">
+				<h1>Lo sentimos. No pudimos encontrar productos con los parámetros solicitados</h1>
+				<img src = "assets/images/Products.png" style = "max-width: 70%; max-height: 70%;">
+			</div>
+			<div *ngIf = "products.length > 0">
+				<div class = "card" *ngFor = "let product of products">
+					<div class = "card-img">
+						<img src = "...">
+					</div>
+					<div class = "card-block">
+						<p class = "card-text">
+							{{ product.value }}
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
