@@ -6,6 +6,7 @@
 	</div>
 	<div class = "header-nav">
 		<a routerLink = "/home" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.home }">Inicio</a>
+		<a *ngIf = "user.token" routerLink = "/near-products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.nearProducts }">Productos cercanos</a>
 		<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
 	</div>
 	<form class = "search">

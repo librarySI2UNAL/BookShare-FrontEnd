@@ -1,0 +1,82 @@
+<!--docs are here 
+https://rawgit.com/ng2-ui/map/master/app/index.html
+-->
+
+<ngui-map 
+  (mapReady$)="initMap($event)"
+  (window:resize)="onResize($event)"
+  [zoom]="zoom"
+  [center]="coords"
+  [scrollwheel]="scrollmap">
+    <circle (initialized$)="initCircle($event)" [center]="coords" [strokeColor]="'#FFFFFF'" [strokeOpacity]="0.4"
+            [strokeWeight]="1" [editable]="false" [radius]="getRadius(dist)" draggable="false">
+        
+    </circle>
+    <marker 
+      [position]="coords"
+      [icon]="{
+               url: 'https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_my_location_black_48px.svg',
+               anchor: [16,16],
+               size: [32,32],
+               scaledSize: [32,32]
+             }"
+      draggable="false">
+        
+    </marker>
+    <ng-container *ngFor="let nearUser of nearUsers">
+      <marker 
+        [position]="[nearUser.latitude,nearUser.longitude]"
+        (click)="nearUserClicked($event, nearUser)"
+        [icon]="{
+                  url: 'https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_person_pin_circle_black_48px.svg',
+                  anchor: [16,16],
+                  size: [32,32],
+                  scaledSize: [32,32]
+                }"
+        draggable="false">
+        
+      </marker>
+    </ng-container>
+</ngui-map>
+
+<clr-modal [(clrModalOpen)]="showUserProducts">
+    <h3 class="modal-title">Productos que tiene este usuario</h3>
+      <div class="modal-body">
+      <div *ngIf = "loading" class = "progress loop">
+      <progress></progress>
+      </div>
+      <div *ngIf = "!loading">
+        <ng-container *ngFor="let prod of userProducts">
+          <div>
+            <p>{{prod.productItem.id}}</p>
+            <p>{{prod.productItem.type}}</p>
+            <p>{{prod.productItem.name}}</p>
+            <p>{{prod.productItem.author}}</p>
+            <p>{{prod.productItem.genre}}</p>
+            <p>{{prod.productItem.editorial}}</p>
+            <p>{{prod.productItem.yearOfPublication}}</p>
+            <button type="button" class="btn btn-primary" (click)="redirect(prod.id)">ver</button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="showUserProducts = false">Ok</button>
+    </div>
+</clr-modal>
+
+<!--
+<div *ngFor="let user of nearUsers">
+    <p>{{user.id}}</p>
+    <p>{{user.name}}</p>
+    <p>{{user.lastName}}</p>
+    <p>{{user.email}}</p>
+    <p>{{user.qualification}}</p>
+    <p>{{user.latitude}}</p>
+    <p>{{user.longitude}}</p>
+    <p>{{user.photo}}</p>
+    <p>{{user.city.id}}</p>
+    <p>{{user.city.name}}</p>
+    <p>{{user.city.placeId}}</p>
+</div>
+-->
