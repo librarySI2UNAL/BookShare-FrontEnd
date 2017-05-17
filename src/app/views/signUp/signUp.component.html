@@ -8,7 +8,7 @@
 			<div class = "login-group">
 				<div>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.email.touched ) && signUpForm.controls.email.invalid">
-						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email" placeholder = "Correo electrónico">
+						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email" placeholder = "Correo electrónico" (keyup.enter)="signUp()"  autofocus>
 						<span *ngIf = "signUpForm.controls.email.errors" class = "tooltip-content">
 							<div [hidden] = "!signUpForm.controls.email.errors.required">
 								El correo electrónico es requerido
@@ -27,7 +27,7 @@
 
 				<div>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.name.touched ) && signUpForm.controls.name.invalid">
-						<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name" placeholder = "Nombre">
+						<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name" placeholder = "Nombre" (keyup.enter)="signUp()" >
 						<span *ngIf = "signUpForm.controls.name.errors" class = "tooltip-content">
 							<div [hidden] = "!signUpForm.controls.name.errors.required">
 								El nombre es requerido
@@ -40,7 +40,7 @@
 
 				<div>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.lastName.touched ) && signUpForm.controls.lastName.invalid">
-						<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName" placeholder = "Apellido">
+						<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName" placeholder = "Apellido" (keyup.enter)="signUp()" >
 						<span *ngIf = "signUpForm.controls.lastName.errors" class = "tooltip-content">
 							<div [hidden] = "!signUpForm.controls.lastName.errors.required">
 								El apellido es requerido
@@ -53,7 +53,7 @@
 
 				<div>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.password.touched ) && signUpForm.controls.password.invalid">
-						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value" placeholder = "Contraseña">
+						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value" placeholder = "Contraseña" (keyup.enter)="signUp()" >
 						<span *ngIf = "signUpForm.controls.password.errors" class = "tooltip-content">
 							<div [hidden] = "!signUpForm.controls.password.errors.required">
 								La contraseña es requerida
@@ -69,7 +69,7 @@
 
 				<div>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.passwordConfirmation.touched ) && signUpForm.controls.passwordConfirmation.invalid">
-						<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation" placeholder = "Confirme la contraseña">
+						<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation" placeholder = "Confirme la contraseña" (keyup.enter)="signUp()" required>
 						<span *ngIf = "signUpForm.controls.passwordConfirmation.errors" class = "tooltip-content">
 							<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
 								Debe confirmar la contraseña

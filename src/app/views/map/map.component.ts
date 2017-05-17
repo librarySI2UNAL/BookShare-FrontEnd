@@ -85,9 +85,9 @@ export class MapComponent implements OnInit{
 			}, error => this.errorMessage = <any>error );
 	}
 
-	nearUserClicked(event: any, user: User){
+	nearUserClicked(event: any, selectedUser: User){
 		let marker = event;
-		this.getAllProductsForUser(user.id);
+		this.getAllProductsForUser(selectedUser.id);
 		this.loading = true;
 		this.showUserProductsModal(true);
 	}

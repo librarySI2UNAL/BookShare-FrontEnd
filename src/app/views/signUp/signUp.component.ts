@@ -134,8 +134,11 @@ export class SignUpComponent implements OnInit
 	{
 		this.loaderService.show();
 		this.submitted = true;
-		if( this.signUpForm.invalid )
+		if( this.signUpForm.invalid ){
+			this.loaderService.hide();
+			this.submitted = false;
 			return;
+		}
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
