@@ -1,11 +1,12 @@
 <div class = "main-container">
 	<div class = "content-container">
 		<div class = "content-area">
-			<div *ngIf = "products.length === 0">
+			<div *ngIf = "productsNotFound">
 				<h1>Lo sentimos. No pudimos encontrar productos con los parámetros solicitados</h1>
 				<img class = "custom-products-not-found-image" src = "assets/images/Products.png" style = "">
 			</div>
-			<div *ngIf = "products.length > 0" class = "custom-product-grid">
+			
+			<div *ngIf = "!productsNotFound" class = "custom-product-grid">
 				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products">
 					<div class = "card-img">
 						<img [src] = "server + product.photos[0].image.url">
@@ -15,6 +16,15 @@
 							<h3>{{ product.productItem.name }}</h3>
 							<h4>{{ product.value | currency: 'COP': true }}</h4>
 						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class = "row flex-items-xs-center">
+				<div class = "btn-group" *ngIf = "pages().length > 0">
+					<div class = "radio btn" *ngFor = "let i of pages()" (click) = "changePage( i )">
+						<input type = "radio" name="btn-group-radios" id = "btn-radio-{{ i }}">
+						<label for = "btn-radio-{{ i }}">{{ i }}</label>
 					</div>
 				</div>
 			</div>

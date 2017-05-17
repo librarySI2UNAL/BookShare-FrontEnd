@@ -30,6 +30,7 @@ export class ProductsComponent implements OnInit
 	selectedInterest: Interest;
 	selectedGenre: Genre;
 	server: string;
+	productsNotFound: boolean;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -48,6 +49,25 @@ export class ProductsComponent implements OnInit
 		this.selectedInterest = new Interest();
 		this.selectedGenre = new Genre();
 		this.server = AppSettings.SERVER;
+		this.productsNotFound = false;
+	}
+
+	private pages(): Array<number>
+	{
+		let array: Array<number> = [];
+		if( !this.totalProducts )
+			return array;
+
+		let pages: number = Math.ceil( this.totalProducts / this.perPage );
+		for( let i = 0; i < pages; i++ )
+			array.push( i + 1 );
+		return [1, 2, 3];
+	}
+
+	private changePage( page: number ): void
+	{
+		if( this.page === page )
+			return;
 	}
 
 	private reset(): void
@@ -109,6 +129,8 @@ export class ProductsComponent implements OnInit
 				let products: Array<any> = response.data;
 				for( let i = 0; i < products.length; ++i )
 					this.products.push( new Product( products[i] ) );
+				if( this.products.length === 0 )
+					this.productsNotFound = true;
 				this.loaderService.hide();
 			} );
 	}
