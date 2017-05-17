@@ -10,8 +10,6 @@ import { Genre } from "../models/genre";
 import { Interest } from "../models/interest";
 import { AppSettings } from "../app.settings";
 
-import { UserService } from "./user.service";
-
 @Injectable()
 export class ProductService
 {
@@ -20,8 +18,7 @@ export class ProductService
 	private genresURL: string;
 	private interestsURL: string;
 
-	constructor( private http: Http,
-		private userService: UserService )
+	constructor( private http: Http )
 	{
 		this.productsURL = `${AppSettings.API_ENDPOINT}/products`;
 		this.usersURL = `${AppSettings.API_ENDPOINT}/users`;
@@ -45,9 +42,7 @@ export class ProductService
 			errMsg = `${error.status} - ${error.statusText || ""} ${err}`;
 		}
 		else
-		{
 			errMsg = error.message ? error.message : error.toString();
-		}
 		console.error( errMsg );
 
 		return Observable.throw( errMsg );
@@ -64,6 +59,13 @@ export class ProductService
 	{
 		return this.http.get( `${this.genresURL}`, { headers: AppSettings.HEADERS } )
 			.map( ( response: Response ) => response.json().data as Array<Genre> )
+			.catch( this.handleError );
+	}
+
+	getByUser( userId: number, available: boolean ): Observable<any>
+	{
+		return this.http.get( `${this.usersURL}/${userId}/products`, { headers: AppSettings.HEADERS } )
+			.map( ( r: Response ) => r.json().data )
 			.catch( this.handleError );
 	}
 
@@ -107,6 +109,7 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
+
 		return this.http.post( `${this.usersURL}/${userId}/products`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
@@ -122,6 +125,7 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
+
 		return this.http.put( `${this.usersURL}/${userId}/products/${id}`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );

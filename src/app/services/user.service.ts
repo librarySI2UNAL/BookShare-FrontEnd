@@ -126,10 +126,4 @@ export class UserService
 			.map( response => response.json().data || { } )
 			.catch( this.handleError );
 	}
-	
-	public getAllProductsForUser( id: number ): Observable<Product[]>{
-		return this.http.get( `${AppSettings.API_ENDPOINT}/users/products?id=${id}`,  { headers: AppSettings.HEADERS } )
-			.map( response => response.json().results || { } )
-			.catch( this.handleError );
-	}
 }

@@ -1,6 +1,5 @@
 import { City } from "./city";
 import { Interest } from "./interest";
-import { Product } from "./product";
 import { Photo } from "./photo";
 
 export class User
@@ -16,7 +15,6 @@ export class User
 	photo: Photo;
 	city: City;
 	interests: Interest[];
-	product: Product[];
 
 	constructor( data: any )
 	{
@@ -33,7 +31,6 @@ export class User
 			this.city = null;
 			this.photo = null;
 			this.interests = [];
-			this.product = [];
 		}
 		else
 		{
@@ -48,7 +45,6 @@ export class User
 			this.city = data.data.city;
 			this.photo = data.data.photo;
 			this.interests = data.data.interests;
-			this.product = data.data.product;
 		}
 	}
 }
