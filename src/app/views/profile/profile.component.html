@@ -93,4 +93,71 @@
 			</div>
 		</div>
 	</div>
+
+
+	<div class="row">
+	    <div class="col-xs-10 offset-xs-1">
+	        <div class="card">
+	            <div class="card-header">
+	                Tus Productos Disponibles
+	            </div>
+	            <div class="card-block">
+
+								<div class = "custom-display-grid">
+															<div class = "card" *ngFor = "let product of products">
+																<div class = "card-img">
+																	<img src = "...">
+																</div>
+																<div class="card clickable">
+																	<p class = "card-text" *ngIf = "product.available">
+																		Título: {{  product.productItem.name}} <br>
+																		Autor: {{ product.productItem.author}}<br>
+																		Editorial: {{ product.productItem.editorial}}<br>
+
+																		</p>
+																</div>
+															</div>
+														</div>
+
+	            </div>
+
+	        </div>
+	    </div>
+	</div>
+
+
+		<div class="row">
+		    <div class="col-xs-10 offset-xs-1">
+		        <div class="card">
+		            <div class="card-header">
+		                Tus Productos Vendidos o Intercambiados
+		            </div>
+		            <div class="card-block">
+
+									<div class = "custom-display-grid">
+																<div class = "card" *ngFor = "let product of products">
+																	<div class = "card-img">
+																		<img src = "...">
+																	</div>
+																	<div class="card clickable">
+																		<p class = "card-text" *ngIf = "!product.available">
+
+																			Título: {{ product.productItem.name}} <br>
+																			<!--Autor: {{ product.productItem.author}}<br>-->
+																			<!--Editorial: {{ product.productItem.editorial}}<br>-->
+
+																			</p>
+																	</div>
+																</div>
+															</div>
+
+		            </div>
+
+		        </div>
+		    </div>
+		</div>
+
+
+
+
 </div>

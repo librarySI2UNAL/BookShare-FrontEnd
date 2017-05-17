@@ -5,6 +5,7 @@ import { FileUploader } from "ng2-file-upload";
 
 import { User } from "../../models/user";
 import { Interest } from "../../models/interest";
+import { Product } from "../../models/product";
 
 import { UserService } from "../../services/user.service";
 import { ProductService } from "../../services/product.service";
@@ -32,6 +33,8 @@ export class ProfileComponent implements OnInit
 	server: string;
 	mode: string;
 	ownProfile:  boolean;
+	products: Array<Product>;
+
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -52,6 +55,7 @@ export class ProfileComponent implements OnInit
 		this.server = AppSettings.SERVER;
 		this.mode = "view";
 		this.ownProfile = false;
+		this.products = [];
 	}
 
 	private mismatch(): ValidatorFn
@@ -117,7 +121,7 @@ export class ProfileComponent implements OnInit
 	private updatePhoto(): void
 	{
 		let fileReader: FileReader = new FileReader();
-		
+
 		fileReader.onload = this.completeOnLoadPhoto.bind( this );
 		fileReader.readAsDataURL( this.uploader.queue[this.uploader.queue.length - 1]._file );
 	}
@@ -129,7 +133,7 @@ export class ProfileComponent implements OnInit
 
 	private save(): void
 	{
-		
+
 	}
 
 	private createProfileForm(): FormGroup
@@ -165,6 +169,19 @@ export class ProfileComponent implements OnInit
 				if( this.user.photo )
 					this.profileImage = this.server + this.user.photo.image.url;
 			} );
+
+
 		this.userService.getSessionStorageUser();
+
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+		this.productService.getUserProducts(this.user.id)
+			.subscribe(result =>
+			{
+			let products: Array<any> = result;
+			for( let i = 0; i < products.length; ++i )
+			  this.products.push( new Product( products[i] ) );
+			});
+
 	}
 }

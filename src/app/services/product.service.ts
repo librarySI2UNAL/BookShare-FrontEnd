@@ -60,10 +60,10 @@ export class ProductService
 			.map( ( response: Response ) => response.json().data as Array<Interest> )
 			.catch( this.handleError );
 	}
-	getUserProducts(userId: number, availables: boolean ): Observable<any>
+	getUserProducts(userId: number): Observable<Array<Product>>
 	{
 		return this.http.get( `${this.usersURL}/${userId}/products`, { headers: AppSettings.HEADERS } )
-			.map( ( response: Response ) => response.json().data)
+			.map( ( response: Response ) => response.json().data as Array<Product>)
 			.catch( this.handleError );
 	}
 
