@@ -48,6 +48,19 @@ export class ProductsComponent implements OnInit
 		this.selectedGenre = new Genre();
 	}
 
+	private reset(): void
+	{
+		this.loaderService.show();
+		this.page = 1;
+		this.productService.getAvailables( this.user.id, this.page, this.perPage )
+			.subscribe( response =>
+			{
+				this.totalProducts = response.count;
+				this.products = response.data;
+				this.loaderService.hide();
+			} );
+	}
+
 	private filter(): void
 	{
 		if( this.filters.search.length === 0 && this.filters.selection.length === 0 )
