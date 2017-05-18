@@ -7,7 +7,7 @@
 			</div>
 			
 			<div *ngIf = "!productsNotFound" class = "custom-product-grid">
-				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products">
+				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products" (click) = "redirectToProduct( product.id )">
 					<div class = "card-img">
 						<img [src] = "server + product.photos[0].image.url">
 					</div>

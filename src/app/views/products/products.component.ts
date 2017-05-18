@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { Product } from "../../models/product";
 import { User } from "../../models/user";
@@ -34,7 +35,8 @@ export class ProductsComponent implements OnInit
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
-		private loaderService: LoaderService )
+		private loaderService: LoaderService,
+		private router: Router )
 	{
 		this.page = -1;
 		this.perPage = 10;
@@ -119,7 +121,7 @@ export class ProductsComponent implements OnInit
 		else
 			q = q.substring( 0, q.length - 1 );
 		columns = columns.substring( 0, columns.length - 1 );
-		
+
 		this.productService.getFilteredAvailables( this.user.id, q, columns, this.page, this.perPage )
 			.subscribe( response =>
 			{
@@ -134,6 +136,11 @@ export class ProductsComponent implements OnInit
 					this.productsNotFound = false;
 				this.loaderService.hide();
 			} );
+	}
+
+	private redirectToProduct( id: number ): void
+	{
+		this.router.navigate( ["/product", id] );
 	}
 
 	ngOnInit()

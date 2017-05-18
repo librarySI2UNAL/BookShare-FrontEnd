@@ -6,11 +6,10 @@
 	</div>
 	<div class = "header-nav">
 		<a routerLink = "/home" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.home }">Inicio</a>
-		<a *ngIf = "user.token" routerLink = "/near-products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.nearProducts }">Productos cercanos</a>
-		<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
-		<a *ngIf = "user.token" routerLink = "/product" class = "nav-link nav-icon" [ngClass] = "{ 'active': actives.product }">
-			<clr-icon shape = "add"></clr-icon>
-		</a>
+		<div *ngIf = "user.token">
+			<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
+			<a *ngIf = "user.token" routerLink = "/near-products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.nearProducts }">Productos cercanos</a>
+		</div>
 	</div>
 	<form class = "search">
 		<label>
@@ -18,6 +17,9 @@
 		</label>
 	</form>
 	<div class = "header-actions">
+		<a *ngIf = "user.token" routerLink = "/product" class = "nav-link nav-icon" [ngClass] = "{ 'active': actives.product }">
+			<clr-icon shape = "add"></clr-icon>
+		</a>
 		<div *ngIf = "!user.token">
 			<a routerLink = "/sign-up" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.signUp }">
 				Regístrate

@@ -251,15 +251,17 @@ export class ProductComponent implements OnInit
 				if( !id )
 					this.router.navigate( ["/home"] );
 
+				this.loaderService.show();
 				this.productService.get( id )
 					.then( product =>
 					{
 						this.product = new Product( product );
-						console.log( this.product );
+						this.loaderService.hide();
 					} )
 					.catch( error =>
 					{
 						console.log( error );
+						this.loaderService.hide();
 					} );
 				this.mode = "view";
 			}
