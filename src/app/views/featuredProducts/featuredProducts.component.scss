@@ -1,0 +1,25 @@
+featuredProducts
+{
+	.custom-product-grid
+	{
+		display: grid;
+		grid-template-columns: 50% 50%;
+	}
+
+	.custom-products-not-found-image
+	{
+		max-width: 70%;
+		max-height: 70%;
+	}
+
+	.custom-product-image-size
+	{
+		width: inherit !important;
+		height: inherit !important;
+	}
+
+	.custom-margin-product
+	{
+		margin-left: 30%;
+	}
+}

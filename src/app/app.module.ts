@@ -19,6 +19,7 @@ import { ProfileComponent } from "./views/profile/profile.component";
 import { ProductComponent }	from "./views/product/product.component";
 import { NearProductsComponent } from "./views/nearProducts/nearProducts.component";
 import { MapComponent } from "./views/map/map.component";
+import { FeaturedProducts } from "./views/featuredProducts/featuredProducts.component";
 import { LoaderComponent } from "./views/loader/loader.component";
 
 import { UserService } from "./services/user.service";
@@ -39,6 +40,7 @@ import { AppRoutingModule } from "./app.routes";
 		ProductComponent,
 		NearProductsComponent,
 		MapComponent,
+		FeaturedProducts,
 		LoaderComponent
 	],
 	imports: [

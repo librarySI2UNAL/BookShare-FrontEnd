@@ -1,0 +1,23 @@
+<div>
+    <div *ngIf = "productsNotFound">
+        <h1>No hemos encontrado productos destacados</h1>
+        <img class = "custom-products-not-found-image" src = "assets/images/Products.png" style = "">
+    </div>
+    <ng-container *ngIf = "!productsNotFound">
+        <div  class = "custom-product-grid">
+            <ng-container *ngFor="let product of products">
+                <div class = "card clickable custom-product-image-size custom-product-image custom-margin-product">
+                    <div class = "card-img">
+						<img [src] = "server + product.photos[0].image.url">
+					</div>
+					<div class = "card-block">
+						<div class = "card-text">
+							<h3>{{ product.productItem.name }}</h3>
+							<h4>{{ product.value | currency: 'COP': true }}</h4>
+						</div>
+					</div>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>
