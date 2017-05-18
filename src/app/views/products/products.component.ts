@@ -95,24 +95,17 @@ export class ProductsComponent implements OnInit
 		this.loaderService.show();
 		this.page = 1;
 		let search: string = this.filters.search.trim();
-		let interests: string = "";
 		let genres: string = "";
 		let columns: string = "";
+		let q: string = "";
 		for( let i = 0; i < this.filters.selection.length; i++ )
-			if( this.filters.selection[i].selected )
-				interests += String( this.filters.selection[i].model ) + "+";
-			else
-				for( let j = 0; j < this.filters.selection[i].children.length; j++ )
+			for( let j = 0; j < this.filters.selection[i].children.length; j++ )
 					genres += String( this.filters.selection[i].children[j].model ) + "+";
-		if( interests.length > 0 )
-		{
-			interests = interests.substring( 0, interests.length - 1 );
-			columns += "interest,";
-		}
 		if( genres.length > 0 )
 		{
 			genres = genres.substring( 0, genres.length - 1 );
 			columns += "genre,";
+			q += genres + ",";
 		}
 		if( search.length > 0 )
 		{
@@ -121,9 +114,13 @@ export class ProductsComponent implements OnInit
 				columns += "name,";
 			if( this.filters.author )
 				columns += "author,";
+			q += search;
 		}
+		else
+			q = q.substring( 0, q.length - 1 );
 		columns = columns.substring( 0, columns.length - 1 );
-		this.productService.getFilteredAvailables( this.user.id, search, interests, genres, columns, this.page, this.perPage )
+		
+		this.productService.getFilteredAvailables( this.user.id, q, columns, this.page, this.perPage )
 			.subscribe( response =>
 			{
 				this.totalProducts = response.count;
