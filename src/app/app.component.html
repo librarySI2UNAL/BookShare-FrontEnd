@@ -8,6 +8,9 @@
 		<a routerLink = "/home" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.home }">Inicio</a>
 		<a *ngIf = "user.token" routerLink = "/near-products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.nearProducts }">Productos cercanos</a>
 		<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
+		<a *ngIf = "user.token" routerLink = "/product" class = "nav-link nav-icon" [ngClass] = "{ 'active': actives.product }">
+			<clr-icon shape = "add"></clr-icon>
+		</a>
 	</div>
 	<form class = "search">
 		<label>
@@ -30,6 +33,7 @@
 			</button>
 			<clr-dropdown-menu>
 				<a routerLink = "/profile" clrDropdownItem>Perfil</a>
+				<a routerLink = "/product" clrDropdownItem>Crea un producto</a>
 				<a class = "custom-pointer" clrDropdownItem (click) = "logOut()">Salir</a>
 			</clr-dropdown-menu>
 		</clr-dropdown>

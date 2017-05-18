@@ -236,6 +236,10 @@ export class ProductComponent implements OnInit
 				this.router.navigate( ["/home"] );
 			else if( Object.keys( params ).length === 0 )
 			{
+				for( let view in AppSettings.ACTIVES )
+					AppSettings.ACTIVES[view] = false;
+				AppSettings.ACTIVES.product = true;
+
 				this.mode = "create";
 				this.product = new Product( {} );
 				this.product.available = true;
