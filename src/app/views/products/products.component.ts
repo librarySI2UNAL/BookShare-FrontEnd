@@ -107,7 +107,7 @@ export class ProductsComponent implements OnInit
 			columns += "genre,";
 			q += genres + ",";
 		}
-		if( search.length > 0 )
+		if( search.length > 0 && ( this.filters.name || this.filters.author ) )
 		{
 			search = search.replace( / /g, "+" );
 			if( this.filters.name )
@@ -130,6 +130,8 @@ export class ProductsComponent implements OnInit
 					this.products.push( new Product( products[i] ) );
 				if( this.products.length === 0 )
 					this.productsNotFound = true;
+				else
+					this.productsNotFound = false;
 				this.loaderService.hide();
 			} );
 	}
