@@ -34,6 +34,8 @@ export class ProfileComponent implements OnInit
 	mode: string;
 	ownProfile:  boolean;
 	products: Array<Product>;
+	editingMode: boolean;
+	userAux: User;
 
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
@@ -56,6 +58,9 @@ export class ProfileComponent implements OnInit
 		this.mode = "view";
 		this.ownProfile = false;
 		this.products = [];
+		this.editingMode = false;
+
+
 	}
 
 	private mismatch(): ValidatorFn
@@ -136,6 +141,15 @@ export class ProfileComponent implements OnInit
 
 	}
 
+	private cancel(): void
+	{
+		this.mode = "view";
+	}
+	private modeView(): void
+	{
+		this.mode = "edit";
+	}
+
 	private createProfileForm(): FormGroup
 	{
 		return this.formBuilder.group(
@@ -143,10 +157,36 @@ export class ProfileComponent implements OnInit
 				name: ["", [Validators.required]],
 				lastName: ["", [Validators.required]],
 				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )],
-					[this.emailExists()]],
-				city: ["", [Validators.required]]
+					[this.emailExists()]]
 			} );
 	}
+
+ private edit(): void
+		{	console.log(this.profileForm);
+			if( this.profileForm.invalid )
+				return;
+			this.loaderService.show();
+			this.mode = "view";
+			this.userService.update( this.userAux )
+			.then( userObject =>
+			{
+				let data: any = {};
+				data.token = this.user.token;
+				data.data = userObject;
+				this.userService.setUser( new User( data ), true );
+				this.loaderService.hide();
+
+				} )
+			.catch( response =>
+			{
+				this.loaderService.hide();
+				console.log( response );
+
+			}
+		);
+
+
+}
 
 	private checkContainsInterest( interest: Interest )
 	{
@@ -166,12 +206,20 @@ export class ProfileComponent implements OnInit
 			.subscribe( user =>
 			{
 				this.user = user;
+
 				if( this.user.photo )
 					this.profileImage = this.server + this.user.photo.image.url;
 			} );
 
 
 		this.userService.getSessionStorageUser();
+		this.userAux = Object.assign( {}, this.user ) as User;
+		this.uploader = new FileUploader( {
+			url: `${this.photoURL}/${this.user.id}/photos`,
+			allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+			maxFileSize: 5242880,
+			authToken: this.user.token
+		} );
 
 		for( let view in AppSettings.ACTIVES )
 			AppSettings.ACTIVES[view] = false;

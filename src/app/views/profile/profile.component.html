@@ -1,5 +1,4 @@
-<div>
-	<div class = "row flex-items-xs-center">
+	<div class = "row flex-items-xs-center" >
 		<h1>Perfil</h1>
 	</div>
 
@@ -10,16 +9,16 @@
 		</div>
 
 		<div class = "col-xs-4 offset-xs-1">
-			<form [formGroup] = "profileForm" (ngSubmit) = "save()">
+			<form [formGroup] = "profileForm" >
 				<h3>Datos personales</h3>
 
 				<br>
 
 				<div class = "form-group">
 					<label>Nombre</label>
-					<span *ngIf = "mode === 'view'">{{ user.name }}</span>
+					<span *ngIf = "mode === 'view'">{{ userAux.name }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.name.touched ) && profileForm.controls.name.invalid">
-						<input type = "text" formControlName = "name" [(ngModel)] = "user.name">
+						<input type = "text" formControlName = "name" [(ngModel)] = "userAux.name">
 
 						<span *ngIf = "profileForm.controls.name.errors" class = "tooltip-content">
 							<div [hidden] = "!profileForm.controls.name.errors.required">
@@ -31,9 +30,9 @@
 
 				<div class = "form-group">
 					<label>Apellido</label>
-					<span *ngIf = "mode === 'view'">{{ user.lastName }}</span>
+					<span *ngIf = "mode === 'view'">{{ userAux.lastName }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.lastName.touched ) && profileForm.controls.lastName.invalid">
-						<input type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+						<input type = "text" formControlName = "lastName" [(ngModel)] = "userAux.lastName">
 
 						<span *ngIf = "profileForm.controls.lastName.errors" class = "tooltip-content">
 							<div [hidden] = "!profileForm.controls.lastName.errors.required">
@@ -45,39 +44,43 @@
 
 				<div class = "form-group">
 					<label>Correo electrónico</label>
-					<span *ngIf = "mode === 'view'">{{ user.email }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.email.touched ) && profileForm.controls.email.invalid">
-						<input type = "text" formControlName = "email" [(ngModel)] = "user.email">
+						<span *ngIf = "mode === 'view'">{{ userAux.email }}</span>
+							<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.email.touched ) && profileForm.controls.email.invalid">
+								<input type = "text" formControlName = "email" [(ngModel)] = "userAux.email">
 
-						<span *ngIf = "profileForm.controls.email.errors" class = "tooltip-content">
-							<div [hidden] = "!profileForm.controls.email.errors.required">
-								El correo electrónico es requerido
-							</div>
-							<div [hidden] = "!signUpForm.controls.email.errors.pattern">
-								El correo electrónico no es válido
-							</div>
-							<div [hidden] = "!signUpForm.controls.email.errors.emailExists">
-								El correo electrónico ya existe
-							</div>
+									<span *ngIf = "profileForm.controls.email.errors" class = "tooltip-content">
+										<div [hidden] = "!profileForm.controls.email.errors.required">
+											El correo electrónico es requerido
+										</div>
+
+										<div [hidden] = "!profileForm.controls.email.errors.pattern">
+											El correo electrónico no es válido
+										</div>
+										<div [hidden] = "!profileForm.controls.email.errors.emailExists">
+											El correo electrónico ya existe
+										</div>
 						</span>
 					</label>
 				</div>
 
-				<div class = "form-group">
-					<label>Ciudad</label>
-					<span *ngIf = "mode === 'view'">{{ user.city.name }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.city.touched ) && profileForm.controls.city.invalid">
-						<input type = "text" formControlName = "city" [(ngModel)] = "user.city.name">
+		<div class = "form-group">
+						<label>Ciudad</label>
+							<span *ngIf = "mode === 'view'">{{ userAux.city.name }}</span>
+						</div>
 
-						<span *ngIf = "profileForm.controls.city.errors" class = "tooltip-content">
-							<div [hidden] = "!profileForm.controls.city.errors.required">
-								La ciudad es requerida
-							</div>
-						</span>
-					</label>
-				</div>
-			</form>
+					</form>
 		</div>
+
+		<div *ngIf = "mode === 'view'" >
+				<button class = "btn btn-primary" (click) = "modeView()">Editar Perfil</button>
+		</div>
+
+	<div *ngIf = "mode === 'edit'" >
+			<button class = "btn btn-primary" (click) = "edit()">Aceptar</button>
+			<button class = "btn btn-primary" (click) = "cancel()">Cancelar</button>
+	</div>
+
+
 	</div>
 
 	<div class = "row flex-items-xs-center">
@@ -143,8 +146,8 @@
 																		<p class = "card-text" *ngIf = "!product.available">
 
 																			Título: {{ product.productItem.name}} <br>
-																			<!--Autor: {{ product.productItem.author}}<br>-->
-																			<!--Editorial: {{ product.productItem.editorial}}<br>-->
+																			Autor: {{ product.productItem.author}}<br>
+																			Editorial: {{ product.productItem.editorial}}<br>
 
 																			</p>
 																	</div>
@@ -156,8 +159,3 @@
 		        </div>
 		    </div>
 		</div>
-
-
-
-
-</div>
