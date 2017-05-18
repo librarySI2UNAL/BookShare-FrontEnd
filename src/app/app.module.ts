@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
 import { ClarityModule } from "clarity-angular";
-import { AgmCoreModule } from "@agm/core";
+import { NguiMapModule} from '@ngui/map';
 import { FileUploadModule } from "ng2-file-upload";
 import { SwiperModule } from "angular2-useful-swiper";
+import { NguiAutoCompleteModule } from "@ngui/auto-complete";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./views/home/home.component";
@@ -17,6 +18,7 @@ import { SignUpComponent } from "./views/signUp/signUp.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ProductComponent }	from "./views/product/product.component";
 import { NearProductsComponent } from "./views/nearProducts/nearProducts.component";
+import { MapComponent } from "./views/map/map.component";
 import { LoaderComponent } from "./views/loader/loader.component";
 
 import { UserService } from "./services/user.service";
@@ -36,6 +38,7 @@ import { AppRoutingModule } from "./app.routes";
 		ProfileComponent,
 		ProductComponent,
 		NearProductsComponent,
+		MapComponent,
 		LoaderComponent
 	],
 	imports: [
@@ -44,14 +47,12 @@ import { AppRoutingModule } from "./app.routes";
 		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule,
+		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyC-f5ER_apawz40mq9fOyXchgZQiuiE_n8&libraries=visualization&callback=initMap'}),
 		HttpModule,
 		ClarityModule.forRoot(),
 		FileUploadModule,
-		AgmCoreModule.forRoot(
-		{
-			apiKey: "AIzaSyAFUtuJfPLeZeim2f6iUcmK_k1AmysBrGg"
-		} ),
-		SwiperModule
+		SwiperModule,
+		NguiAutoCompleteModule
 	],
 	providers: [
 		UserService,

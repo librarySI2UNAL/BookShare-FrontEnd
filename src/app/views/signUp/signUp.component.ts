@@ -134,8 +134,11 @@ export class SignUpComponent implements OnInit
 	{
 		this.loaderService.show();
 		this.submitted = true;
-		if( this.signUpForm.invalid )
+		if( this.signUpForm.invalid ){
+			this.loaderService.hide();
+			this.submitted = false;
 			return;
+		}
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
@@ -147,6 +150,30 @@ export class SignUpComponent implements OnInit
 					maxFileSize: 5242880,
 					authToken: this.user.token
 				} );
+				this.uploader.onCompleteItem = ( item, response, status, headers ) =>
+				{
+					if( this.user.interests.length > 0 )
+					{
+						this.userService.update( this.user )
+							.then( userObject =>
+							{
+								let data: any = {};
+								data.token = this.user.token;
+								data.data = userObject;
+								this.userService.setUser( new User( data ), true );
+								this.loaderService.hide();
+								this.router.navigate( ["/profile"] );
+							} )
+							.catch( response =>
+							{
+								this.loaderService.hide();
+								console.log( response );
+								this.router.navigate( ["/profile"] );
+							} );
+					}
+					else
+						this.loaderService.hide();
+				};
 				AppSettings.HEADERS.set( "Authorization", this.user.token );
 				this.registeredUser = true;
 				this.loaderService.hide();
@@ -161,8 +188,11 @@ export class SignUpComponent implements OnInit
 	private updateUser(): void
 	{
 		if( this.uploader.queue.length > 0 )
+		{
+			this.loaderService.show();
 			this.uploader.queue[this.uploader.queue.length - 1].upload();
-		if( this.user.interests.length > 0 )
+		}
+		else if( this.user.interests.length > 0 )
 		{
 			this.loaderService.show();
 			this.userService.update( this.user )

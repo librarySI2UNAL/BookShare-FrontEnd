@@ -18,7 +18,7 @@ export class ProductItem
 			this.type = null;
 			this.name = null;
 			this.author = null;
-			this.genre = new Genre();
+			this.genre = null;
 			this.editorial = null;
 			this.yearOfPublication = null;
 		}

@@ -10,8 +10,6 @@ import { Genre } from "../models/genre";
 import { Interest } from "../models/interest";
 import { AppSettings } from "../app.settings";
 
-import { UserService } from "./user.service";
-
 @Injectable()
 export class ProductService
 {
@@ -20,8 +18,7 @@ export class ProductService
 	private genresURL: string;
 	private interestsURL: string;
 
-	constructor( private http: Http,
-		private userService: UserService )
+	constructor( private http: Http )
 	{
 		this.productsURL = `${AppSettings.API_ENDPOINT}/products`;
 		this.usersURL = `${AppSettings.API_ENDPOINT}/users`;
@@ -46,15 +43,13 @@ export class ProductService
 			errMsg = `${error.status} - ${error.statusText || ""} ${err}`;
 		}
 		else
-		{
 			errMsg = error.message ? error.message : error.toString();
-		}
 		console.error( errMsg );
 
 		return Observable.throw( errMsg );
 	}
 
-	getInterests(): Observable<Array<Interest>>
+	public getInterests(): Observable<Array<Interest>>
 	{
 		return this.http.get( `${this.interestsURL}` )
 			.map( ( response: Response ) => response.json().data as Array<Interest> )
@@ -67,28 +62,51 @@ export class ProductService
 			.catch( this.handleError );
 	}
 
-	getGenres(): Observable<Array<Genre>>
+	public getGenres(): Observable<Array<Genre>>
 	{
 		return this.http.get( `${this.genresURL}`, { headers: AppSettings.HEADERS } )
 			.map( ( response: Response ) => response.json().data as Array<Genre> )
 			.catch( this.handleError );
 	}
 
-	availables( page: number, perPage: number ): Observable<any>
+	public getByUser( userId: number, available: boolean ): Observable<any>
 	{
-		return this.http.get( `${this.productsURL}?page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
+		return this.http.get( `${this.usersURL}/${userId}/products?available=${available}`, { headers: AppSettings.HEADERS } )
+			.map( ( r: Response ) => r.json().data )
+			.catch( this.handleError );
+	}
+
+	public getAvailables( userId: number, page: number, perPage: number ): Observable<any>
+	{
+		return this.http.get( `${this.productsURL}?user_id=${userId}&page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
 			.map( ( r: Response ) => r.json() )
 			.catch( this.handleError );
 	}
 
-	get( id: number ): Promise<any>
+	public getFilteredAvailables( userId: number, query: string, interests: string, genres: string, columns: string, page: number, perPage: number ): Observable<any>
+	{
+		let q: string = "";
+		if( interests.length > 0 )
+			q += interests + ",";
+		if( genres.length > 0 )
+			q += genres + ",";
+		q += query;
+		if( query.length === 0 )
+			q = q.substring( 0, q.length - 1 );
+
+		return this.http.get( `${this.productsURL}/search?q=${q}&columns=${columns}&user_id=${userId}&page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
+			.map( ( r: Response ) => r.json() )
+			.catch( this.handleError );
+	}
+
+	public get( id: number ): Promise<any>
 	{
 		return this.http.get( `${this.productsURL}/${id}`, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
 
-	create( userId: number, product: Product ): Promise<any>
+	public create( userId: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
 		productAux.product_item = product.productItem;
@@ -98,12 +116,13 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
+
 		return this.http.post( `${this.usersURL}/${userId}/products`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
 
-	update( userId: number, id: number, product: Product ): Promise<any>
+	public update( userId: number, id: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
 		productAux.product_item = product.productItem;
@@ -113,6 +132,7 @@ export class ProductService
 		delete productAux.product_item.yearOfPublication;
 		productAux.code_type = product.codeType;
 		delete productAux.codeType;
+
 		return this.http.put( `${this.usersURL}/${userId}/products/${id}`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
