@@ -42,6 +42,7 @@ export class ProductComponent implements OnInit
 	profileImage: string;
 	loadingComment: boolean;
 	comment: string;
+	id: number;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -77,6 +78,7 @@ export class ProductComponent implements OnInit
 		this.profileImage = "/images/Avatar.jpg";
 		this.loadingComment = false;
 		this.comment = "";
+		this.id = -1;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -167,6 +169,28 @@ export class ProductComponent implements OnInit
 	{
 		if( this.comment.length === 0 )
 			return;
+		this.loadingComment = true;
+		this.productService.addComment( this.product.id, this.user.id, this.comment )
+			.then( comment =>
+			{
+				this.comment = "";
+				this.productService.get( this.id )
+					.then( product =>
+					{
+						this.product = new Product( product );
+						this.loadingComment = false;
+					} )
+					.catch( error =>
+					{
+						console.log( error );
+						this.loadingComment = false;
+					} );
+			} )
+			.catch( error =>
+			{
+				console.log( error );
+				this.loadingComment = false;
+			} );
 	}
 
 	private save(): void
@@ -265,12 +289,12 @@ export class ProductComponent implements OnInit
 				}
 				else
 				{
-					let id: number = +params["id"];
-					if( !id )
+					this.id = +params["id"];
+					if( !this.id )
 						this.router.navigate( ["/home"] );
 
 					this.loaderService.show();
-					this.productService.existsOwn( id, this.user.id )
+					this.productService.existsOwn( this.id, this.user.id )
 						.then( response =>
 						{
 							this.ownProduct = response.exists;
@@ -279,7 +303,7 @@ export class ProductComponent implements OnInit
 						{
 							console.log( error );
 						} );
-					this.productService.get( id )
+					this.productService.get( this.id )
 						.then( product =>
 						{
 							this.product = new Product( product );

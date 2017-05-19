@@ -256,14 +256,17 @@
 				<h3>Comentarios</h3>
 			</div>
 
-			<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
-				<div>
-					<img *ngIf = "comment.user.photo" class = "img-thumbnail custom-profile-image-small" [src] = "server + comment.user.photo.image.url">
-					<img *ngIf = "!comment.user.photo" class = "img-thumbnail custom-profile-image-small" [src] = "server + profileImage">
-				</div>
-				<div class = "col-xs">
-					<label><b>{{ comment.user.name }} {{ comment.user.lastName }}</b></label>
-					<label>{{ comment.comment }}</label>
+			<div class = "col-xs custom-width custom-comment-wrapper">
+				<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
+					<div>
+						<img *ngIf = "comment.user.photo" class = "img-thumbnail custom-profile-image-64" [src] = "server + comment.user.photo.image.url">
+						<img *ngIf = "!comment.user.photo" class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
+					</div>
+					<div class = "col-xs">
+						<label><b>{{ comment.user.name }} {{ comment.user.lastName }}</b></label>
+						<br>
+						<label>{{ comment.comment }}</label>
+					</div>
 				</div>
 			</div>
 
@@ -271,7 +274,7 @@
 
 			<div class = "row flex-items-xs-center custom-width">
 				<div>
-					<img class = "img-thumbnail custom-profile-image-small" [src] = "server + profileImage">
+					<img class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
 				</div>
 				<div class = "col-xs">
 					<label><b>{{ user.name }} {{ user.lastName }}</b></label>

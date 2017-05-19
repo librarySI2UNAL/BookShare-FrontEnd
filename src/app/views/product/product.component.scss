@@ -16,9 +16,15 @@ product
 		}
 	}
 
-	.custom-profile-image-small
+	.custom-profile-image-64
 	{
 		max-width: 64px;
 		max-height: 64px;
+	}
+
+	.custom-comment-wrapper
+	{
+		max-height: 250px;
+		overflow: overlay;
 	}
 }
