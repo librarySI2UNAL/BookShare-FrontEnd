@@ -29,6 +29,9 @@ export class HomeComponent implements OnInit
 	{
 		this.swiperConfig = {
 			pagination: ".swiper-pagination",
+			paginationClickable: true,
+        	nextButton: '.swiper-button-next',
+        	prevButton: '.swiper-button-prev',
 			effect: "coverflow",
 			grabCursor: true,
 			centeredSlides: true,
