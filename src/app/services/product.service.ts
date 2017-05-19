@@ -83,6 +83,13 @@ export class ProductService
 			.catch( this.handleError );
 	}
 
+	public existsOwn( id: number, userId: number ): Promise<any>
+	{
+		return this.http.get( `${this.usersURL}/${userId}/products/${id}/validate`, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json() )
+			.catch( this.handleError );
+	}
+
 	public get( id: number ): Promise<any>
 	{
 		return this.http.get( `${this.productsURL}/${id}`, { headers: AppSettings.HEADERS } ).toPromise()

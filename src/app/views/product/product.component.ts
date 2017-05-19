@@ -38,6 +38,8 @@ export class ProductComponent implements OnInit
 	photoURL: string;
 	productImages: Array<string>;
 	server: string;
+	ownProduct: boolean;
+	profileImage: string;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -69,6 +71,8 @@ export class ProductComponent implements OnInit
 		this.createdProduct = false;
 		this.productImages = [];
 		this.server = AppSettings.SERVER;
+		this.ownProduct = false;
+		this.profileImage = "/images/Avatar.jpg";
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -228,48 +232,61 @@ export class ProductComponent implements OnInit
 			.subscribe( user =>
 			{
 				this.user = user;
+				if( this.user.photo )
+					this.profileImage = this.user.photo.image.url;
 			} );
 		this.userService.getSessionStorageUser();
-		this.route.params.subscribe( params =>
-		{
-			if( Object.keys( params ).length > 1 )
-				this.router.navigate( ["/home"] );
-			else if( Object.keys( params ).length === 0 )
-			{
-				for( let view in AppSettings.ACTIVES )
-					AppSettings.ACTIVES[view] = false;
-				AppSettings.ACTIVES.product = true;
 
-				this.mode = "create";
-				this.product = new Product( {} );
-				this.product.available = true;
-				this.product.special = true;
-			}
-			else
+		this.route.params
+			.subscribe( params =>
 			{
-				let id: number = +params["id"];
-				if( !id )
+				if( Object.keys( params ).length > 1 )
 					this.router.navigate( ["/home"] );
+				else if( Object.keys( params ).length === 0 )
+				{
+					for( let view in AppSettings.ACTIVES )
+						AppSettings.ACTIVES[view] = false;
+					AppSettings.ACTIVES.product = true;
 
-				this.loaderService.show();
-				this.productService.get( id )
-					.then( product =>
-					{
-						this.product = new Product( product );
-						this.loaderService.hide();
-					} )
-					.catch( error =>
-					{
-						console.log( error );
-						this.loaderService.hide();
-					} );
-				this.mode = "view";
-			}
+					this.mode = "create";
+					this.product = new Product( {} );
+					this.product.available = true;
+					this.product.special = true;
+				}
+				else
+				{
+					let id: number = +params["id"];
+					if( !id )
+						this.router.navigate( ["/home"] );
 
-			this.productService.getGenres().subscribe( response =>
+					this.loaderService.show();
+					this.productService.existsOwn( id, this.user.id )
+						.then( response =>
+						{
+							this.ownProduct = response.exists;
+						} )
+						.catch( error =>
+						{
+							console.log( error );
+						} );
+					this.productService.get( id )
+						.then( product =>
+						{
+							this.product = new Product( product );
+							this.loaderService.hide();
+						} )
+						.catch( error =>
+						{
+							console.log( error );
+							this.loaderService.hide();
+						} );
+					this.mode = "view";
+				}
+			} );
+
+		this.productService.getGenres().subscribe( response =>
 			{
 				this.genres = response;
 			} );
-		} );
 	}
 }

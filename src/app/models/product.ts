@@ -1,6 +1,7 @@
 import { ProductItem } from "./productItem";
 import { User } from "./user";
 import { Photo } from "./photo";
+import { Comment } from "./comment";
 
 export class Product
 {
@@ -14,6 +15,7 @@ export class Product
 	code: string;
 	codeType: string;
 	photos: Array<Photo>;
+	comments: Array<Comment>;
 	productItem: ProductItem;
 	user: User;
 
@@ -31,6 +33,7 @@ export class Product
 			this.code = null;
 			this.codeType = null;
 			this.photos = [];
+			this.comments = [];
 			this.productItem = new ProductItem( {} );
 			this.user = null;
 		}
@@ -46,6 +49,7 @@ export class Product
 			this.code = data.code;
 			this.codeType = data.codeType;
 			this.photos = data.photos;
+			this.comments = data.comments;
 			this.productItem = new ProductItem( data.productItem );
 			this.user = data.user;
 		}
