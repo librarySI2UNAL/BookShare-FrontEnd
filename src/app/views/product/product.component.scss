@@ -22,9 +22,20 @@ product
 		max-height: 64px;
 	}
 
+	.custom-profile-image-128
+	{
+		max-width: 128px;
+		max-height: 128px;
+	}
+
 	.custom-comment-wrapper
 	{
 		max-height: 250px;
 		overflow: overlay;
+	}
+
+	.custom-padding-left-5
+	{
+		padding-left: 5%;
 	}
 }

@@ -40,6 +40,7 @@ export class ProductComponent implements OnInit
 	server: string;
 	ownProduct: boolean;
 	profileImage: string;
+	avatarImage: string;
 	loadingComment: boolean;
 	comment: string;
 	id: number;
@@ -74,8 +75,9 @@ export class ProductComponent implements OnInit
 		this.createdProduct = false;
 		this.productImages = [];
 		this.server = AppSettings.SERVER;
-		this.ownProduct = false;
+		this.ownProduct = true;
 		this.profileImage = "/images/Avatar.jpg";
+		this.avatarImage = "/images/Avatar.jpg";
 		this.loadingComment = false;
 		this.comment = "";
 		this.id = -1;
@@ -262,6 +264,9 @@ export class ProductComponent implements OnInit
 
 	ngOnInit()
 	{
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+
 		this.userService.userState
 			.subscribe( user =>
 			{
@@ -278,8 +283,6 @@ export class ProductComponent implements OnInit
 					this.router.navigate( ["/home"] );
 				else if( Object.keys( params ).length === 0 )
 				{
-					for( let view in AppSettings.ACTIVES )
-						AppSettings.ACTIVES[view] = false;
 					AppSettings.ACTIVES.product = true;
 
 					this.mode = "create";
@@ -307,6 +310,7 @@ export class ProductComponent implements OnInit
 						.then( product =>
 						{
 							this.product = new Product( product );
+							console.log( this.product );
 							this.loaderService.hide();
 						} )
 						.catch( error =>

@@ -15,6 +15,18 @@
 			</button>
 			<img class = "img-thumbnail custom-product-image" [src] = "server + photo.image.url">
 		</div>
+
+		<div *ngIf = "mode === 'view' && !ownProduct && product.user" class = "custom-padding-left-5">
+			<div>
+				<img *ngIf = "product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + product.user.photo.image.url">
+				<img *ngIf = "!product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + avatarImage">
+			</div>
+		</div>
+
+		<div *ngIf = "mode === 'view' && !ownProduct && product.user" class = "custom-padding-left-5">
+			<h2>{{ product.user.name }} {{ product.user.lastName }}</h2>
+			<h3>{{ product.user.email }}</h3>
+		</div>
 	</div>
 </div>
 
@@ -56,7 +68,7 @@
 		<br>
 
 		<div class = "row custom-width">
-			<div class = "col-xs-6 offset-xs-1">
+			<div class = "col-xs offset-xs-1">
 				<div class = "form-group">
 					<label>Nombre</label>
 					<span *ngIf = "mode === 'view'">{{ product.productItem.name }}</span>
@@ -144,7 +156,7 @@
 				</div>
 			</div>
 
-			<div class = "col-xs-4">
+			<div class = "col-xs">
 				<div class = "form-group">
 					<label>Tipo de producto</label>
 					<span *ngIf = "mode === 'view'">{{ typeTexts[product.productItem.type] }}</span>
@@ -260,7 +272,7 @@
 				<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
 					<div>
 						<img *ngIf = "comment.user.photo" class = "img-thumbnail custom-profile-image-64" [src] = "server + comment.user.photo.image.url">
-						<img *ngIf = "!comment.user.photo" class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
+						<img *ngIf = "!comment.user.photo" class = "img-thumbnail custom-profile-image-64" [src] = "server + avatarImage">
 					</div>
 					<div class = "col-xs">
 						<label><b>{{ comment.user.name }} {{ comment.user.lastName }}</b></label>
