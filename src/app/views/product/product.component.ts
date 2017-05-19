@@ -40,6 +40,8 @@ export class ProductComponent implements OnInit
 	server: string;
 	ownProduct: boolean;
 	profileImage: string;
+	loadingComment: boolean;
+	comment: string;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -73,6 +75,8 @@ export class ProductComponent implements OnInit
 		this.server = AppSettings.SERVER;
 		this.ownProduct = false;
 		this.profileImage = "/images/Avatar.jpg";
+		this.loadingComment = false;
+		this.comment = "";
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -157,6 +161,12 @@ export class ProductComponent implements OnInit
 		}
 		else
 			this.router.navigate( ["/home"] );
+	}
+
+	private addComment(): void
+	{
+		if( this.comment.length === 0 )
+			return;
 	}
 
 	private save(): void

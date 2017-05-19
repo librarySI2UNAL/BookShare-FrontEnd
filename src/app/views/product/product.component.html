@@ -248,33 +248,42 @@
 				<button *ngIf = "mode !== 'view'" class = "btn btn-primary btn-block" type = "submit">Guardar</button>
 			</div>
 		</div>
-
-		<div *ngIf = "mode === 'view'" class = "row flex-items-xs-center custom-width">
-			<div class = "col-xs-8">
-				<div class = "row flex-items-xs-center custom-width">
-					<h3>Comentarios</h3>
-				</div>
-				
-				<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
-					<label>{{ comment.user.name }} {{ comment.user.lastName }}</label>
-					<span>{{ comment.comment }}</span>
-
-					<br>
-				</div>
-
-				<br>
-
-				<div class = "row flex-items-xs-center custom-width">
-					<div>
-						<img class = "img-thumbnail custom-profile-image-small" [src] = "server + profileImage">
-					</div>
-					<div class = "col-xs">
-						<textarea rows = "2" placeholder = "Escribe un comentario..."></textarea>
-					</div>
-				</div>
-
-				<br>
-			</div>
-		</div>
 	</form>
+
+	<div *ngIf = "mode === 'view'" class = "row flex-items-xs-center custom-width">
+		<div class = "col-xs-8">
+			<div class = "row flex-items-xs-center custom-width">
+				<h3>Comentarios</h3>
+			</div>
+
+			<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
+				<div>
+					<img *ngIf = "comment.user.photo" class = "img-thumbnail custom-profile-image-small" [src] = "server + comment.user.photo.image.url">
+					<img *ngIf = "!comment.user.photo" class = "img-thumbnail custom-profile-image-small" [src] = "server + profileImage">
+				</div>
+				<div class = "col-xs">
+					<label><b>{{ comment.user.name }} {{ comment.user.lastName }}</b></label>
+					<label>{{ comment.comment }}</label>
+				</div>
+			</div>
+
+			<br>
+
+			<div class = "row flex-items-xs-center custom-width">
+				<div>
+					<img class = "img-thumbnail custom-profile-image-small" [src] = "server + profileImage">
+				</div>
+				<div class = "col-xs">
+					<label><b>{{ user.name }} {{ user.lastName }}</b></label>
+					<textarea rows = "2" placeholder = "Escribe un comentario..." [(ngModel)] = "comment"></textarea>
+				</div>
+			</div>
+
+			<div class = "row custom-width">
+				<button class = "btn btn-outline" [clrLoading] = "loadingComment" (click) = "addComment()">Comentar</button>
+			</div>
+
+			<br>
+		</div>
+	</div>
 </div>
