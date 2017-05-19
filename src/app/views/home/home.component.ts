@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { Interest } from "../../models/interest";
 import { LoaderComponent } from "../loader/loader.component";
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit
 	server: string;
 
 	constructor( private productService: ProductService,
-		private loaderService: LoaderService )
+		private loaderService: LoaderService,
+		private router: Router )
 	{
 		this.swiperConfig = {
 			pagination: ".swiper-pagination",
@@ -43,9 +45,9 @@ export class HomeComponent implements OnInit
 		this.server = AppSettings.SERVER;
 	}
 
-	private selectInterest( index: number )
+	private selectInterest( id: number )
 	{
-		console.log( index );
+		this.router.navigate( ["/products"] );
 	}
 
 	ngOnInit()

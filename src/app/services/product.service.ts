@@ -83,6 +83,25 @@ export class ProductService
 			.catch( this.handleError );
 	}
 
+	public existsOwn( id: number, userId: number ): Promise<any>
+	{
+		return this.http.get( `${this.usersURL}/${userId}/products/${id}/validate`, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json() )
+			.catch( this.handleError );
+	}
+
+	public addComment( productId: number, userId: number, comment: string ): Promise<any>
+	{
+		let data: any = {
+			user_id: userId,
+			comment: comment
+		};
+
+		return this.http.post( `${this.productsURL}/${productId}/comments`, { data: data }, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json().data )
+			.catch( this.handleError );
+	}
+
 	public get( id: number ): Promise<any>
 	{
 		return this.http.get( `${this.productsURL}/${id}`, { headers: AppSettings.HEADERS } ).toPromise()

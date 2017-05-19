@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { Product } from "../../models/product";
 import { User } from "../../models/user";
@@ -29,12 +30,15 @@ export class ProductsComponent implements OnInit
 	filters: any;
 	selectedInterest: Interest;
 	selectedGenre: Genre;
+	selectedInterestAux: any;
 	server: string;
 	productsNotFound: boolean;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
-		private loaderService: LoaderService )
+		private loaderService: LoaderService,
+		private router: Router,
+		private route: ActivatedRoute )
 	{
 		this.page = -1;
 		this.perPage = 10;
@@ -48,6 +52,7 @@ export class ProductsComponent implements OnInit
 		};
 		this.selectedInterest = new Interest();
 		this.selectedGenre = new Genre();
+		this.selectedInterestAux = {};
 		this.server = AppSettings.SERVER;
 		this.productsNotFound = false;
 	}
@@ -119,7 +124,7 @@ export class ProductsComponent implements OnInit
 		else
 			q = q.substring( 0, q.length - 1 );
 		columns = columns.substring( 0, columns.length - 1 );
-		
+
 		this.productService.getFilteredAvailables( this.user.id, q, columns, this.page, this.perPage )
 			.subscribe( response =>
 			{
@@ -136,6 +141,16 @@ export class ProductsComponent implements OnInit
 			} );
 	}
 
+	private toString( id: number ): string
+	{
+		return String( id );
+	}
+
+	private redirectToProduct( id: number ): void
+	{
+		this.router.navigate( ["/product", id] );
+	}
+
 	ngOnInit()
 	{
 		for( let view in AppSettings.ACTIVES )
@@ -147,6 +162,17 @@ export class ProductsComponent implements OnInit
 			.subscribe( interests =>
 			{
 				this.interests = interests;
+				/*for( let i = 0; i < this.interests.length; i++ )
+					this.selectedInterestAux[String( this.interests[i].id )] = false;
+				this.route.params
+					.subscribe( data =>
+					{
+						if( data.interest )
+						{
+							this.selectedInterestAux[data.interest] = true;
+							this.filter();
+						}
+					} );*/
 			} );
 		this.userService.userState
 			.subscribe( user =>

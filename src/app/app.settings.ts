@@ -8,6 +8,7 @@ export class AppSettings
 	public static ACTIVES: any = {
 		home: false,
 		products: false,
+		product: false,
 		nearProducts: false,
 		signUp: false
 	};

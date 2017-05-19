@@ -38,6 +38,12 @@ export class ProductComponent implements OnInit
 	photoURL: string;
 	productImages: Array<string>;
 	server: string;
+	ownProduct: boolean;
+	profileImage: string;
+	avatarImage: string;
+	loadingComment: boolean;
+	comment: string;
+	id: number;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -69,6 +75,12 @@ export class ProductComponent implements OnInit
 		this.createdProduct = false;
 		this.productImages = [];
 		this.server = AppSettings.SERVER;
+		this.ownProduct = true;
+		this.profileImage = "/images/Avatar.jpg";
+		this.avatarImage = "/images/Avatar.jpg";
+		this.loadingComment = false;
+		this.comment = "";
+		this.id = -1;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -155,6 +167,34 @@ export class ProductComponent implements OnInit
 			this.router.navigate( ["/home"] );
 	}
 
+	private addComment(): void
+	{
+		if( this.comment.length === 0 )
+			return;
+		this.loadingComment = true;
+		this.productService.addComment( this.product.id, this.user.id, this.comment )
+			.then( comment =>
+			{
+				this.comment = "";
+				this.productService.get( this.id )
+					.then( product =>
+					{
+						this.product = new Product( product );
+						this.loadingComment = false;
+					} )
+					.catch( error =>
+					{
+						console.log( error );
+						this.loadingComment = false;
+					} );
+			} )
+			.catch( error =>
+			{
+				console.log( error );
+				this.loadingComment = false;
+			} );
+	}
+
 	private save(): void
 	{
 		this.submitted = true;
@@ -224,46 +264,67 @@ export class ProductComponent implements OnInit
 
 	ngOnInit()
 	{
+		for( let view in AppSettings.ACTIVES )
+			AppSettings.ACTIVES[view] = false;
+
 		this.userService.userState
 			.subscribe( user =>
 			{
 				this.user = user;
+				if( this.user.photo )
+					this.profileImage = this.user.photo.image.url;
 			} );
 		this.userService.getSessionStorageUser();
-		this.route.params.subscribe( params =>
-		{
-			if( Object.keys( params ).length > 1 )
-				this.router.navigate( ["/home"] );
-			else if( Object.keys( params ).length === 0 )
+
+		this.route.params
+			.subscribe( params =>
 			{
-				this.mode = "create";
-				this.product = new Product( {} );
-				this.product.available = true;
-				this.product.special = true;
-			}
-			else
-			{
-				let id: number = +params["id"];
-				if( !id )
+				if( Object.keys( params ).length > 1 )
 					this.router.navigate( ["/home"] );
+				else if( Object.keys( params ).length === 0 )
+				{
+					AppSettings.ACTIVES.product = true;
 
-				this.productService.get( id )
-					.then( product =>
-					{
-						this.product = new Product( product );
-						console.log( this.product );
-					} )
-					.catch( error =>
-					{
-						console.log( error );
-					} );
-				this.mode = "view";
-			}
+					this.mode = "create";
+					this.product = new Product( {} );
+					this.product.available = true;
+					this.product.special = true;
+				}
+				else
+				{
+					this.id = +params["id"];
+					if( !this.id )
+						this.router.navigate( ["/home"] );
 
-			this.productService.getGenres().subscribe( response =>
+					this.loaderService.show();
+					this.productService.existsOwn( this.id, this.user.id )
+						.then( response =>
+						{
+							this.ownProduct = response.exists;
+						} )
+						.catch( error =>
+						{
+							console.log( error );
+						} );
+					this.productService.get( this.id )
+						.then( product =>
+						{
+							this.product = new Product( product );
+							console.log( this.product );
+							this.loaderService.hide();
+						} )
+						.catch( error =>
+						{
+							console.log( error );
+							this.loaderService.hide();
+						} );
+					this.mode = "view";
+				}
+			} );
+
+		this.productService.getGenres().subscribe( response =>
 			{
 				this.genres = response;
 			} );
-		} );
 	}
 }

@@ -7,7 +7,7 @@
 			</div>
 			
 			<div *ngIf = "!productsNotFound" class = "custom-product-grid">
-				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products">
+				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products" (click) = "redirectToProduct( product.id )">
 					<div class = "card-img">
 						<img [src] = "server + product.photos[0].image.url">
 					</div>
@@ -33,6 +33,15 @@
 		</div>
 		<nav class = "sidenav">
 			<section class = "sidenav-content">
+				<section class = "nav-group">
+					<div class = "row flex-items-xs-center">
+						<button class = "btn btn-success" routerLink = "/product">
+							<clr-icon shape = "add"></clr-icon>
+							Crea un producto
+						</button>
+					</div>
+				</section>
+
 				<section class = "nav-group">
 					<div class = "col-xs">
 						<clr-icon shape = "search"></clr-icon>
