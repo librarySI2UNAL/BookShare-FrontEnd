@@ -34,6 +34,15 @@
 		<nav class = "sidenav">
 			<section class = "sidenav-content">
 				<section class = "nav-group">
+					<div class = "row flex-items-xs-center">
+						<button class = "btn btn-success" routerLink = "/product">
+							<clr-icon shape = "add"></clr-icon>
+							Crea un producto
+						</button>
+					</div>
+				</section>
+
+				<section class = "nav-group">
 					<div class = "col-xs">
 						<clr-icon shape = "search"></clr-icon>
 						<input type = "text" [(ngModel)] = "filters.search" placeholder = "Buscar">
