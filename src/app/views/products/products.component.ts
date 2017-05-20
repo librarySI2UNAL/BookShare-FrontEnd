@@ -33,6 +33,7 @@ export class ProductsComponent implements OnInit
 	selectedInterestAux: any;
 	server: string;
 	productsNotFound: boolean;
+	genericBook: string;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -55,6 +56,7 @@ export class ProductsComponent implements OnInit
 		this.selectedInterestAux = {};
 		this.server = AppSettings.SERVER;
 		this.productsNotFound = false;
+		this.genericBook = "/images/book_cover.jpg";
 	}
 
 	private pages(): Array<number>
