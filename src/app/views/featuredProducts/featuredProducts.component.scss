@@ -5,6 +5,22 @@ featuredProducts
 		
 	}
 	
+	.custom-featured-products-wrapper{
+		position: relative;
+		height: 100%;
+		width: 100%;
+		margin: 12px;
+		padding: 12px;
+		border: outset 1px;
+    	border-color: rgba(0, 0, 0, 0.60);
+		border-radius: 12px;
+		
+		h3{
+			top: -15px;
+    		position: relative;
+		}
+	}
+	
 	.custom-product-container{
 		position: relative;
 		height: 100%;
