@@ -148,6 +148,11 @@ import { AppSettings } from "../../app.settings";
 
 						}
 
+						private redirectToProduct( id: number ): void
+						{
+							this.router.navigate( ["/product", id] );
+						}
+						
 						private cancel(): void
 						{
 							this.mode = "view";

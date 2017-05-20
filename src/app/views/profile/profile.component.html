@@ -109,9 +109,10 @@
 				<div class = "custom-display-grid">
 					<div class = "card" *ngFor = "let product of productsAvailable">
 						<div class = "card-img">
-							<img src = "...">
+							<img *ngIf = "product.photos.length > 0" [src] = "server + product.photos[0].image.url">
+							<img *ngIf = "product.photos.length === 0" [src] = "server + genericBook">
 						</div>
-						<div class="card clickable">
+						<div class="card clickable" (click) = "redirectToProduct( product.id )">
 							<p class = "card-text">
 								Título: {{  product.productItem.name}} <br>
 								Autor: {{ product.productItem.author}}<br>
@@ -138,7 +139,8 @@
 				<div class = "custom-display-grid" >
 					<div class = "card">
 						<div class = "card-img">
-							<img src = "...">
+							<img *ngIf = "product.photos.length > 0" [src] = "server + product.photos[0].image.url">
+							<img *ngIf = "product.photos.length === 0" [src] = "server + genericBook">
 						</div>
 						<div class="card clickable">
 							<p class = "card-text">
