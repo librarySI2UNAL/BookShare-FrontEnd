@@ -120,7 +120,7 @@ export class SignUpComponent implements OnInit
 	private updatePhoto(): void
 	{
 		let fileReader: FileReader = new FileReader();
-		
+
 		fileReader.onload = this.completeOnLoadPhoto.bind( this );
 		fileReader.readAsDataURL( this.uploader.queue[this.uploader.queue.length - 1]._file );
 	}
@@ -132,13 +132,11 @@ export class SignUpComponent implements OnInit
 
 	private signUp(): void
 	{
-		this.loaderService.show();
+
 		this.submitted = true;
-		if( this.signUpForm.invalid ){
-			this.loaderService.hide();
-			this.submitted = false;
+		if( this.signUpForm.invalid )
 			return;
-		}
+		this.loaderService.show();
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
@@ -150,7 +148,9 @@ export class SignUpComponent implements OnInit
 					maxFileSize: 5242880,
 					authToken: this.user.token
 				} );
-				this.uploader.onCompleteItem = ( item, response, status, headers ) =>
+
+				//this.uploader.onCompleteItem = ( item, response, status, headers ) =>
+				this.uploader.onSuccessItem = (item, response, status, headers ) =>
 				{
 					if( this.user.interests.length > 0 )
 					{
@@ -160,6 +160,7 @@ export class SignUpComponent implements OnInit
 								let data: any = {};
 								data.token = this.user.token;
 								data.data = userObject;
+								console.log(data);
 								this.userService.setUser( new User( data ), true );
 								this.loaderService.hide();
 								this.router.navigate( ["/profile"] );
@@ -171,8 +172,9 @@ export class SignUpComponent implements OnInit
 								this.router.navigate( ["/profile"] );
 							} );
 					}
-					else
+					else{
 						this.loaderService.hide();
+						this.router.navigate( ["/profile"] );}
 				};
 				AppSettings.HEADERS.set( "Authorization", this.user.token );
 				this.registeredUser = true;

@@ -1,161 +1,159 @@
-	<div class = "row flex-items-xs-center" >
-		<h1>Perfil</h1>
+<div class = "row flex-items-xs-center" >
+	<h1>Perfil</h1>
+</div>
+
+<div class = "row flex-items-xs-center">
+	<div class = "col-xs-4 offset-xs-1" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+		<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
+		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 	</div>
 
-	<div class = "row flex-items-xs-center">
-		<div class = "col-xs-4 offset-xs-1" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
-			<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
-			<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
-		</div>
+	<div class = "col-xs-4 offset-xs-1">
+		<form [formGroup] = "profileForm" >
+			<h3>Datos personales</h3>
 
-		<div class = "col-xs-4 offset-xs-1">
-			<form [formGroup] = "profileForm" >
-				<h3>Datos personales</h3>
+			<br>
 
-				<br>
+			<div class = "form-group">
+				<label>Nombre</label>
+				<span *ngIf = "mode === 'view'">{{ userAux.name }}</span>
+				<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.name.touched ) && profileForm.controls.name.invalid">
+					<input type = "text" formControlName = "name" [(ngModel)] = "userAux.name">
 
-				<div class = "form-group">
-					<label>Nombre</label>
-					<span *ngIf = "mode === 'view'">{{ userAux.name }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.name.touched ) && profileForm.controls.name.invalid">
-						<input type = "text" formControlName = "name" [(ngModel)] = "userAux.name">
+					<span *ngIf = "profileForm.controls.name.errors" class = "tooltip-content">
+						<div [hidden] = "!profileForm.controls.name.errors.required">
+							El nombre es requerido
+						</div>
+					</span>
+				</label>
+			</div>
 
-						<span *ngIf = "profileForm.controls.name.errors" class = "tooltip-content">
-							<div [hidden] = "!profileForm.controls.name.errors.required">
-								El nombre es requerido
-							</div>
-						</span>
-					</label>
-				</div>
+			<div class = "form-group">
+				<label>Apellido</label>
+				<span *ngIf = "mode === 'view'">{{ userAux.lastName }}</span>
+				<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.lastName.touched ) && profileForm.controls.lastName.invalid">
+					<input type = "text" formControlName = "lastName" [(ngModel)] = "userAux.lastName">
 
-				<div class = "form-group">
-					<label>Apellido</label>
-					<span *ngIf = "mode === 'view'">{{ userAux.lastName }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.lastName.touched ) && profileForm.controls.lastName.invalid">
-						<input type = "text" formControlName = "lastName" [(ngModel)] = "userAux.lastName">
+					<span *ngIf = "profileForm.controls.lastName.errors" class = "tooltip-content">
+						<div [hidden] = "!profileForm.controls.lastName.errors.required">
+							El apellido es requerido
+						</div>
+					</span>
+				</label>
+			</div>
 
-						<span *ngIf = "profileForm.controls.lastName.errors" class = "tooltip-content">
-							<div [hidden] = "!profileForm.controls.lastName.errors.required">
-								El apellido es requerido
-							</div>
-						</span>
-					</label>
-				</div>
+			<div class = "form-group">
+				<label>Correo electrónico</label>
+				<span *ngIf = "mode === 'view'">{{ userAux.email }}</span>
+				<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.email.touched ) && profileForm.controls.email.invalid">
+					<input type = "text" formControlName = "email" [(ngModel)] = "userAux.email">
 
-				<div class = "form-group">
-					<label>Correo electrónico</label>
-						<span *ngIf = "mode === 'view'">{{ userAux.email }}</span>
-							<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.email.touched ) && profileForm.controls.email.invalid">
-								<input type = "text" formControlName = "email" [(ngModel)] = "userAux.email">
-
-									<span *ngIf = "profileForm.controls.email.errors" class = "tooltip-content">
-										<div [hidden] = "!profileForm.controls.email.errors.required">
-											El correo electrónico es requerido
-										</div>
-
-										<div [hidden] = "!profileForm.controls.email.errors.pattern">
-											El correo electrónico no es válido
-										</div>
-										<div [hidden] = "!profileForm.controls.email.errors.emailExists">
-											El correo electrónico ya existe
-										</div>
-						</span>
-					</label>
-				</div>
-
-		<div class = "form-group">
-						<label>Ciudad</label>
-							<span *ngIf = "mode === 'view'">{{ userAux.city.name }}</span>
+					<span *ngIf = "profileForm.controls.email.errors" class = "tooltip-content">
+						<div [hidden] = "!profileForm.controls.email.errors.required">
+							El correo electrónico es requerido
 						</div>
 
-					</form>
-		</div>
+						<div [hidden] = "!profileForm.controls.email.errors.pattern">
+							El correo electrónico no es válido
+						</div>
+						<div [hidden] = "!profileForm.controls.email.errors.emailExists">
+							El correo electrónico ya existe
+						</div>
+					</span>
+				</label>
+			</div>
 
-		<div *ngIf = "mode === 'view'" >
-				<button class = "btn btn-primary" (click) = "modeView()">Editar Perfil</button>
-		</div>
+			<div class = "form-group">
+				<label>Ciudad</label>
+				<span *ngIf = "mode === 'view'">{{ userAux.city.name }}</span>
+			</div>
+
+		</form>
+	</div>
+
+	<div *ngIf = "mode === 'view'" >
+		<button class = "btn btn-primary" (click) = "modeView()">Editar Perfil</button>
+	</div>
 
 	<div *ngIf = "mode === 'edit'" >
-			<button class = "btn btn-primary" (click) = "edit()">Aceptar</button>
-			<button class = "btn btn-primary" (click) = "cancel()">Cancelar</button>
+		<button class = "btn btn-primary" (click) = "edit()">Aceptar</button>
+		<button class = "btn btn-primary" (click) = "cancel()">Cancelar</button>
 	</div>
 
 
-	</div>
+</div>
 
-	<div class = "row flex-items-xs-center">
-		<div class = "col-xs-10 offset-xs-1">
-			<h3>Intereses</h3>
-			<div class = "custom-display-grid">
-				<a *ngFor = "let interest of interests; let i = index" class = "card card-img" [ngClass] = "{ 'custom-item-selected': checkContainsInterest( interest ), 'clickable custom-pointer': mode !== 'view' }" (click) = "selectInterest( i )">
-					<img [src] = "server + interest.photo.image.url">
-					<div class = "custom-over">
-						<div class = "custom-over-text">{{ interest.name }}</div>
+<div class = "row flex-items-xs-center">
+	<div class = "col-xs-10 offset-xs-1">
+		<h3>Intereses</h3>
+		<div class = "custom-display-grid">
+			<a *ngFor = "let interest of interests; let i = index" class = "card card-img" [ngClass] = "{ 'custom-item-selected': checkContainsInterest( interest ), 'clickable custom-pointer': mode !== 'view' }" (click) = "selectInterest( i )">
+				<img [src] = "server + interest.photo.image.url">
+				<div class = "custom-over">
+					<div class = "custom-over-text">{{ interest.name }}</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-xs-10 offset-xs-1">
+		<div class="card">
+			<div class="card-header">
+				Tus Productos Disponibles
+			</div>
+			<div class="card-block">
+
+				<div class = "custom-display-grid">
+					<div class = "card" *ngFor = "let product of productsAvailable">
+						<div class = "card-img">
+							<img src = "...">
+						</div>
+						<div class="card clickable">
+							<p class = "card-text">
+								Título: {{  product.productItem.name}} <br>
+								Autor: {{ product.productItem.author}}<br>
+								Editorial: {{ product.productItem.editorial}}<br>
+
+							</p>
+						</div>
 					</div>
-				</a>
+				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<div class="row">
-	    <div class="col-xs-10 offset-xs-1">
-	        <div class="card">
-	            <div class="card-header">
-	                Tus Productos Disponibles
-	            </div>
-	            <div class="card-block">
+<div class="row" *ngFor = "let product of productsUnavailable">
+	<div class="col-xs-10 offset-xs-1" *ngIf = "productsUnavailable.length > 0">
+		<div class="card">
+			<div class="card-header">
+				Tus Productos Vendidos o Intercambiados
+			</div>
+			<div class="card-block">
 
-								<div class = "custom-display-grid">
-															<div class = "card" *ngFor = "let product of products">
-																<div class = "card-img">
-																	<img src = "...">
-																</div>
-																<div class="card clickable">
-																	<p class = "card-text" *ngIf = "product.available">
-																		Título: {{  product.productItem.name}} <br>
-																		Autor: {{ product.productItem.author}}<br>
-																		Editorial: {{ product.productItem.editorial}}<br>
+				<div class = "custom-display-grid" >
+					<div class = "card">
+						<div class = "card-img">
+							<img src = "...">
+						</div>
+						<div class="card clickable">
+							<p class = "card-text">
 
-																		</p>
-																</div>
-															</div>
-														</div>
+								Título: {{ product.productItem.name}} <br>
+								Autor: {{ product.productItem.author}}<br>
+								Editorial: {{ product.productItem.editorial}}<br>
 
-	            </div>
+							</p>
+						</div>
+					</div>
+				</div>
 
-	        </div>
-	    </div>
-	</div>
+			</div>
 
-
-		<div class="row">
-		    <div class="col-xs-10 offset-xs-1">
-		        <div class="card">
-		            <div class="card-header">
-		                Tus Productos Vendidos o Intercambiados
-		            </div>
-		            <div class="card-block">
-
-									<div class = "custom-display-grid">
-																<div class = "card" *ngFor = "let product of products">
-																	<div class = "card-img">
-																		<img src = "...">
-																	</div>
-																	<div class="card clickable">
-																		<p class = "card-text" *ngIf = "!product.available">
-
-																			Título: {{ product.productItem.name}} <br>
-																			Autor: {{ product.productItem.author}}<br>
-																			Editorial: {{ product.productItem.editorial}}<br>
-
-																			</p>
-																	</div>
-																</div>
-															</div>
-
-		            </div>
-
-		        </div>
-		    </div>
 		</div>
+	</div>
+</div>
