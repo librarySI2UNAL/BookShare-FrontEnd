@@ -8,7 +8,7 @@
             <div class="swiper-wrapper">
                 <ng-container *ngFor="let product of products">
                     <div class="swiper-slide">
-                        <div class = "clickable custom-product-container">
+                        <div class = "clickable custom-product-container" (click) = "goToProductDetail( product.id )">
                             <div class = "custom-thumbnail-container">
                                 <ng-container *ngIf="product.photos[0]">
             					    <img [src] = "server + product.photos[0].image.url">
