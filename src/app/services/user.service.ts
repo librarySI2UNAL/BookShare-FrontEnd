@@ -88,6 +88,7 @@ export class UserService
 		delete userAux.id;
 		delete userAux.token;
 		delete userAux.city;
+		delete userAux.photo;
 		return this.http.post( this.usersURL, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json() )
 			.catch( this.handleError );
@@ -102,6 +103,7 @@ export class UserService
 		delete userAux.id;
 		delete userAux.token;
 		delete userAux.city;
+		delete userAux.photo;
 		return this.http.put( `${this.usersURL}/${user.id}`, { data: userAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handleError );
