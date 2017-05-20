@@ -140,4 +140,11 @@ export class ProductService
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
+	
+	public getSpecials(): Observable<Product[]>
+	{
+		return this.http.get( `${AppSettings.API_ENDPOINT}/products/specials`, { headers: AppSettings.HEADERS } )
+			.map( response => response.json().data )
+			.catch( this.handleError );
+	}
 }
