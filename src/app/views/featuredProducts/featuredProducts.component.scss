@@ -1,25 +1,49 @@
 featuredProducts
 {
-	.custom-product-grid
+	swiper
 	{
-		display: grid;
-		grid-template-columns: 50% 50%;
+		
 	}
-
-	.custom-products-not-found-image
-	{
-		max-width: 70%;
-		max-height: 70%;
+	
+	.custom-product-container{
+		position: relative;
+		height: 100%;
+		width: 100%;
 	}
-
-	.custom-product-image-size
-	{
-		width: inherit !important;
-		height: inherit !important;
+	
+	.custom-thumbnail-container{
+		img{
+			position:relative;
+			height: 100%;
+			width: 100%;
+		}
 	}
-
-	.custom-margin-product
-	{
-		margin-left: 30%;
+	
+	.custom-overlay {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: rgba(0, 0, 0, 0.6);;
+		overflow: hidden;
+		width: 100%;
+		height: 0;
+		transition: .5s ease;
+		
+		.text {
+		  white-space: nowrap; 
+		  color: white;
+		  font-size: 20px;
+		  position: absolute;
+		  overflow: hidden;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		  -ms-transform: translate(-50%, -50%);
+		}
+	}
+		
+	.custom-product-container:hover .custom-overlay {
+		height: 100%;
 	}
 }
