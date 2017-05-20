@@ -5,11 +5,13 @@
 				<h1>Lo sentimos. No pudimos encontrar productos con los parámetros solicitados</h1>
 				<img class = "custom-products-not-found-image" src = "assets/images/Products.png" style = "">
 			</div>
-			
+
 			<div *ngIf = "!productsNotFound" class = "custom-product-grid">
 				<div class = "card clickable custom-product-image-size custom-product-image custom-margin-product" *ngFor = "let product of products" (click) = "redirectToProduct( product.id )">
 					<div class = "card-img">
-						<img [src] = "server + product.photos[0].image.url">
+						<span ng-if= "product.photos.lenght > 0" >	
+							<img [src] = "server + product.photos[0].image.url">
+						</span>
 					</div>
 					<div class = "card-block">
 						<div class = "card-text">
