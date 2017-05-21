@@ -50,7 +50,7 @@ export class Product
 			this.codeType = data.codeType;
 			this.photos = data.photos;
 			this.comments = data.comments;
-			this.productItem = new ProductItem( data );
+			this.productItem = new ProductItem(data);
 			this.user = data.user;
 		}
 	}
