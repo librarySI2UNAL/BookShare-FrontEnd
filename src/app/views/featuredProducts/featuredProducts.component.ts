@@ -2,13 +2,16 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from '@angular/router';
 
 import { Product } from "../../models/product";
+import { User } from "../../models/user";
 import { ProductService } from "../../services/product.service";
+import { UserService } from "../../services/user.service";
 import { AppSettings } from "../../app.settings";
 
 @Component(
 {
 	selector: 'featuredProducts',
-	providers: [ ProductService ],
+	providers: [ ProductService,
+	             UserService],
 	templateUrl: './featuredProducts.component.html',
 	styleUrls: ['featuredProducts.component.scss'],
 	encapsulation: ViewEncapsulation.None
@@ -16,6 +19,7 @@ import { AppSettings } from "../../app.settings";
 
 export class FeaturedProducts implements OnInit{
 	products: Product[];
+	user: User;
 	errorMessage: string;
     productsNotFound: boolean = false;
     server: string = AppSettings.SERVER;
@@ -44,13 +48,14 @@ export class FeaturedProducts implements OnInit{
             }
         }
 	};
-	constructor( private productService: ProductService, private router: Router )
+	constructor( private productService: ProductService, private userService: UserService, private router: Router )
 	{
 	}
 
 	ngOnInit()
 	{
-		this.getSpecials()
+		this.getSpecials();
+		this.getUser();
 	}
 	
 	private getSpecials(): void
@@ -58,14 +63,30 @@ export class FeaturedProducts implements OnInit{
 		this.productService.getSpecials()
 			.subscribe( products =>
 			{
-				this.products = products;
+				this.products = [];
+				let prods: Product[] = products;
+				for( let i = 0; i < prods.length; ++i )
+					this.products.push( new Product( prods[i] ) );
+				console.log(this.products);
 				if( this.products.length === 0 )
 					this.productsNotFound = true;
+				
 			}, error => this.errorMessage = <any>error );
 	}
 	
+	private getUser(): void
+	{
+	    this.userService.userState
+			.subscribe( user =>
+			{
+				this.user = user;
+			} );
+		this.userService.getSessionStorageUser();
+	}
+	
     goToProductDetail(productId : number): void {
-        let link = ['/product', productId];
-        this.router.navigate(link);
+        if(this.user.token){
+            this.router.navigate(['/product', productId]);
+        }
     }
 }

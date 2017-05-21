@@ -47,15 +47,15 @@ featuredProducts
 		transition: .5s ease;
 		
 		.text {
-		  white-space: nowrap; 
-		  color: white;
-		  font-size: 20px;
-		  position: absolute;
-		  overflow: hidden;
-		  top: 50%;
-		  left: 50%;
-		  transform: translate(-50%, -50%);
-		  -ms-transform: translate(-50%, -50%);
+			text-align: center;
+			color: white;
+			font-size: 20px;
+			position: absolute;
+			overflow: hidden;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
 		}
 	}
 		
