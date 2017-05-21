@@ -112,6 +112,7 @@ export class ProductService
 	public create( userId: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
+		productAux.id = userId;
 		productAux.product_item = product.productItem;
 		productAux.product_item.genre = product.productItem.genre.id;
 		productAux.product_item.year_of_publication = product.productItem.yearOfPublication;

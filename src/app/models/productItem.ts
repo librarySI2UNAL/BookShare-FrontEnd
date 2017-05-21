@@ -25,12 +25,12 @@ export class ProductItem
 		else
 		{
 			this.type = data.type;
-			this.id = data[this.type].id;
-			this.name = data[this.type].name;
-			this.author = data[this.type].author;
-			this.genre = data[this.type].genre;
-			this.editorial = data[this.type].editorial;
-			this.yearOfPublication = data[this.type].yearOfPublication;
+			this.id = data.id;
+			this.name = data.name;
+			this.author = data.author;
+			this.genre = data.genre;
+			this.editorial = data.editorial;
+			this.yearOfPublication = data.yearOfPublication;
 		}
 	}
 }
