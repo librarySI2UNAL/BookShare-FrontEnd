@@ -11,7 +11,7 @@ import { AppSettings } from "../../app.settings";
 @Component(
 {
 	selector: 'map',
-	providers: [ UserService ],
+	providers: [ UserService, ProductService ],
 	templateUrl: './map.component.html',
 	styleUrls: ['map.component.scss'],
 	encapsulation: ViewEncapsulation.None

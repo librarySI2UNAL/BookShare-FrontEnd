@@ -6,15 +6,20 @@
 	</div>
 	<div class = "header-nav">
 		<a routerLink = "/home" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.home }">Inicio</a>
-		<a *ngIf = "user.token" routerLink = "/near-products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.nearProducts }">Productos cercanos</a>
-		<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
+		<div *ngIf = "user.token">
+			<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
+			<a *ngIf = "user.token" routerLink = "/near-products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.nearProducts }">Productos cercanos</a>
+		</div>
 	</div>
-	<form class = "search">
+	<!--<form class = "search">
 		<label>
 			<input class = "custom-width-200" type = "text" placeholder = "Busca libros o colecciones">
 		</label>
-	</form>
+	</form>-->
 	<div class = "header-actions">
+		<a *ngIf = "user.token" routerLink = "/product" class = "nav-link nav-icon" [ngClass] = "{ 'active': actives.product }">
+			<clr-icon shape = "add"></clr-icon>
+		</a>
 		<div *ngIf = "!user.token">
 			<a routerLink = "/sign-up" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.signUp }">
 				Regístrate
@@ -30,6 +35,7 @@
 			</button>
 			<clr-dropdown-menu>
 				<a routerLink = "/profile" clrDropdownItem>Perfil</a>
+				<a routerLink = "/product" clrDropdownItem>Crea un producto</a>
 				<a class = "custom-pointer" clrDropdownItem (click) = "logOut()">Salir</a>
 			</clr-dropdown-menu>
 		</clr-dropdown>

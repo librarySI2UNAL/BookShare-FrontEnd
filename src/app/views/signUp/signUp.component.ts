@@ -32,6 +32,7 @@ export class SignUpComponent implements OnInit
 	photoURL: string;
 	profileImage: string;
 	server: string;
+	positionError: boolean = false;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -50,8 +51,8 @@ export class SignUpComponent implements OnInit
 		this.signUpForm = this.createSignUpForm();
 		this.submitted = false;
 		this.registeredUser = false;
-		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 		this.server = AppSettings.SERVER;
+		this.profileImage = this.server + "/images/Avatar.jpg";
 	}
 
 	private mismatch(): ValidatorFn
@@ -132,16 +133,17 @@ export class SignUpComponent implements OnInit
 
 	private signUp(): void
 	{
-
 		this.submitted = true;
 		if( this.signUpForm.invalid )
 			return;
+
 		this.loaderService.show();
 		this.userService.create( this.user, this.password.value )
 			.then( data =>
 			{
 				this.user = new User( data );
 				this.userService.setUser( this.user, true );
+				
 				this.uploader = new FileUploader( {
 					url: `${this.photoURL}/${this.user.id}/photos`,
 					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
@@ -152,38 +154,32 @@ export class SignUpComponent implements OnInit
 				//this.uploader.onCompleteItem = ( item, response, status, headers ) =>
 				this.uploader.onSuccessItem = (item, response, status, headers ) =>
 				{
-					if( this.user.interests.length > 0 )
-					{
-						this.userService.update( this.user )
-							.then( userObject =>
-							{
-								let data: any = {};
-								data.token = this.user.token;
-								data.data = userObject;
-								console.log(data);
-								this.userService.setUser( new User( data ), true );
-								this.loaderService.hide();
-								this.router.navigate( ["/profile"] );
-							} )
-							.catch( response =>
-							{
-								this.loaderService.hide();
-								console.log( response );
-								this.router.navigate( ["/profile"] );
-							} );
-					}
-					else{
-						this.loaderService.hide();
-						this.router.navigate( ["/profile"] );}
+					this.userService.update( this.user )
+						.then( userObject =>
+						{
+							let data: any = {};
+							data.token = this.user.token;
+							data.data = userObject;
+							this.userService.setUser( new User( data ), true );
+							this.loaderService.hide();
+							this.router.navigate( ["/profile"] );
+						} )
+						.catch( response =>
+						{
+							this.loaderService.hide();
+							console.log( response );
+							this.router.navigate( ["/profile"] );
+						} );
 				};
+				
 				AppSettings.HEADERS.set( "Authorization", this.user.token );
 				this.registeredUser = true;
 				this.loaderService.hide();
 			} )
 			.catch( error =>
 			{
-				this.loaderService.hide();
 				console.log( error );
+				this.loaderService.hide();
 			} );
 	}
 
@@ -229,6 +225,13 @@ export class SignUpComponent implements OnInit
 				passwordConfirmation: ["", [Validators.required, Validators.minLength( 8 ), this.mismatch()]]
 			} );
 	}
+	
+	private handleLocationError (error:any): any { 
+		if (error.code == error.PERMISSION_DENIED){
+			console.log("you denied me :-(");
+			this.positionError = true;
+		}
+	}
 
 	public ngOnInit()
 	{
@@ -243,8 +246,9 @@ export class SignUpComponent implements OnInit
 		this.user.qualification = 0.0;
 		this.user.interests = [];
 		if( navigator.geolocation )
-			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
-		else
+			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ), this.handleLocationError(this));
+		console.log(this.positionError);
+		if( this.positionError )
 		{
 			this.position = {
 				latitude: 4.6482836,

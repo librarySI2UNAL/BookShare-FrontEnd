@@ -83,19 +83,29 @@ export class ProductService
 			.catch( this.handleError );
 	}
 
-	public getFilteredAvailables( userId: number, query: string, interests: string, genres: string, columns: string, page: number, perPage: number ): Observable<any>
+	public getFilteredAvailables( userId: number, query: string, columns: string, page: number, perPage: number ): Observable<any>
 	{
-		let q: string = "";
-		if( interests.length > 0 )
-			q += interests + ",";
-		if( genres.length > 0 )
-			q += genres + ",";
-		q += query;
-		if( query.length === 0 )
-			q = q.substring( 0, q.length - 1 );
-
-		return this.http.get( `${this.productsURL}/search?q=${q}&columns=${columns}&user_id=${userId}&page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
+		return this.http.get( `${this.productsURL}/search?q=${query}&columns=${columns}&user_id=${userId}&page=${page}&per_page=${perPage}`, { headers: AppSettings.HEADERS } )
 			.map( ( r: Response ) => r.json() )
+			.catch( this.handleError );
+	}
+
+	public existsOwn( id: number, userId: number ): Promise<any>
+	{
+		return this.http.get( `${this.usersURL}/${userId}/products/${id}/validate`, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json() )
+			.catch( this.handleError );
+	}
+
+	public addComment( productId: number, userId: number, comment: string ): Promise<any>
+	{
+		let data: any = {
+			user_id: userId,
+			comment: comment
+		};
+
+		return this.http.post( `${this.productsURL}/${productId}/comments`, { data: data }, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json().data )
 			.catch( this.handleError );
 	}
 
@@ -136,5 +146,12 @@ export class ProductService
 		return this.http.put( `${this.usersURL}/${userId}/products/${id}`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
+	}
+	
+	public getSpecials(): Observable<Product[]>
+	{
+		return this.http.get( `${AppSettings.API_ENDPOINT}/products/specials`, { headers: AppSettings.HEADERS } )
+			.map( response => response.json().data )
+			.catch( this.handleError );
 	}
 }

@@ -1,0 +1,50 @@
+<div class = "custom-featured-products-wrapper">
+    <h3>Productos destacados:</h3>
+    <div *ngIf = "productsNotFound">
+        <h1>No hemos encontrado productos destacados</h1>
+        <img class = "custom-products-not-found-image" src = "./assets/images/Products.png" style = "">
+    </div>
+    <ng-container *ngIf = "!productsNotFound">
+        <swiper [config] = "swiperConfig">
+            <div class="swiper-wrapper">
+                <ng-container *ngFor="let product of products">
+                    <div class="swiper-slide">
+                        <div class = "clickable custom-product-container" (click) = "goToProductDetail( product.id )">
+                            <div class = "custom-thumbnail-container">
+                                <ng-container *ngIf="product.photos[0]">
+            					    <img [src] = "server + product.photos[0].image.url">
+            					</ng-container>
+            					<ng-container *ngIf="!product.photos[0]">
+            					    <img [src] = "server + genericPhotoURL">
+            					</ng-container>
+        					</div>
+        					<div class="custom-overlay">
+                                <div class="text">{{ product.productItem.name }}<br>
+                                {{ product.value | currency: 'COP': true }}</div>
+                            </div>
+                        </div>    
+                    </div>
+                </ng-container>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </swiper>
+        <!--
+        <div  class = "custom-product-grid">
+            <ng-container *ngFor="let product of products">
+                <div class = "card clickable custom-product-image-size custom-product-image custom-margin-product">
+                    <div class = "card-img">
+						<img [src] = "server + product.photos[0].image.url">
+					</div>
+					<div class = "card-block">
+						<div class = "card-text">
+							<h3>{{ product.productItem.name }}</h3>
+							<h4>{{ product.value | currency: 'COP': true }}</h4>
+						</div>
+					</div>
+                </div>
+            </ng-container>
+        </div>
+        -->
+    </ng-container>
+</div>

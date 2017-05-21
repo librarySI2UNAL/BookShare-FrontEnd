@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { Product } from "../../models/product";
 import { User } from "../../models/user";
@@ -29,12 +30,16 @@ export class ProductsComponent implements OnInit
 	filters: any;
 	selectedInterest: Interest;
 	selectedGenre: Genre;
+	selectedInterestAux: any;
 	server: string;
 	productsNotFound: boolean;
+	genericBook: string;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
-		private loaderService: LoaderService )
+		private loaderService: LoaderService,
+		private router: Router,
+		private route: ActivatedRoute )
 	{
 		this.page = -1;
 		this.perPage = 10;
@@ -48,8 +53,10 @@ export class ProductsComponent implements OnInit
 		};
 		this.selectedInterest = new Interest();
 		this.selectedGenre = new Genre();
+		this.selectedInterestAux = {};
 		this.server = AppSettings.SERVER;
 		this.productsNotFound = false;
+		this.genericBook = "/images/book_cover.jpg";
 	}
 
 	private pages(): Array<number>
@@ -95,35 +102,32 @@ export class ProductsComponent implements OnInit
 		this.loaderService.show();
 		this.page = 1;
 		let search: string = this.filters.search.trim();
-		let interests: string = "";
 		let genres: string = "";
 		let columns: string = "";
+		let q: string = "";
 		for( let i = 0; i < this.filters.selection.length; i++ )
-			if( this.filters.selection[i].selected )
-				interests += String( this.filters.selection[i].model ) + "+";
-			else
-				for( let j = 0; j < this.filters.selection[i].children.length; j++ )
+			for( let j = 0; j < this.filters.selection[i].children.length; j++ )
 					genres += String( this.filters.selection[i].children[j].model ) + "+";
-		if( interests.length > 0 )
-		{
-			interests = interests.substring( 0, interests.length - 1 );
-			columns += "interest,";
-		}
 		if( genres.length > 0 )
 		{
 			genres = genres.substring( 0, genres.length - 1 );
 			columns += "genre,";
+			q += genres + ",";
 		}
-		if( search.length > 0 )
+		if( search.length > 0 && ( this.filters.name || this.filters.author ) )
 		{
 			search = search.replace( / /g, "+" );
 			if( this.filters.name )
 				columns += "name,";
 			if( this.filters.author )
 				columns += "author,";
+			q += search;
 		}
+		else
+			q = q.substring( 0, q.length - 1 );
 		columns = columns.substring( 0, columns.length - 1 );
-		this.productService.getFilteredAvailables( this.user.id, search, interests, genres, columns, this.page, this.perPage )
+
+		this.productService.getFilteredAvailables( this.user.id, q, columns, this.page, this.perPage )
 			.subscribe( response =>
 			{
 				this.totalProducts = response.count;
@@ -133,8 +137,20 @@ export class ProductsComponent implements OnInit
 					this.products.push( new Product( products[i] ) );
 				if( this.products.length === 0 )
 					this.productsNotFound = true;
+				else
+					this.productsNotFound = false;
 				this.loaderService.hide();
 			} );
+	}
+
+	private toString( id: number ): string
+	{
+		return String( id );
+	}
+
+	private redirectToProduct( id: number ): void
+	{
+		this.router.navigate( ["/product", id] );
 	}
 
 	ngOnInit()
@@ -148,6 +164,17 @@ export class ProductsComponent implements OnInit
 			.subscribe( interests =>
 			{
 				this.interests = interests;
+				/*for( let i = 0; i < this.interests.length; i++ )
+					this.selectedInterestAux[String( this.interests[i].id )] = false;
+				this.route.params
+					.subscribe( data =>
+					{
+						if( data.interest )
+						{
+							this.selectedInterestAux[data.interest] = true;
+							this.filter();
+						}
+					} );*/
 			} );
 		this.userService.userState
 			.subscribe( user =>
