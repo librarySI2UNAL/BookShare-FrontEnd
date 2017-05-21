@@ -32,6 +32,7 @@ export class SignUpComponent implements OnInit
 	photoURL: string;
 	profileImage: string;
 	server: string;
+	positionError: boolean = false;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -222,6 +223,13 @@ export class SignUpComponent implements OnInit
 				passwordConfirmation: ["", [Validators.required, Validators.minLength( 8 ), this.mismatch()]]
 			} );
 	}
+	
+	private handleLocationError (error:any): any { 
+		if (error.code == error.PERMISSION_DENIED){
+			console.log("you denied me :-(");
+			this.positionError = true;
+		}
+	}
 
 	public ngOnInit()
 	{
@@ -236,8 +244,9 @@ export class SignUpComponent implements OnInit
 		this.user.qualification = 0.0;
 		this.user.interests = [];
 		if( navigator.geolocation )
-			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ) );
-		else
+			navigator.geolocation.getCurrentPosition( this.setPosition.bind( this ), this.handleLocationError(this));
+		console.log(this.positionError);
+		if( this.positionError )
 		{
 			this.position = {
 				latitude: 4.6482836,
