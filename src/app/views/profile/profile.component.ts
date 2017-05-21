@@ -152,7 +152,7 @@ import { AppSettings } from "../../app.settings";
 						{
 							this.router.navigate( ["/product", id] );
 						}
-						
+
 						private cancel(): void
 						{
 							this.mode = "view";
@@ -174,11 +174,15 @@ import { AppSettings } from "../../app.settings";
 							}
 
 							private edit(): void
-							{	console.log(this.profileForm);
+							{
+
 								if( this.profileForm.invalid )
 								return;
+
+
+								if( this.uploader.queue.length > 0 )
+								{
 								this.loaderService.show();
-								this.mode = "view";
 								this.userService.update( this.userAux )
 								.then( userObject =>
 									{
@@ -187,6 +191,7 @@ import { AppSettings } from "../../app.settings";
 										data.data = userObject;
 										this.userService.setUser( new User( data ), true );
 										this.loaderService.hide();
+										this.mode = "view";
 
 									} )
 									.catch( response =>
@@ -195,13 +200,15 @@ import { AppSettings } from "../../app.settings";
 											console.log( response );
 
 										}
+
 									);
 
-
 								}
-
-
-
+								else{
+									this.mode = "view";
+									this.loaderService.hide();
+								}
+								}
 
 
 								private checkContainsInterest( interest: Interest )
