@@ -288,7 +288,7 @@ export class ProductComponent implements OnInit
 					this.mode = "create";
 					this.product = new Product( {} );
 					this.product.available = true;
-					this.product.special = true;
+					this.product.special = false;
 				}
 				else
 				{

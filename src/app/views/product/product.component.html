@@ -154,6 +154,19 @@
 						</span>
 					</label>
 				</div>
+
+				<div *ngIf = "mode !== 'view'" class = "form-group">
+					<label>Producto destacado</label>
+					<clr-checkbox [(ngModel)] = "product.special" [ngModelOptions] = "{ standalone: true }">
+						¿Es un producto que se debe destacar?
+					</clr-checkbox>
+					<clr-tooltip [clrTooltipDirection] = "'top-left'" [clrTooltipSize] = "'lg'">
+					    <clr-icon shape = "help"></clr-icon>
+					    <clr-tooltip-content>
+					        <span>Un producto destacado es un libro o colección de una edición especial o de una primera edición</span>
+					    </clr-tooltip-content>
+					</clr-tooltip>
+				</div>
 			</div>
 
 			<div class = "col-xs">
