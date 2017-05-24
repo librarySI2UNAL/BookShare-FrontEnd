@@ -64,13 +64,10 @@ export class FeaturedProducts implements OnInit{
 			.subscribe( products =>
 			{
 				this.products = [];
-				let prods: Product[] = products;
-				for( let i = 0; i < prods.length; ++i )
-					this.products.push( new Product( prods[i] ) );
-				console.log(this.products);
+				for( let i = 0; i < products.length; ++i )
+					this.products.push( new Product( products[i] ) );
 				if( this.products.length === 0 )
 					this.productsNotFound = true;
-				
 			}, error => this.errorMessage = <any>error );
 	}
 	

@@ -275,7 +275,7 @@
 					<label>Valor del producto</label>
 					<span *ngIf = "mode === 'view'">{{ product.value | currency: 'COP': true }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.value.touched ) && productForm.controls.value.invalid">
-						<input type = "number" formControlName = "value" [(ngModel)] = "product.value">
+						<input type = "number" min = "0" formControlName = "value" [(ngModel)] = "product.value">
 
 						<span *ngIf = "productForm.controls.value.errors" class = "tooltip-content">
 							<div [hidden] = "!productForm.controls.value.errors.required">
