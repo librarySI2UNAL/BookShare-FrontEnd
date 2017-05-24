@@ -5,6 +5,7 @@ export class AppSettings
 	//public static SERVER: string = "https://backend-development-debeltranc.c9users.io";
 	//public static SERVER: string = "https://bookshare-backend-migaballengal.c9users.io/";
 	public static SERVER: string = "http://localhost:3000";
+	//public static SERVER: string = "https://back-idrojasf.c9users.io";
 	public static API_ENDPOINT: string = `${AppSettings.SERVER}/api/v1`;
 	public static ACTIVES: any = {
 		home: false,
