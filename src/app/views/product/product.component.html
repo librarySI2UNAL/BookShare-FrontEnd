@@ -262,11 +262,29 @@
 		</div>
 	</form>
 
+
 	<div *ngIf = "mode === 'view'" class = "row flex-items-xs-center custom-width">
 		<div class = "col-xs-8">
 			<div class = "row flex-items-xs-center custom-width">
 				<h3>Comentarios</h3>
 			</div>
+		<br>
+			<div class = "row flex-items-xs-center custom-width">
+		<div>
+			<img class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
+		</div>
+		<div class = "col-xs">
+			<label><b>{{ user.name }} {{ user.lastName }}</b></label>
+			<textarea rows = "2" placeholder = "Escribe un comentario..." [(ngModel)] = "comment"></textarea>
+			</div>
+	</div>
+
+	<div class = "row custom-width">
+		<button class = "btn btn-outline" [clrLoading] = "loadingComment" (click) = "addComment()">Comentar</button>
+	</div>
+	
+	<br>
+	<br>
 
 			<div class = "col-xs custom-width custom-comment-wrapper">
 				<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
@@ -284,19 +302,7 @@
 
 			<br>
 
-			<div class = "row flex-items-xs-center custom-width">
-				<div>
-					<img class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
-				</div>
-				<div class = "col-xs">
-					<label><b>{{ user.name }} {{ user.lastName }}</b></label>
-					<textarea rows = "2" placeholder = "Escribe un comentario..." [(ngModel)] = "comment"></textarea>
-				</div>
-			</div>
-
-			<div class = "row custom-width">
-				<button class = "btn btn-outline" [clrLoading] = "loadingComment" (click) = "addComment()">Comentar</button>
-			</div>
+			
 
 			<br>
 		</div>
