@@ -8,6 +8,7 @@
 		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
 		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
 	</div>
+	
 	<div class = "row flex-items-xs-center custom-width">
 		<div *ngFor = "let photo of product.photos; let i = index">
 			<button *ngIf = "mode === 'edit'" class = "close" (click) = "deletePhoto( i )">
@@ -15,20 +16,38 @@
 			</button>
 			<img class = "img-thumbnail custom-product-image" [src] = "server + photo.image.url">
 		</div>
+	</div>
 
-		<div *ngIf = "mode === 'view' && !ownProduct && product.user" class = "custom-padding-left-5">
+	<br>
+
+	<div *ngIf = "mode === 'view' && !ownProduct" class = "row flex-items-xs-center custom-width">
+		<div class = "col-xs-4">
+			<button class = "btn btn-success btn-block" (click) = "showUserInformationModal( true )">Quiero comprar el producto</button>
+		</div>
+	</div>
+</div>
+
+<clr-modal [(clrModalOpen)] = "showUserInformation">
+	<h3 class = "modal-title">Propietario</h3>
+	<div class = "modal-body">
+		<div *ngIf = "product.user" class = "row custom-padding-left-5 custom-width custom-overflow-hidden">
 			<div>
 				<img *ngIf = "product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + product.user.photo.image.url">
 				<img *ngIf = "!product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + avatarImage">
 			</div>
-		</div>
 
-		<div *ngIf = "mode === 'view' && !ownProduct && product.user" class = "custom-padding-left-5">
-			<h2>{{ product.user.name }} {{ product.user.lastName }}</h2>
-			<h3>{{ product.user.email }}</h3>
+			<div class = "custom-padding-left-5">
+				<h3>{{ product.user.name }} {{ product.user.lastName }}</h3>
+				<h4>{{ product.user.email }}</h4>
+			</div>
 		</div>
 	</div>
-</div>
+	<div class = "modal-footer">
+		<button class = "btn btn-outline" (click) = "showUserInformationModal( false )">Cancelar</button>
+		<button class = "btn btn-primary" (click) = "showUserInformationModal( false )">Aceptar</button>
+	</div>
+</clr-modal>
+
 
 <div *ngIf = "createdProduct">
 	<div *ngIf = "productImages.length < 5" class = "row flex-items-xs-center custom-width">
@@ -161,10 +180,10 @@
 						¿Es un producto que se debe destacar?
 					</clr-checkbox>
 					<clr-tooltip [clrTooltipDirection] = "'top-left'" [clrTooltipSize] = "'lg'">
-					    <clr-icon shape = "help"></clr-icon>
-					    <clr-tooltip-content>
-					        <span>Un producto destacado es un libro o colección de una edición especial o de una primera edición</span>
-					    </clr-tooltip-content>
+						<clr-icon shape = "help"></clr-icon>
+						<clr-tooltip-content>
+							<span>Un producto destacado es un libro o colección de una edición especial o de una primera edición</span>
+						</clr-tooltip-content>
 					</clr-tooltip>
 				</div>
 			</div>

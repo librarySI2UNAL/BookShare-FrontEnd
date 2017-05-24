@@ -44,6 +44,7 @@ export class ProductComponent implements OnInit
 	loadingComment: boolean;
 	comment: string;
 	id: number;
+	showUserInformation: boolean;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -81,6 +82,7 @@ export class ProductComponent implements OnInit
 		this.loadingComment = false;
 		this.comment = "";
 		this.id = -1;
+		this.showUserInformation = false;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -175,11 +177,11 @@ export class ProductComponent implements OnInit
 		this.productService.addComment( this.product.id, this.user.id, this.comment )
 			.then( comment =>
 			{
-				this.comment = "";
 				this.productService.get( this.id )
 					.then( product =>
 					{
 						this.product = new Product( product );
+						this.comment = "";
 						this.loadingComment = false;
 					} )
 					.catch( error =>
@@ -193,6 +195,11 @@ export class ProductComponent implements OnInit
 				console.log( error );
 				this.loadingComment = false;
 			} );
+	}
+
+	private showUserInformationModal( value: boolean ): void
+	{
+		this.showUserInformation = value;
 	}
 
 	private save(): void
