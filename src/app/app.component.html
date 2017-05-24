@@ -50,6 +50,9 @@
 		</clr-dropdown>
 	</div>
 </header>
+
+<router-outlet></router-outlet>
+
 <clr-modal [(clrModalOpen)] = "showLogIn" [clrModalClosable] = "false">
 	<h3 class = "modal-title">Ingresa</h3>
 	<div class = "modal-body custom-overflow-visible">
@@ -110,4 +113,3 @@
 </clr-modal>
 
 <loader></loader>
-<router-outlet></router-outlet>
