@@ -112,12 +112,12 @@ export class ProductService
 	public create( userId: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
-		productAux.product_item = product.productItem;
+		productAux.product_item = Object.assign( {}, product.productItem );
 		productAux.product_item.genre = product.productItem.genre.id;
 		productAux.product_item.year_of_publication = product.productItem.yearOfPublication;
+		productAux.code_type = product.codeType;
 		delete productAux.productItem;
 		delete productAux.product_item.yearOfPublication;
-		productAux.code_type = product.codeType;
 		delete productAux.codeType;
 
 		return this.http.post( `${this.usersURL}/${userId}/products`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
@@ -128,16 +128,26 @@ export class ProductService
 	public update( userId: number, id: number, product: Product ): Promise<any>
 	{
 		let productAux: any = Object.assign( {}, product );
-		productAux.product_item = product.productItem;
+		productAux.product_item = Object.assign( {}, product.productItem );
 		productAux.product_item.genre = product.productItem.genre.id;
 		productAux.product_item.year_of_publication = product.productItem.yearOfPublication;
+		productAux.code_type = product.codeType;
+		delete productAux.user;
+		delete productAux.photos;
+		delete productAux.comments;
 		delete productAux.productItem;
 		delete productAux.product_item.yearOfPublication;
-		productAux.code_type = product.codeType;
 		delete productAux.codeType;
 
 		return this.http.put( `${this.usersURL}/${userId}/products/${id}`, { data: productAux }, { headers: AppSettings.HEADERS } ).toPromise()
 			.then( response => response.json().data )
+			.catch( this.handlePromiseError );
+	}
+
+	public delete( userId: number, id: number ): Promise<any>
+	{
+		return this.http.delete( `${this.usersURL}/${userId}/products/${id}`, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json() )
 			.catch( this.handlePromiseError );
 	}
 	

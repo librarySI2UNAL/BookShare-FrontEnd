@@ -8,6 +8,7 @@
 		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
 		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
 	</div>
+	
 	<div class = "row flex-items-xs-center custom-width">
 		<div *ngFor = "let photo of product.photos; let i = index">
 			<button *ngIf = "mode === 'edit'" class = "close" (click) = "deletePhoto( i )">
@@ -15,20 +16,54 @@
 			</button>
 			<img class = "img-thumbnail custom-product-image" [src] = "server + photo.image.url">
 		</div>
+	</div>
 
-		<div *ngIf = "mode === 'view' && !ownProduct && product.user" class = "custom-padding-left-5">
+	<br>
+
+	<div *ngIf = "mode === 'view' && !ownProduct" class = "row flex-items-xs-center custom-width">
+		<div class = "col-xs-4">
+			<button class = "btn btn-success btn-block" (click) = "showUserInformationModal( true )">Quiero comprar el producto</button>
+		</div>
+	</div>
+
+	<div *ngIf = "mode === 'view' && ownProduct" class = "row flex-items-xs-center custom-width">
+		<button class = "btn btn-primary" (click) = "edit()">Editar</button>
+		<button class = "btn btn-warning" (click) = "showDeleteConfirmationModal( true )">Eliminar</button>
+	</div>
+</div>
+
+<clr-modal [(clrModalOpen)] = "showDeleteConfirmation">
+	<h3 class = "modal-title">{{ product.productItem.name }}</h3>
+	<div class = "modal-body">
+		<h4>¿Desea eliminar el producto?</h4>
+	</div>
+	<div class = "modal-footer">
+		<button class = "btn btn-outline" (click) = "showDeleteConfirmationModal( false )">Cancelar</button>
+		<button [clrLoading] = "deleteLoading" class = "btn btn-warning" (click) = "delete()">Aceptar</button>
+	</div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)] = "showUserInformation">
+	<h3 class = "modal-title">Propietario</h3>
+	<div class = "modal-body">
+		<div *ngIf = "product.user" class = "row custom-padding-left-5 custom-width custom-overflow-hidden">
 			<div>
 				<img *ngIf = "product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + product.user.photo.image.url">
 				<img *ngIf = "!product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + avatarImage">
 			</div>
-		</div>
 
-		<div *ngIf = "mode === 'view' && !ownProduct && product.user" class = "custom-padding-left-5">
-			<h2>{{ product.user.name }} {{ product.user.lastName }}</h2>
-			<h3>{{ product.user.email }}</h3>
+			<div class = "custom-padding-left-5">
+				<h3>{{ product.user.name }} {{ product.user.lastName }}</h3>
+				<h4>{{ product.user.email }}</h4>
+			</div>
 		</div>
 	</div>
-</div>
+	<div class = "modal-footer">
+		<button class = "btn btn-outline" (click) = "showUserInformationModal( false )">Cancelar</button>
+		<button class = "btn btn-primary" (click) = "showUserInformationModal( false )">Aceptar</button>
+	</div>
+</clr-modal>
+
 
 <div *ngIf = "createdProduct">
 	<div *ngIf = "productImages.length < 5" class = "row flex-items-xs-center custom-width">
@@ -109,7 +144,7 @@
 						</span>
 					</label>-->
 					<div *ngIf = "mode !== 'view'" class = "col-xs">
-						<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" (valueChanged) = "product.productItem.genre = $event" no-match-found-text = "No existe este género">
+						<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" (valueChanged) = "setGenre( $event )" [(ngModel)] = "product.productItem.genre" no-match-found-text = "No existe este género">
 						
 						<div *ngIf = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
 							<span *ngIf = "productForm.controls.genre.errors" class = "custom-error-text">
@@ -153,6 +188,19 @@
 							</div>
 						</span>
 					</label>
+				</div>
+
+				<div *ngIf = "mode !== 'view'" class = "form-group">
+					<label>Producto destacado</label>
+					<clr-checkbox [(ngModel)] = "product.special" [ngModelOptions] = "{ standalone: true }">
+						¿Es un producto que se debe destacar?
+					</clr-checkbox>
+					<clr-tooltip [clrTooltipDirection] = "'top-left'" [clrTooltipSize] = "'lg'">
+						<clr-icon shape = "help"></clr-icon>
+						<clr-tooltip-content>
+							<span>Un producto destacado es un libro o colección de una edición especial o de una primera edición</span>
+						</clr-tooltip-content>
+					</clr-tooltip>
 				</div>
 			</div>
 
@@ -243,7 +291,7 @@
 					<label>Valor del producto</label>
 					<span *ngIf = "mode === 'view'">{{ product.value | currency: 'COP': true }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.value.touched ) && productForm.controls.value.invalid">
-						<input type = "number" formControlName = "value" [(ngModel)] = "product.value">
+						<input type = "number" min = "0" formControlName = "value" [(ngModel)] = "product.value">
 
 						<span *ngIf = "productForm.controls.value.errors" class = "tooltip-content">
 							<div [hidden] = "!productForm.controls.value.errors.required">
@@ -262,29 +310,11 @@
 		</div>
 	</form>
 
-
 	<div *ngIf = "mode === 'view'" class = "row flex-items-xs-center custom-width">
 		<div class = "col-xs-8">
 			<div class = "row flex-items-xs-center custom-width">
 				<h3>Comentarios</h3>
 			</div>
-		<br>
-			<div class = "row flex-items-xs-center custom-width">
-		<div>
-			<img class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
-		</div>
-		<div class = "col-xs">
-			<label><b>{{ user.name }} {{ user.lastName }}</b></label>
-			<textarea rows = "2" placeholder = "Escribe un comentario..." [(ngModel)] = "comment"></textarea>
-			</div>
-	</div>
-
-	<div class = "row custom-width">
-		<button class = "btn btn-outline" [clrLoading] = "loadingComment" (click) = "addComment()">Comentar</button>
-	</div>
-	
-	<br>
-	<br>
 
 			<div class = "col-xs custom-width custom-comment-wrapper">
 				<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
@@ -302,7 +332,19 @@
 
 			<br>
 
-			
+			<div class = "row flex-items-xs-center custom-width">
+				<div>
+					<img class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
+				</div>
+				<div class = "col-xs">
+					<label><b>{{ user.name }} {{ user.lastName }}</b></label>
+					<textarea rows = "2" placeholder = "Escribe un comentario..." [(ngModel)] = "comment"></textarea>
+				</div>
+			</div>
+
+			<div class = "row custom-width">
+				<button class = "btn btn-outline" [clrLoading] = "loadingComment" (click) = "addComment()">Comentar</button>
+			</div>
 
 			<br>
 		</div>
