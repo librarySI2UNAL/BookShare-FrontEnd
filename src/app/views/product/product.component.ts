@@ -45,6 +45,8 @@ export class ProductComponent implements OnInit
 	comment: string;
 	id: number;
 	showUserInformation: boolean;
+	showDeleteConfirmation: boolean;
+	deleteLoading: boolean;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -83,6 +85,8 @@ export class ProductComponent implements OnInit
 		this.comment = "";
 		this.id = -1;
 		this.showUserInformation = false;
+		this.showDeleteConfirmation = false;
+		this.deleteLoading = false;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -202,11 +206,22 @@ export class ProductComponent implements OnInit
 		this.showUserInformation = value;
 	}
 
+	private showDeleteConfirmationModal( value: boolean ): void
+	{
+		this.showDeleteConfirmation = value;
+	}
+
+	private edit(): void
+	{
+		this.mode = "edit";
+	}
+
 	private save(): void
 	{
 		this.submitted = true;
 		if( this.productForm.invalid )
 			return;
+		
 		this.loaderService.show();
 		if( this.mode === "create" )
 			this.productService.create( this.user.id, this.product )
@@ -260,13 +275,34 @@ export class ProductComponent implements OnInit
 				{
 					this.product = new Product( product );
 					this.loaderService.hide();
-					this.router.navigate( ["/home"] );
+					this.mode = "view";
 				} )
 				.catch( error =>
 				{
 					this.loaderService.hide();
 					console.log( error );
 				} );
+	}
+
+	private delete(): void
+	{
+		this.loaderService.show();
+		this.productService.delete( this.user.id, this.product.id )
+			.then( response =>
+			{
+				this.loaderService.hide();
+				this.router.navigate( ["/profile"] );
+			} )
+			.catch( error =>
+			{
+				console.log( error );
+				this.loaderService.hide();
+			} );
+	}
+
+	private setGenre( genre: any ): void
+	{
+		this.product.productItem.genre = genre;
 	}
 
 	ngOnInit()
