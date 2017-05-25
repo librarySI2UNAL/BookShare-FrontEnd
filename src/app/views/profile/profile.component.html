@@ -1,25 +1,25 @@
-<div>
-	<div class = "row flex-items-xs-center">
+<div *ngIf = "ownProfile" class = "custom-padding-left-5" >
+	<div class = "row flex-items-xs-center" >
 		<h1>Perfil</h1>
 	</div>
 
 	<div class = "row flex-items-xs-center">
-		<div class = "col-xs-4 offset-xs-1" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
-			<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
+		<div class = "col-xs offset-xs-1 custom-profile-image" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+			<img class = "img-thumbnail" [src] = "profileImage">
 			<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 		</div>
 
 		<div class = "col-xs-4 offset-xs-1">
-			<form [formGroup] = "profileForm" (ngSubmit) = "save()">
+			<form [formGroup] = "profileForm" >
 				<h3>Datos personales</h3>
 
 				<br>
 
 				<div class = "form-group">
 					<label>Nombre</label>
-					<span *ngIf = "mode === 'view'">{{ user.name }}</span>
+					<span *ngIf = "mode === 'view'">{{ userAux.name }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.name.touched ) && profileForm.controls.name.invalid">
-						<input type = "text" formControlName = "name" [(ngModel)] = "user.name">
+						<input type = "text" formControlName = "name" [(ngModel)] = "userAux.name">
 
 						<span *ngIf = "profileForm.controls.name.errors" class = "tooltip-content">
 							<div [hidden] = "!profileForm.controls.name.errors.required">
@@ -31,9 +31,9 @@
 
 				<div class = "form-group">
 					<label>Apellido</label>
-					<span *ngIf = "mode === 'view'">{{ user.lastName }}</span>
+					<span *ngIf = "mode === 'view'">{{ userAux.lastName }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.lastName.touched ) && profileForm.controls.lastName.invalid">
-						<input type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName">
+						<input type = "text" formControlName = "lastName" [(ngModel)] = "userAux.lastName">
 
 						<span *ngIf = "profileForm.controls.lastName.errors" class = "tooltip-content">
 							<div [hidden] = "!profileForm.controls.lastName.errors.required">
@@ -45,40 +45,47 @@
 
 				<div class = "form-group">
 					<label>Correo electrónico</label>
-					<span *ngIf = "mode === 'view'">{{ user.email }}</span>
+					<span *ngIf = "mode === 'view'">{{ userAux.email }}</span>
 					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.email.touched ) && profileForm.controls.email.invalid">
-						<input type = "text" formControlName = "email" [(ngModel)] = "user.email">
+						<input type = "text" formControlName = "email" [(ngModel)] = "userAux.email">
 
 						<span *ngIf = "profileForm.controls.email.errors" class = "tooltip-content">
 							<div [hidden] = "!profileForm.controls.email.errors.required">
 								El correo electrónico es requerido
 							</div>
-							<div [hidden] = "!signUpForm.controls.email.errors.pattern">
+
+							<div [hidden] = "!profileForm.controls.email.errors.pattern">
 								El correo electrónico no es válido
 							</div>
-							<div [hidden] = "!signUpForm.controls.email.errors.emailExists">
+							<div [hidden] = "!profileForm.controls.email.errors.emailExists">
 								El correo electrónico ya existe
 							</div>
 						</span>
 					</label>
 				</div>
 
-				<div class = "form-group">
+				<div class = "form-group" *ngIf = "mode === 'view'">
 					<label>Ciudad</label>
-					<span *ngIf = "mode === 'view'">{{ user.city.name }}</span>
-					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.city.touched ) && profileForm.controls.city.invalid">
-						<input type = "text" formControlName = "city" [(ngModel)] = "user.city.name">
-
-						<span *ngIf = "profileForm.controls.city.errors" class = "tooltip-content">
-							<div [hidden] = "!profileForm.controls.city.errors.required">
-								La ciudad es requerida
-							</div>
-						</span>
-					</label>
+					<span >{{ userAux.city.name }}</span>
 				</div>
+
 			</form>
 		</div>
+
 	</div>
+
+	<div class="custom-buttons">
+		<div *ngIf = "mode === 'view'" >
+			<button class = "btn btn-primary" (click) = "modeView()">Editar</button>
+		</div>
+
+		<div *ngIf = "mode === 'edit'">
+			<button class = "btn" (click) = "cancel()">Cancelar</button>
+			<button class = "btn btn-primary" (click) = "edit()">Aceptar</button>
+		</div>
+
+	</div>
+
 
 	<div class = "row flex-items-xs-center">
 		<div class = "col-xs-10 offset-xs-1">
@@ -90,6 +97,90 @@
 						<div class = "custom-over-text">{{ interest.name }}</div>
 					</div>
 				</a>
+			</div>
+		</div>
+	</div>
+
+
+	<div class = "row flex-items-xs-center">
+		<div class="col-xs-3 offset-xs-1 card">
+			<div class="card-header">Tus productos disponibles</div>
+			<div class = "card-text" *ngIf = "productsAvailable.length == 0">
+				<span>No tienes productos disponibles. <a routerLink = "/product">¿Deseas agregar uno?</a></span>
+
+				<br>
+				
+				<img class = "custom-products-not-found-image" src = "./assets/images/Products.png" (click) = "redirectToCreateProduct()" >
+			</div>
+			<div class = "card-block" *ngIf = "productsAvailable.length > 0">
+				<ng-container *ngIf = "!productsNotFound">
+					<swiper [config] = "swiperConfig">
+						<div class="swiper-wrapper">
+							<ng-container *ngFor="let product of productsAvailable">
+								<div class="swiper-slide">
+									<div class = "clickable custom-product-container" (click) = "redirectToProduct( product.id )">
+										<div class = "custom-thumbnail-container">
+											<ng-container *ngIf="product.photos[0]">
+												<img [src] = "server + product.photos[0].image.url">
+											</ng-container>
+											<ng-container *ngIf="!product.photos[0]">
+												<img [src] = "server + genericPhotoURL">
+											</ng-container>
+										</div>
+										<div class="custom-overlay">
+											<div class="text">{{ product.productItem.name }}</div>
+
+											<br>
+											
+											<div class="text">
+												{{ product.value | currency: 'COP': true }}
+											</div>
+										</div>
+									</div>
+								</div>
+							</ng-container>
+						</div>
+						<!-- Add Pagination -->
+						<div class="swiper-pagination"></div>
+					</swiper>
+				</ng-container>
+			</div>
+		</div>
+
+		<div class="col-xs-3 offset-xs-1 card">
+			<div class = "custom-featured-products-wrapper">
+				<div class="card-header">Tus productos vendidos</div>
+				<div class = "card-text"*ngIf = "productsUnavailable.length == 0">
+					<p>No tienes productos vendidos</p><br>
+					<img class = "custom-products-not-found-image" src = "./assets/images/Products.png" (click) = "redirectToCreateProduct()" >
+				</div>
+				<div class = "card-block" *ngIf = "productsUnavailable.length > 0">
+					<ng-container *ngIf = "!productsNotFound">
+						<swiper [config] = "swiperConfig">
+							<div class="swiper-wrapper">
+								<ng-container *ngFor="let product of productsUnavailable">
+									<div class="swiper-slide">
+										<div class = "clickable custom-product-container" (click) = "redirectToProduct( product.id )">
+											<div class = "custom-thumbnail-container">
+												<ng-container *ngIf="product.photos[0]">
+													<img [src] = "server + product.photos[0].image.url">
+												</ng-container>
+												<ng-container *ngIf="!product.photos[0]">
+													<img [src] = "server + genericPhotoURL">
+												</ng-container>
+											</div>
+											<div class="custom-overlay">
+												<div class="text">{{ product.productItem.name }}</div>
+											</div>
+										</div>
+									</div>
+								</ng-container>
+							</div>
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
+						</swiper>
+					</ng-container>
+				</div>
 			</div>
 		</div>
 	</div>

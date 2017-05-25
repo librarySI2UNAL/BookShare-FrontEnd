@@ -121,7 +121,7 @@ export class SignUpComponent implements OnInit
 	private updatePhoto(): void
 	{
 		let fileReader: FileReader = new FileReader();
-		
+
 		fileReader.onload = this.completeOnLoadPhoto.bind( this );
 		fileReader.readAsDataURL( this.uploader.queue[this.uploader.queue.length - 1]._file );
 	}
@@ -150,7 +150,9 @@ export class SignUpComponent implements OnInit
 					maxFileSize: 5242880,
 					authToken: this.user.token
 				} );
-				this.uploader.onCompleteItem = ( item, response, status, headers ) =>
+
+				//this.uploader.onCompleteItem = ( item, response, status, headers ) =>
+				this.uploader.onSuccessItem = (item, response, status, headers ) =>
 				{
 					this.userService.update( this.user )
 						.then( userObject =>

@@ -24,6 +24,7 @@ export class ProductService
 		this.usersURL = `${AppSettings.API_ENDPOINT}/users`;
 		this.genresURL = `${AppSettings.API_ENDPOINT}/genres`;
 		this.interestsURL = `${AppSettings.API_ENDPOINT}/interests`;
+
 	}
 
 	private handlePromiseError( error: any ): Promise<any>
@@ -52,6 +53,12 @@ export class ProductService
 	{
 		return this.http.get( `${this.interestsURL}` )
 			.map( ( response: Response ) => response.json().data as Array<Interest> )
+			.catch( this.handleError );
+	}
+	getUserProducts(userId: number): Observable<Array<Product>>
+	{
+		return this.http.get( `${this.usersURL}/${userId}/products`, { headers: AppSettings.HEADERS } )
+			.map( ( response: Response ) => response.json().data as Array<Product>)
 			.catch( this.handleError );
 	}
 

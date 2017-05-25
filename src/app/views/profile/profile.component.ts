@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router} from "@angular/router";
 import { FileUploader } from "ng2-file-upload";
 
 import { User } from "../../models/user";
 import { Interest } from "../../models/interest";
+import { Product } from "../../models/product";
 
 import { UserService } from "../../services/user.service";
 import { ProductService } from "../../services/product.service";
@@ -32,6 +33,12 @@ export class ProfileComponent implements OnInit
 	server: string;
 	mode: string;
 	ownProfile:  boolean;
+	productsAvailable: Array<Product>;
+	productsUnavailable: Array<Product>;
+	editingMode: boolean;
+	userAux: User;
+	otherUser:any;
+	otherUserId:string;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -51,30 +58,37 @@ export class ProfileComponent implements OnInit
 		this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 		this.server = AppSettings.SERVER;
 		this.mode = "view";
-		this.ownProfile = false;
+		this.ownProfile = true;
+		this.productsAvailable = [];
+		this.productsUnavailable = [];
+		this.editingMode = false;
 	}
 
 	private mismatch(): ValidatorFn
 	{
 		return ( control: AbstractControl ): { [key: string]: any } =>
-			{
-				let input: string = control.value;
-				let password: string = this.password.value;
-				let isValid: boolean = password !== input;
-				if( isValid )
-					return { mismatch: { password } }
-				else
-					return null;
-			};
+		{
+			let input: string = control.value;
+			let password: string = this.password.value;
+			let isValid: boolean = password !== input;
+			if( isValid )
+				return { mismatch: { password } }
+			else
+				return null;
+		};
 	}
 
 	private emailExists(): ValidatorFn
 	{
 		return ( control: AbstractControl ): { [key: string]: any } =>
-			{
-				return new Promise( resolve =>
+		{
+			return new Promise( resolve =>
 				{
-					let input: string = control.value;
+					let input: string = control.value
+
+					if( this.user.email === this.userAux.email )
+						resolve( null );
+
 					this.userService.existsWithEmail( input )
 						.then( data =>
 						{
@@ -88,13 +102,14 @@ export class ProfileComponent implements OnInit
 							resolve( null );
 						} );
 				} );
-			}
+		}
 	}
 
 	private selectInterest( index: number ): void
 	{
 		if( this.mode === "view" )
 			return;
+
 		let exists: boolean = false;
 		for( let i = 0; i < this.user.interests.length; ++i )
 			if( this.user.interests[i].id === this.interests[index].id )
@@ -117,7 +132,7 @@ export class ProfileComponent implements OnInit
 	private updatePhoto(): void
 	{
 		let fileReader: FileReader = new FileReader();
-		
+
 		fileReader.onload = this.completeOnLoadPhoto.bind( this );
 		fileReader.readAsDataURL( this.uploader.queue[this.uploader.queue.length - 1]._file );
 	}
@@ -127,9 +142,24 @@ export class ProfileComponent implements OnInit
 		this.profileImage = e.target.result;
 	}
 
-	private save(): void
+	private redirectToProduct( id: number ): void
 	{
-		
+		this.router.navigate( ["/product", id] );
+	}
+
+	private redirectToCreateProduct(): void
+	{
+		this.router.navigate( ["/product"] );
+	}
+
+	private cancel(): void
+	{
+		this.mode = "view";
+	}
+	
+	private modeView(): void
+	{
+		this.mode = "edit";
 	}
 
 	private createProfileForm(): FormGroup
@@ -139,9 +169,44 @@ export class ProfileComponent implements OnInit
 				name: ["", [Validators.required]],
 				lastName: ["", [Validators.required]],
 				email: ["", [Validators.required, Validators.pattern( /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/ )],
-					[this.emailExists()]],
-				city: ["", [Validators.required]]
+					[this.emailExists()]]
 			} );
+	}
+
+	private edit(): void
+	{
+		if( this.profileForm.invalid )
+			return;
+		
+		if( this.uploader.queue.length > 0 )
+		{
+			this.loaderService.show();
+			this.uploader.queue[this.uploader.queue.length - 1].upload();
+
+			this.uploader.onSuccessItem = (item, response, status, headers ) =>
+			{
+				this.userService.update( this.user )
+					.then( userObject =>
+					{
+						let data: any = {};
+						data.token = this.user.token;
+						data.data = userObject;
+						this.userService.setUser( new User( data ), true );
+						this.loaderService.hide();
+						this.mode = "view";
+					} )
+					.catch( response =>
+					{
+						this.loaderService.hide();
+						console.log( response );
+					} );
+			};
+		}
+		else
+		{
+			this.loaderService.hide();
+			this.mode = "view";
+		}
 	}
 
 	private checkContainsInterest( interest: Interest )
@@ -153,17 +218,45 @@ export class ProfileComponent implements OnInit
 	{
 		for( let view in AppSettings.ACTIVES )
 			AppSettings.ACTIVES[view] = false;
+		
 		this.productService.getInterests()
 			.subscribe( interests =>
 			{
 				this.interests = interests;
 			} );
+		
 		this.userService.userState
 			.subscribe( user =>
 			{
 				this.user = user;
+
 				if( this.user.photo )
 					this.profileImage = this.server + this.user.photo.image.url;
+
+				this.userAux = Object.assign( {}, this.user ) as User;
+				
+				this.uploader = new FileUploader( {
+					url: `${this.photoURL}/${this.user.id}/photos`,
+					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+					maxFileSize: 5242880,
+					authToken: this.user.token
+				} );
+				
+				this.productService.getByUser( this.user.id, true )
+					.subscribe( result =>
+					{
+						let products: Array<any> = result;
+						for( let i = 0; i < products.length; ++i )
+							this.productsAvailable.push( new Product( products[i] ) );
+					} );
+
+				this.productService.getByUser( this.user.id, false )
+					.subscribe( result =>
+					{
+						let products: Array<any> = result;
+						for( let i = 0; i < products.length; ++i )
+							this.productsUnavailable.push( new Product( products[i] ) );
+					} );
 			} );
 		this.userService.getSessionStorageUser();
 	}
