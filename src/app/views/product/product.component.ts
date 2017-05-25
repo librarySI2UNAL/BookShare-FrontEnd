@@ -27,6 +27,7 @@ export class ProductComponent implements OnInit
 	productForm: FormGroup;
 	mode: string;
 	product: Product;
+	productAux: Product;
 	covers: any;
 	statuses: any;
 	genres: Array<Genre>;
@@ -211,9 +212,15 @@ export class ProductComponent implements OnInit
 		this.showDeleteConfirmation = value;
 	}
 
-	private edit(): void
+	private edit( value: boolean ): void
 	{
-		this.mode = "edit";
+		if( value )
+			this.mode = "edit";
+		else
+		{
+			this.product = Object.assign( {}, this.productAux ) as Product;
+			this.mode = "view";
+		}
 	}
 
 	private save(): void
@@ -353,6 +360,7 @@ export class ProductComponent implements OnInit
 						.then( product =>
 						{
 							this.product = new Product( product );
+							this.productAux = Object.assign( {}, this.product ) as Product;
 							console.log( this.product );
 							this.loaderService.hide();
 						} )
