@@ -143,6 +143,13 @@ export class ProductService
 			.then( response => response.json().data )
 			.catch( this.handlePromiseError );
 	}
+
+	public delete( userId: number, id: number ): Promise<any>
+	{
+		return this.http.delete( `${this.usersURL}/${userId}/products/${id}`, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json() )
+			.catch( this.handlePromiseError );
+	}
 	
 	public getSpecials(): Observable<Product[]>
 	{

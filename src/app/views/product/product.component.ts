@@ -284,6 +284,22 @@ export class ProductComponent implements OnInit
 				} );
 	}
 
+	private delete(): void
+	{
+		this.loaderService.show();
+		this.productService.delete( this.user.id, this.product.id )
+			.then( response =>
+			{
+				this.loaderService.hide();
+				this.router.navigate( ["/profile"] );
+			} )
+			.catch( error =>
+			{
+				console.log( error );
+				this.loaderService.hide();
+			} );
+	}
+
 	ngOnInit()
 	{
 		for( let view in AppSettings.ACTIVES )

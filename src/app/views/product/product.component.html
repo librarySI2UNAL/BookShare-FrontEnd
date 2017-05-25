@@ -39,7 +39,7 @@
 	</div>
 	<div class = "modal-footer">
 		<button class = "btn btn-outline" (click) = "showDeleteConfirmationModal( false )">Cancelar</button>
-		<button [clrLoading] = "deleteLoading" class = "btn btn-warning">Aceptar</button>
+		<button [clrLoading] = "deleteLoading" class = "btn btn-warning" (click) = "delete()">Aceptar</button>
 	</div>
 </clr-modal>
 
