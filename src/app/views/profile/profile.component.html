@@ -4,8 +4,8 @@
 	</div>
 
 	<div class = "row flex-items-xs-center">
-		<div class = "col-xs-4 offset-xs-1" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
-			<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
+		<div class = "col-xs offset-xs-1 custom-profile-image" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+			<img class = "img-thumbnail" [src] = "profileImage">
 			<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 		</div>
 
@@ -76,12 +76,12 @@
 
 	<div class="custom-buttons">
 		<div *ngIf = "mode === 'view'" >
-			<button class = "btn btn-primary" (click) = "modeView()">Editar Perfil</button>
+			<button class = "btn btn-primary" (click) = "modeView()">Editar</button>
 		</div>
 
-		<div *ngIf = "mode === 'edit'" >
+		<div *ngIf = "mode === 'edit'">
+			<button class = "btn" (click) = "cancel()">Cancelar</button>
 			<button class = "btn btn-primary" (click) = "edit()">Aceptar</button>
-			<button class = "btn btn-primary" (click) = "cancel()">Cancelar</button>
 		</div>
 
 	</div>
