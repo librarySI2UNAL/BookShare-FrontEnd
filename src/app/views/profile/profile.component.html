@@ -1,4 +1,4 @@
-<div *ngIf = "ownProfile" class = "custom-padding-left-5" >
+<div class = "custom-padding-left-5" >
 	<div class = "row flex-items-xs-center" >
 		<h1>Perfil</h1>
 	</div>
@@ -9,7 +9,7 @@
 			<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
 		</div>
 
-		<div class = "col-xs-4 offset-xs-1">
+		<div class = "col-xs-4 offset-xs-1" *ngIf = "userAux">
 			<form [formGroup] = "profileForm" >
 				<h3>Datos personales</h3>
 
@@ -75,7 +75,7 @@
 	</div>
 
 	<div class="custom-buttons">
-		<div *ngIf = "mode === 'view'" >
+		<div *ngIf = "mode === 'view' && ownProfile" >
 			<button class = "btn btn-primary" (click) = "modeView()">Editar</button>
 		</div>
 
