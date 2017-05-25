@@ -104,10 +104,12 @@
 
 	<div class = "row flex-items-xs-center">
 		<div class="col-xs-3 offset-xs-1 card">
+			<div class="card-header">Tus productos disponibles</div>
+			<div class = "card-text" *ngIf = "productsAvailable.length == 0">
+				<span>No tienes productos disponibles. <a routerLink = "/product">¿Deseas agregar uno?</a></span>
 
-			<div class="card-header">Tus Productos Disponibles:</div>
-			<div class = "card-text"*ngIf = "productsAvailable.length == 0">
-				<p>No tienes productos disponibles, ¿deseas agregar?</p><br>
+				<br>
+				
 				<img class = "custom-products-not-found-image" src = "./assets/images/Products.png" (click) = "redirectToCreateProduct()" >
 			</div>
 			<div class = "card-block" *ngIf = "productsAvailable.length > 0">
@@ -126,8 +128,49 @@
 											</ng-container>
 										</div>
 										<div class="custom-overlay">
-											<div class="text">{{ product.productItem.name }}<br>
-												{{ product.value | currency: 'COP': true }}</div>
+											<div class="text">{{ product.productItem.name }}</div>
+
+											<br>
+											
+											<div class="text">
+												{{ product.value | currency: 'COP': true }}
+											</div>
+										</div>
+									</div>
+								</div>
+							</ng-container>
+						</div>
+						<!-- Add Pagination -->
+						<div class="swiper-pagination"></div>
+					</swiper>
+				</ng-container>
+			</div>
+		</div>
+
+		<div class="col-xs-3 offset-xs-1 card">
+			<div class = "custom-featured-products-wrapper">
+				<div class="card-header">Tus productos vendidos</div>
+				<div class = "card-text"*ngIf = "productsUnavailable.length == 0">
+					<p>No tienes productos vendidos</p><br>
+					<img class = "custom-products-not-found-image" src = "./assets/images/Products.png" (click) = "redirectToCreateProduct()" >
+				</div>
+				<div class = "card-block" *ngIf = "productsUnavailable.length > 0">
+					<ng-container *ngIf = "!productsNotFound">
+						<swiper [config] = "swiperConfig">
+							<div class="swiper-wrapper">
+								<ng-container *ngFor="let product of productsUnavailable">
+									<div class="swiper-slide">
+										<div class = "clickable custom-product-container" (click) = "redirectToProduct( product.id )">
+											<div class = "custom-thumbnail-container">
+												<ng-container *ngIf="product.photos[0]">
+													<img [src] = "server + product.photos[0].image.url">
+												</ng-container>
+												<ng-container *ngIf="!product.photos[0]">
+													<img [src] = "server + genericPhotoURL">
+												</ng-container>
+											</div>
+											<div class="custom-overlay">
+												<div class="text">{{ product.productItem.name }}</div>
 											</div>
 										</div>
 									</div>
@@ -139,81 +182,6 @@
 					</ng-container>
 				</div>
 			</div>
-
-			<div class="col-xs-3 offset-xs-1 card">
-				<div class = "custom-featured-products-wrapper ">
-					<div class="card-header">Tus productos vendidos o intercambiados</div>
-					<div class = "card-text"*ngIf = "productsUnavailable.length == 0">
-						<p>No tienes productos vendidos o intercambiados :( </p><br>
-						<img class = "custom-products-not-found-image" src = "./assets/images/Products.png" (click) = "redirectToCreateProduct()" >
-					</div>
-					<div class = "card-block" *ngIf = "productsUnavailable.length > 0">
-						<ng-container *ngIf = "!productsNotFound">
-							<swiper [config] = "swiperConfig">
-								<div class="swiper-wrapper">
-									<ng-container *ngFor="let product of productsUnavailable">
-										<div class="swiper-slide">
-											<div class = "clickable custom-product-container" (click) = "redirectToProduct( product.id )">
-												<div class = "custom-thumbnail-container">
-													<ng-container *ngIf="product.photos[0]">
-														<img [src] = "server + product.photos[0].image.url">
-													</ng-container>
-													<ng-container *ngIf="!product.photos[0]">
-														<img [src] = "server + genericPhotoURL">
-													</ng-container>
-												</div>
-												<div class="custom-overlay">
-													<div class="text">{{ product.productItem.name }}</div>
-												</div>
-											</div>
-										</div>
-									</ng-container>
-								</div>
-								<!-- Add Pagination -->
-								<div class="swiper-pagination"></div>
-							</swiper>
-						</ng-container>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
-
-	<div *ngIf = "!ownProfile" class = "custom-padding-left-5" >
-		<div class = "row flex-items-xs-center" >
-			<h1>{{ otherUser.name + " " + otherUser.lastName}}</h1>
-		</div>
-		<div class = "row flex-items-xs-center">
-			<div class = "col-xs-4 offset-xs-1" >
-				<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
-			</div>
-			<div class = "col-xs-4 offset-xs-1">
-				<form [formGroup] = "profileForm" >
-					<h3>Datos de Usuario</h3><br>
-					<div class = "form-group">
-						<label>Correo electrónico</label>
-						<span *ngIf = "mode === 'view'">{{ otherUser.email }}</span>
-					</div>
-					<div class = "form-group" *ngIf = "mode === 'view'">
-						<label>Ciudad</label>
-						<span >{{ otherUser.city.name }}</span>
-					</div>
-				</form>
-			</div>
-
-		</div>
-
-		<div class = "row flex-items-xs-center">
-			<div class = "col-xs-10 offset-xs-1">
-				<h3>Intereses</h3>
-				<div class = "custom-display-grid">
-					<a *ngFor = "let interest of interests; let i = index" class = "card card-img">
-						<img [src] = "server + interest.photo.image.url">
-						<div class = "custom-over">
-							<div class = "custom-over-text">{{ interest.name }}</div>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
+</div>
