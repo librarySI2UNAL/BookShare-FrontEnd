@@ -43,6 +43,7 @@ export class ProductComponent implements OnInit
 	profileImage: string;
 	avatarImage: string;
 	loadingComment: boolean;
+	loadingSold: boolean;
 	comment: string;
 	id: number;
 	showUserInformation: boolean;
@@ -83,6 +84,7 @@ export class ProductComponent implements OnInit
 		this.profileImage = "/images/Avatar.jpg";
 		this.avatarImage = "/images/Avatar.jpg";
 		this.loadingComment = false;
+		this.loadingSold = false;
 		this.comment = "";
 		this.id = -1;
 		this.showUserInformation = false;
@@ -310,6 +312,23 @@ export class ProductComponent implements OnInit
 	private setGenre( genre: any ): void
 	{
 		this.product.productItem.genre = genre;
+	}
+
+	private setAvailability( value: boolean ): void
+	{
+		this.loadingSold = true;
+		this.product.available = value;
+		this.productService.update( this.user.id, this.product.id, this.product )
+			.then( product =>
+			{
+				this.loadingSold = false;
+				this.router.navigate( ["/profile"] );
+			} )
+			.catch( error =>
+			{
+				this.loadingSold = false;
+				console.log( error );
+			} );
 	}
 
 	ngOnInit()
