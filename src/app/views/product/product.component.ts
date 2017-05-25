@@ -300,6 +300,11 @@ export class ProductComponent implements OnInit
 			} );
 	}
 
+	private setGenre( genre: any ): void
+	{
+		this.product.productItem.genre = genre;
+	}
+
 	ngOnInit()
 	{
 		for( let view in AppSettings.ACTIVES )
