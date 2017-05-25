@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router} from "@angular/router";
 import { FileUploader } from "ng2-file-upload";
 
 import { User } from "../../models/user";
@@ -35,9 +35,11 @@ import { AppSettings } from "../../app.settings";
 		ownProfile:  boolean;
 		productsAvailable: Array<Product>;
 		productsUnavailable: Array<Product>;
-
 		editingMode: boolean;
 		userAux: User;
+		otherUser:any;
+		otherUserId:string;
+
 
 
 		@ViewChild( "fileInput" ) fileInput: ElementRef;
@@ -58,12 +60,10 @@ import { AppSettings } from "../../app.settings";
 				this.profileImage = "https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg";
 				this.server = AppSettings.SERVER;
 				this.mode = "view";
-				this.ownProfile = false;
+				this.ownProfile = true;
 				this.productsAvailable = [];
 				this.productsUnavailable = [];
 				this.editingMode = false;
-
-
 			}
 
 			private mismatch(): ValidatorFn
@@ -88,7 +88,7 @@ import { AppSettings } from "../../app.settings";
 						{
 							let input: string = control.value
 
-							if(this.user.email == this.userAux.email)
+							if(this.user.email == this.user.email)
 							resolve( null );
 
 							this.userService.existsWithEmail( input )
@@ -143,11 +143,6 @@ import { AppSettings } from "../../app.settings";
 							this.profileImage = e.target.result;
 						}
 
-						private save(): void
-						{
-
-						}
-
 						private redirectToProduct( id: number ): void
 						{
 							this.router.navigate( ["/product", id] );
@@ -156,9 +151,11 @@ import { AppSettings } from "../../app.settings";
 						{
 							this.router.navigate( ["/product"] );
 						}
+
 						private cancel(): void
 						{
 							this.mode = "view";
+
 						}
 						private modeView(): void
 						{
@@ -190,80 +187,101 @@ import { AppSettings } from "../../app.settings";
 
 										this.userService.update( this.user )
 										.then( userObject =>
-											{	console.log( "is it working");
-											let data: any = {};
-											data.token = this.user.token;
-											data.data = userObject;
-											this.userService.setUser( new User( data ), true );
-											this.loaderService.hide();
-											this.mode = "view";
-
-										} )
-										.catch( response =>
 											{
+												let data: any = {};
+												data.token = this.user.token;
+												data.data = userObject;
+												this.userService.setUser( new User( data ), true );
 												this.loaderService.hide();
-												console.log( response );
-											} );
-										};}
-										else{
-											this.loaderService.hide();
-											this.mode = "view";
-										}
-									}
+												this.mode = "view";
 
-
-									private checkContainsInterest( interest: Interest )
-									{
-
-										return this.user.interests.some( userInterest => userInterest.id === interest.id );
-
-									}
-
-									public ngOnInit()
-									{
-										for( let view in AppSettings.ACTIVES )
-										AppSettings.ACTIVES[view] = false;
-										this.productService.getInterests()
-										.subscribe( interests =>
-											{
-												this.interests = interests;
-											} );
-											this.userService.userState
-											.subscribe( user =>
+											} )
+											.catch( response =>
 												{
-													this.user = user;
-
-													if( this.user.photo )
-													this.profileImage = this.server + this.user.photo.image.url;
+													this.loaderService.hide();
+													console.log( response );
 												} );
+											};}
+											else{
+												this.loaderService.hide();
+												this.mode = "view";
+											}
+										}
 
 
-												this.userService.getSessionStorageUser();
-												this.userAux = Object.assign( {}, this.user ) as User;
-												this.uploader = new FileUploader( {
-													url: `${this.photoURL}/${this.user.id}/photos`,
-													allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
-													maxFileSize: 5242880,
-													authToken: this.user.token
+										private checkContainsInterest( interest: Interest )
+										{
+
+											return this.user.interests.some( userInterest => userInterest.id === interest.id );
+
+										}
+
+
+
+
+										public ngOnInit()
+										{
+
+											for( let view in AppSettings.ACTIVES )
+											AppSettings.ACTIVES[view] = false;
+											this.productService.getInterests()
+											.subscribe( interests =>
+												{
+													this.interests = interests;
 												} );
-
-												for( let view in AppSettings.ACTIVES )
-												AppSettings.ACTIVES[view] = false;
-												this.productService.getByUser(this.user.id, true)
-												.subscribe(result =>
+												this.userService.userState
+												.subscribe( user =>
 													{
-														let products: Array<any> = result;
-														for( let i = 0; i < products.length; ++i )
-														this.productsAvailable.push( new Product( products[i] ) );
-													});
+														this.user = user;
 
-													this.productService.getByUser(this.user.id, false)
+														if( this.user.photo )
+														this.profileImage = this.server + this.user.photo.image.url;
+													} );
+
+
+
+													this.userService.getSessionStorageUser();
+													this.userAux = Object.assign( {}, this.user ) as User;
+													this.uploader = new FileUploader( {
+														url: `${this.photoURL}/${this.user.id}/photos`,
+														allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+														maxFileSize: 5242880,
+														authToken: this.user.token
+													} );
+
+													for( let view in AppSettings.ACTIVES )
+													AppSettings.ACTIVES[view] = false;
+													this.productService.getByUser(this.user.id, true)
 													.subscribe(result =>
 														{
 															let products: Array<any> = result;
 															for( let i = 0; i < products.length; ++i )
-															this.productsUnavailable.push( new Product( products[i] ) );
+															this.productsAvailable.push( new Product( products[i] ) );
 														});
 
+														this.productService.getByUser(this.user.id, false)
+														.subscribe(result =>
+															{
+																let products: Array<any> = result;
+																for( let i = 0; i < products.length; ++i )
+																this.productsUnavailable.push( new Product( products[i] ) );
+															});
+
+															if(this.router.url != "/profile"){
+
+																this.ownProfile = true;
+																this.otherUserId = this.router.url.substr(9);
+																this.userService.get(Number(this.otherUserId)).then(
+																	user2 =>{
+																		let data: any = {};
+																		data.data = user2;
+																		this.otherUser = Object.assign( {}, data.data ) as User;
+																		
+																	}
+																);
+															}
+															else{
+																this.ownProfile = true;
+															}
+														}
 													}
-												}
