@@ -202,6 +202,12 @@
 						</clr-tooltip-content>
 					</clr-tooltip>
 				</div>
+
+				<div *ngIf = "mode == 'view' && product.description && product.description.length > 0" class = "form-group">
+					<label>Descripción</label>
+					<span *ngIf = "mode === 'view'">{{ product.description }}</span>
+					<textarea *ngIf = "mode === 'edit'" rows = "5" [(ngModel)] = "product.description"></textarea>
+				</div>
 			</div>
 
 			<div class = "col-xs">
