@@ -74,8 +74,8 @@ export class UserService
 
 	public get( id: number ): Promise<any>
 	{
-		return this.http.get( `${this.usersURL}/${id}` ).toPromise()
-			.then( response => response.json() )
+		return this.http.get( `${this.usersURL}/${id}`, { headers: AppSettings.HEADERS } ).toPromise()
+			.then( response => response.json().data )
 			.catch( this.handleError );
 	}
 

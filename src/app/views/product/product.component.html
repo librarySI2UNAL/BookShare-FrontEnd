@@ -27,6 +27,7 @@
 	</div>
 
 	<div *ngIf = "mode === 'view' && ownProduct" class = "row flex-items-xs-center custom-width">
+		<button class = "btn btn-success" (click) = "setAvailability( false )" [clrLoading] = "loadingSold">Ya vendí este producto</button>
 		<button class = "btn btn-primary" (click) = "edit( true )">Editar</button>
 		<button class = "btn btn-warning" (click) = "showDeleteConfirmationModal( true )">Eliminar</button>
 	</div>

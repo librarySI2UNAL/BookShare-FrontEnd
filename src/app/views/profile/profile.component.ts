@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ElementRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
-import { Router} from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FileUploader } from "ng2-file-upload";
 
 import { User } from "../../models/user";
@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit
 	constructor( private userService: UserService,
 		private productService: ProductService,
 		private loaderService: LoaderService,
+		private route: ActivatedRoute,
 		private router: Router,
 		private formBuilder: FormBuilder )
 	{
@@ -211,7 +212,8 @@ export class ProfileComponent implements OnInit
 
 	private checkContainsInterest( interest: Interest )
 	{
-		return this.user.interests.some( userInterest => userInterest.id === interest.id );
+		if( this.user )
+			return this.user.interests.some( userInterest => userInterest.id === interest.id );
 	}
 
 	public ngOnInit()
@@ -224,40 +226,132 @@ export class ProfileComponent implements OnInit
 			{
 				this.interests = interests;
 			} );
-		
-		this.userService.userState
-			.subscribe( user =>
+
+		this.loaderService.show();
+		this.route.params
+			.subscribe( params =>
 			{
-				this.user = user;
+				if( Object.keys( params ).length > 1 )
+				{
+					this.loaderService.hide();
+					this.router.navigate( ["/home"] );
+				}
+				else if( Object.keys( params ).length === 0 )
+				{
+					this.userService.userState
+						.subscribe( user =>
+						{
+							let id: number = user.id;
+							let token: string = user.token;
 
-				if( this.user.photo )
-					this.profileImage = this.server + this.user.photo.image.url;
+							this.userService.get( id )
+								.then( user =>
+								{
+									this.ownProfile = true;
+									let data: any = {};
+									data.data = user;
+									data.token = token;
+									this.user = new User( data );
 
-				this.userAux = Object.assign( {}, this.user ) as User;
+									if( this.user.photo )
+										this.profileImage = this.server + this.user.photo.image.url;
+								
+									this.userAux = Object.assign( {}, this.user ) as User;
 				
-				this.uploader = new FileUploader( {
-					url: `${this.photoURL}/${this.user.id}/photos`,
-					allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
-					maxFileSize: 5242880,
-					authToken: this.user.token
-				} );
-				
-				this.productService.getByUser( this.user.id, true )
-					.subscribe( result =>
-					{
-						let products: Array<any> = result;
-						for( let i = 0; i < products.length; ++i )
-							this.productsAvailable.push( new Product( products[i] ) );
-					} );
+									this.uploader = new FileUploader( {
+										url: `${this.photoURL}/${this.user.id}/photos`,
+										allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+										maxFileSize: 5242880,
+										authToken: this.user.token
+									} );
+									
+									this.productService.getByUser( this.user.id, true )
+										.subscribe( result =>
+										{
+											let products: Array<any> = result;
+											for( let i = 0; i < products.length; ++i )
+												this.productsAvailable.push( new Product( products[i] ) );
+										} );
 
-				this.productService.getByUser( this.user.id, false )
-					.subscribe( result =>
-					{
-						let products: Array<any> = result;
-						for( let i = 0; i < products.length; ++i )
-							this.productsUnavailable.push( new Product( products[i] ) );
-					} );
+									this.productService.getByUser( this.user.id, false )
+										.subscribe( result =>
+										{
+											let products: Array<any> = result;
+											for( let i = 0; i < products.length; ++i )
+												this.productsUnavailable.push( new Product( products[i] ) );
+										} );
+
+									this.loaderService.hide();
+								} )
+								.catch( error =>
+								{
+									console.log( error );
+									this.loaderService.hide();
+								} );
+						} );
+				}
+				else
+				{
+					this.userService.userState
+						.subscribe( user =>
+						{
+							let id: number = user.id;
+							let token: string = user.token;
+
+							let idAux: number = +params["id"];
+							if( !idAux )
+								this.router.navigate( ["/home"] );
+
+							this.userService.get( idAux )
+								.then( user =>
+								{
+									this.ownProfile = id === idAux;
+									let data: any = {};
+									data.data = user;
+									data.token = token;
+									this.user = new User( data );
+
+									if( this.user.photo )
+										this.profileImage = this.server + this.user.photo.image.url;
+								
+									this.userAux = Object.assign( {}, this.user ) as User;
+				
+									if( this.ownProfile )
+										this.uploader = new FileUploader( {
+											url: `${this.photoURL}/${this.user.id}/photos`,
+											allowedMimeType: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
+											maxFileSize: 5242880,
+											authToken: this.user.token
+										} );
+									
+									this.productService.getByUser( this.user.id, true )
+										.subscribe( result =>
+										{
+											let products: Array<any> = result;
+											for( let i = 0; i < products.length; ++i )
+												this.productsAvailable.push( new Product( products[i] ) );
+										} );
+
+									if( this.ownProfile )
+										this.productService.getByUser( this.user.id, false )
+											.subscribe( result =>
+											{
+												let products: Array<any> = result;
+												for( let i = 0; i < products.length; ++i )
+													this.productsUnavailable.push( new Product( products[i] ) );
+											} );
+
+									this.loaderService.hide();
+								} )
+								.catch( error =>
+								{
+									console.log( error );
+									this.loaderService.hide();
+								} );
+						} );
+				}
+
+				this.userService.getSessionStorageUser();
 			} );
-		this.userService.getSessionStorageUser();
 	}
 }
