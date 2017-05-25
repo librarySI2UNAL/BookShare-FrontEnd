@@ -25,7 +25,23 @@
 			<button class = "btn btn-success btn-block" (click) = "showUserInformationModal( true )">Quiero comprar el producto</button>
 		</div>
 	</div>
+
+	<div *ngIf = "mode === 'view' && ownProduct" class = "row flex-items-xs-center custom-width">
+		<button class = "btn btn-primary">Editar</button>
+		<button class = "btn btn-warning" (click) = "showDeleteConfirmationModal( true )">Eliminar</button>
+	</div>
 </div>
+
+<clr-modal [(clrModalOpen)] = "showDeleteConfirmation">
+	<h3 class = "modal-title">{{ product.productItem.name }}</h3>
+	<div class = "modal-body">
+		<h4>¿Desea eliminar el producto?</h4>
+	</div>
+	<div class = "modal-footer">
+		<button class = "btn btn-outline" (click) = "showDeleteConfirmationModal( false )">Cancelar</button>
+		<button class = "btn btn-warning">Aceptar</button>
+	</div>
+</clr-modal>
 
 <clr-modal [(clrModalOpen)] = "showUserInformation">
 	<h3 class = "modal-title">Propietario</h3>

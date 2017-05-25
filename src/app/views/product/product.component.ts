@@ -45,6 +45,7 @@ export class ProductComponent implements OnInit
 	comment: string;
 	id: number;
 	showUserInformation: boolean;
+	showDeleteConfirmation: boolean;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -83,6 +84,7 @@ export class ProductComponent implements OnInit
 		this.comment = "";
 		this.id = -1;
 		this.showUserInformation = false;
+		this.showDeleteConfirmation = false;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -200,6 +202,11 @@ export class ProductComponent implements OnInit
 	private showUserInformationModal( value: boolean ): void
 	{
 		this.showUserInformation = value;
+	}
+
+	private showDeleteConfirmationModal( value: boolean ): void
+	{
+		this.showDeleteConfirmation = value;
 	}
 
 	private save(): void
