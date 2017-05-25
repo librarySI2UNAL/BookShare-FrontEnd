@@ -55,6 +55,7 @@ export class UserService
 	{
 		sessionStorage.removeItem( "user" );
 		this.setUser( new User( {} ) );
+		AppSettings.HEADERS = new Headers( { "Content-Type": "application/json", "Accept": "application/json" } );
 	}
 
 	// Handle errors

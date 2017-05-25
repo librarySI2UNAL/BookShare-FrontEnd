@@ -12,13 +12,13 @@ export class ProductItem
 
 	constructor( data: any )
 	{
-		if( Object.keys( data ).length === 0 )
+		if( !data || Object.keys( data ).length === 0 )
 		{
 			this.id = null;
 			this.type = null;
 			this.name = null;
 			this.author = null;
-			this.genre = null;
+			this.genre = new Genre();
 			this.editorial = null;
 			this.yearOfPublication = null;
 		}

@@ -18,10 +18,10 @@ import { AppSettings } from "../../app.settings";
 } )
 
 export class FeaturedProducts implements OnInit{
-	products: Product[];
+	products: Product[] = [];
 	user: User;
 	errorMessage: string;
-    productsNotFound: boolean = false;
+    productsNotFound: boolean = true;
     server: string = AppSettings.SERVER;
     genericPhotoURL: string = "/images/book_cover.jpg";
     swiperConfig: any = {
@@ -64,13 +64,10 @@ export class FeaturedProducts implements OnInit{
 			.subscribe( products =>
 			{
 				this.products = [];
-				let prods: Product[] = products;
-				for( let i = 0; i < prods.length; ++i )
-					this.products.push( new Product( prods[i] ) );
-				console.log(this.products);
-				if( this.products.length === 0 )
-					this.productsNotFound = true;
-				
+				for( let i = 0; i < products.length; ++i )
+					this.products.push( new Product( products[i] ) );
+				this.productsNotFound = this.products.length === 0;
+
 			}, error => this.errorMessage = <any>error );
 	}
 	
