@@ -68,7 +68,7 @@
 				<div class = "form-group">
 					<label>Correo electrónico</label>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.email.touched ) && logInForm.controls.email.invalid">
-						<input class = "form-control" type = "text" formControlName = "email" (keyup.escape)="showLogInModal( false )" (keyup.enter)="logIn()"  [(ngModel)] = "credentials.email"/>
+						<input class = "form-control" type = "text" formControlName = "email" (keyup.escape) = "showLogInModal( false )" (keyup.enter) = "logIn()" [(ngModel)] = "credentials.email"/>
 						<span *ngIf = "logInForm.controls.email.errors" class = "tooltip-content">
 							<div [hidden] = "!logInForm.controls.email.errors.required">
 								El correo electrónico es requerido
@@ -77,7 +77,7 @@
 								El correo electrónico no es válido
 							</div>
 							<div [hidden] = "!logInForm.controls.email.errors.emailDoesNotExist">
-								Esta cuenta no se encuentra registrada. <a routerLink = "/sign-up">¿Desea iniciar registrarse?</a>
+								Esta cuenta no se encuentra registrada
 							</div>
 						</span>
 					</label>
@@ -86,7 +86,7 @@
 				<div class = "form-group">
 					<label>Contraseña</label>
 					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.password.touched ) && logInForm.controls.password.invalid">
-						<input class = "form-control" type = "password" formControlName = "password" (keyup.escape)="showLogInModal( false )" (keyup.enter)="logIn()"  [(ngModel)] = "credentials.password"/>
+						<input class = "form-control" type = "password" formControlName = "password" (keyup.escape) = "showLogInModal( false )" (keyup.enter) = "logIn()" [(ngModel)] = "credentials.password"/>
 						<span *ngIf = "logInForm.controls.password.errors" class = "tooltip-content">
 							<div [hidden] = "!logInForm.controls.password.errors.required">
 								La contraseña es requerida
