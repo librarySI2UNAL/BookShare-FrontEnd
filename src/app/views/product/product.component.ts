@@ -46,6 +46,7 @@ export class ProductComponent implements OnInit
 	id: number;
 	showUserInformation: boolean;
 	showDeleteConfirmation: boolean;
+	deleteLoading: boolean;
 
 	@ViewChild( "fileInput" ) fileInput: ElementRef;
 
@@ -85,6 +86,7 @@ export class ProductComponent implements OnInit
 		this.id = -1;
 		this.showUserInformation = false;
 		this.showDeleteConfirmation = false;
+		this.deleteLoading = false;
 	}
 
 	private maxValue( max: number ): ValidatorFn
@@ -209,11 +211,17 @@ export class ProductComponent implements OnInit
 		this.showDeleteConfirmation = value;
 	}
 
+	private edit(): void
+	{
+		this.mode = "edit";
+	}
+
 	private save(): void
 	{
 		this.submitted = true;
 		if( this.productForm.invalid )
 			return;
+		
 		this.loaderService.show();
 		if( this.mode === "create" )
 			this.productService.create( this.user.id, this.product )
@@ -267,7 +275,7 @@ export class ProductComponent implements OnInit
 				{
 					this.product = new Product( product );
 					this.loaderService.hide();
-					this.router.navigate( ["/home"] );
+					this.mode = "view";
 				} )
 				.catch( error =>
 				{
