@@ -100,6 +100,11 @@ export class MapComponent implements OnInit{
 			}, error => this.errorMessage = <any>error );
 	}
 
+	private redirectToProduct( id: number )
+	{
+		this.router.navigate( ["/product", id] );
+	}
+
 	nearUserClicked(event: any, selectedUser: User){
 		let marker = event;
 		this.getAllProductsForUser(selectedUser.id);
