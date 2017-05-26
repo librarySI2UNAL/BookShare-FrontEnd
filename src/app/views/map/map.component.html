@@ -9,7 +9,7 @@ https://rawgit.com/ng2-ui/map/master/app/index.html
   [center]="coords"
   [scrollwheel]="scrollmap">
     <circle (initialized$)="initCircle($event)" [center]="coords" [strokeColor]="'#FFFFFF'" [strokeOpacity]="0.4"
-            [strokeWeight]="1" [editable]="false" [radius]="getRadius(dist)" draggable="false">
+            [strokeWeight]="1" [editable]="false" [radius]="getRadius()" draggable="false">
         
     </circle>
     <marker 

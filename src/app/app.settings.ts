@@ -12,4 +12,5 @@ export class AppSettings
 		signUp: false
 	};
 	public static HEADERS: Headers = new Headers( { "Content-Type": "application/json", "Accept": "application/json" } );
+	public static MAPDIST: number = 15; 
 }

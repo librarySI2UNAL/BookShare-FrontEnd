@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router } from '@angular/router';
 
 import { AppSettings } from "../../app.settings";
 
@@ -12,7 +13,9 @@ import { AppSettings } from "../../app.settings";
 
 export class NearProductsComponent implements OnInit
 {
-	constructor()
+	myDist: number = AppSettings.MAPDIST;
+	
+	constructor(private router: Router)
 	{
 		
 	}
@@ -22,5 +25,17 @@ export class NearProductsComponent implements OnInit
 		for( let view in AppSettings.ACTIVES )
 			AppSettings.ACTIVES[view] = false;
 		AppSettings.ACTIVES.nearProducts = true;
+	}
+	
+	getDist(){
+		return AppSettings.MAPDIST;
+	}
+	
+	newDist(updatedDist: any){
+		this.myDist = updatedDist;
+	}
+	
+	mouseReleased(){
+		AppSettings.MAPDIST = this.myDist;
 	}
 }

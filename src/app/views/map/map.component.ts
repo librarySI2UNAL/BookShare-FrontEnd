@@ -22,7 +22,6 @@ export class MapComponent implements OnInit{
 	circle: any;
 	coords: any;
 	zoom: number = 8;
-	dist: number = 15;
 	scrollmap: boolean = false;
 	user: User;
 	nearUsers: User[];
@@ -49,10 +48,14 @@ export class MapComponent implements OnInit{
 	initCircle(event: any){
 		this.circle = event;
 		this.map.fitBounds(this.circle.getBounds());
+		google.maps.event.addListener(this.circle,'radius_changed',() => {
+			this.getNearUsers();
+            console.log("qwertyuiop");
+        })
 	}
 	
-	getRadius(distanceInKilometers: number){
-		return distanceInKilometers*1000;
+	getRadius(){
+		return AppSettings.MAPDIST*1000;
 	}
 	
 	onResize(event) {
@@ -74,7 +77,7 @@ export class MapComponent implements OnInit{
 	
 	private getNearUsers(): void
 	{
-		this.userService.getNear( this.user.id, this.dist )
+		this.userService.getNear( this.user.id, AppSettings.MAPDIST )
 			.subscribe( users =>
 			{
 				this.nearUsers = users;

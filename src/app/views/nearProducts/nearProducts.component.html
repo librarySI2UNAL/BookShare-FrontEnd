@@ -1,18 +1,20 @@
 <div id="NearProductsWrapper">
 
-		<h1>
-		¡Encuentra los Libros Mas cercanos a Ti!
+	<h1>
+		¡Encuentra los libros a {{getDist()}}Km a la redonda!
 	</h1>
 
 
 	<div class="row center">
-	<div class = "row flex-items-xs-center custom-width">
-
-		<div class="col-md-12">
-			<div class="map">
-				<map></map>
+		<div class = "row flex-items-xs-center custom-width">
+	
+			<div class="col-md-12">
+				<div class="map">
+					<map></map>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
+	
+	<div>Seleccionar distancia: <input type="range" name="points" min="2" max="30" [(ngModel)]="myDist" (ngModelChange)="newDist($event)" (mouseup)="mouseReleased()">{{myDist}}Km</div>
 </div>
