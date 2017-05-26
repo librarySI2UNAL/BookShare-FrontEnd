@@ -30,6 +30,9 @@ export class FeaturedProducts implements OnInit{
         paginationClickable: true,
         slidesPerView: 5,
         spaceBetween: 50,
+        nextButton: '.swiper-button-next',
+       	prevButton: '.swiper-button-prev',
+        
         breakpoints: {
             1024: {
                 slidesPerView: 4,
