@@ -47,11 +47,26 @@ https://rawgit.com/ng2-ui/map/master/app/index.html
       </div>
       <div *ngIf = "!loading">
         <ng-container *ngFor="let prod of userProducts">
-          <div>
-            <p>{{prod.productItem.type}}</p>
-            <p>{{prod.productItem.name}}</p>
-            <p>{{prod.productItem.author}}</p>
-            <button class="btn btn-primary" [routerLink] = "['/product', { id: prod.id }]">Ver más</button>
+          <div class="BookContainer">
+            <div class = "BookThumb">
+              <ng-container *ngIf="prod.photos[0]">
+                <img [src] = "server + prod.photos[0].image.url">
+              </ng-container>
+              <ng-container *ngIf="!prod.photos[0]">
+                <img [src] = "server + genericPhotoURL">
+              </ng-container>
+        		</div>
+            <div class="BookDescription">
+              <div class="BookName">
+                {{prod.productItem.name}}
+              </div>
+              <div class="BookAuthor">
+                {{prod.productItem.author}}
+              </div>
+            </div>
+            <div class="BookBtn">
+              <button class="btn btn-primary" [routerLink] = "['/product', { id: prod.id }]">Ver más</button>
+            </div>
           </div>
         </ng-container>
       </div>

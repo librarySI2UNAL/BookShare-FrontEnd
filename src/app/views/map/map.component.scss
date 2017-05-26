@@ -14,3 +14,35 @@ map{
     border: 3px solid blue;
     padding: 10px;
 }
+
+.BookContainer{
+    width: 500px;
+    height: 160px;
+    margin: 5px;
+    background: rgba(183, 183, 183, 0.07);
+    
+    .BookThumb{
+        img{
+            width: 100px;
+            height: 151px;
+        }    
+    }
+    
+    .BookDescription{
+        position: relative;
+        left: 114px;
+        bottom: 154px;
+        
+        .BookName{
+            font-weight: Bold;
+            font-size: large;
+        }
+    }
+    
+    .BookBtn{
+        position: relative;
+        left: 114px;
+        bottom: 90px;
+    }
+    
+}

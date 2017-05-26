@@ -29,6 +29,7 @@ export class MapComponent implements OnInit{
 	errorMessage: string;
 	userProducts: Product[];
 	loading: boolean = true;
+	server: string = AppSettings.SERVER;
 
 	constructor( private userService: UserService,
 		private productService: ProductService,
@@ -50,7 +51,8 @@ export class MapComponent implements OnInit{
 		this.map.fitBounds(this.circle.getBounds());
 		google.maps.event.addListener(this.circle,'radius_changed',() => {
 			this.getNearUsers();
-            console.log("qwertyuiop");
+            this.map.setCenter(this.coords);
+			this.map.fitBounds(this.circle.getBounds());
         })
 	}
 	
