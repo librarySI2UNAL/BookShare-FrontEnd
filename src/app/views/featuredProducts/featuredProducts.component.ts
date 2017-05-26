@@ -5,6 +5,7 @@ import { Product } from "../../models/product";
 import { User } from "../../models/user";
 import { ProductService } from "../../services/product.service";
 import { UserService } from "../../services/user.service";
+import { LoaderService } from "../../services/loader.service";
 import { AppSettings } from "../../app.settings";
 
 @Component(
@@ -48,7 +49,10 @@ export class FeaturedProducts implements OnInit{
             }
         }
 	};
-	constructor( private productService: ProductService, private userService: UserService, private router: Router )
+	constructor( private productService: ProductService,
+		private userService: UserService,
+		private loaderService: LoaderService,
+		private router: Router )
 	{
 	}
 
@@ -67,8 +71,13 @@ export class FeaturedProducts implements OnInit{
 				for( let i = 0; i < products.length; ++i )
 					this.products.push( new Product( products[i] ) );
 				this.productsNotFound = this.products.length === 0;
+				this.loaderService.hide();
 
-			}, error => this.errorMessage = <any>error );
+			}, error =>
+			{
+				this.errorMessage = <any>error;
+				this.loaderService.hide();
+			} );
 	}
 	
 	private getUser(): void

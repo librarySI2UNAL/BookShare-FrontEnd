@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit
 			{
 				this.interests = interests;
 				this.showSwiper = true;
-				this.loaderService.hide();
 			} );
 	}
 }
