@@ -1,1 +1,115 @@
+<header class = "header-6">
+	<div class = "branding">
+		<a routerLink = "/home" class = "nav-link">
+			<img class = "custom-image-48" src = "assets/images/Isologo_white.png"/>
+		</a>
+	</div>
+	<div class = "header-nav">
+		<a routerLink = "/home" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.home }">Inicio</a>
+		<div *ngIf = "user.token">
+			<a *ngIf = "user.token" routerLink = "/products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.products }">Productos disponibles</a>
+			<a *ngIf = "user.token" routerLink = "/near-products" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.nearProducts }">Productos cercanos</a>
+		</div>
+	</div>
+	<!--<form class = "search">
+		<label>
+			<input class = "custom-width-200" type = "text" placeholder = "Busca libros o colecciones">
+		</label>
+	</form>-->
+	<div class = "header-actions">
+		<a *ngIf = "user.token" routerLink = "/product" class = "nav-link nav-icon" [ngClass] = "{ 'active': actives.product }">
+			<clr-icon shape = "add"></clr-icon>
+		</a>
+		<div *ngIf = "!user.token">
+			<a routerLink = "/sign-up" class = "nav-link nav-text" [ngClass] = "{ 'active': actives.signUp }">
+				Regístrate
+			</a>
+			<a class = "nav-link nav-text custom-pointer" (click) = "showLogInModal( true )">
+				Ingresa
+			</a>
+		</div>
+		<clr-dropdown *ngIf = "user.token" clrMenuPosition = "bottom-right">
+			<button class = "nav-text" clrDropdownToggle>
+				{{ user.name }} {{ user.lastName }}
+				<clr-icon shape = "caret down"></clr-icon>
+			</button>
+			<clr-dropdown-menu>
+				<a routerLink = "/profile" clrDropdownItem>Perfil</a>
+				<a routerLink = "/product" clrDropdownItem>Crea un producto</a>
+				<a class = "custom-pointer" clrDropdownItem (click) = "logOut()">Salir</a>
+			</clr-dropdown-menu>
+		</clr-dropdown>
+		<clr-dropdown clrMenuPosition="bottom-right">
+			<button class="nav-icon" clrDropdownToggle>
+				<clr-icon shape="cog"></clr-icon>
+				<clr-icon shape="caret down"></clr-icon>
+			</button>
+			<clr-dropdown-menu>
+				<a routerLink = "/contact-us" clrDropdownItem>Contáctenos</a>
+			</clr-dropdown-menu>
+		</clr-dropdown>
+	</div>
+</header>
+
 <router-outlet></router-outlet>
+
+<clr-modal [(clrModalOpen)] = "showLogIn" [clrModalClosable] = "false">
+	<h3 class = "modal-title">Ingresa</h3>
+	<div class = "modal-body custom-overflow-visible">
+		<div *ngIf = "logInError" class = "alert alert-danger">
+			<div class = "alert-item">
+				<span class = "alert-text">
+					{{ logInErrorMessage }}
+				</span>
+			</div>
+		</div>
+		<div *ngIf = "!loading">
+			<form [formGroup] = "logInForm">
+				<div class = "form-group">
+					<label>Correo electrónico</label>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.email.touched ) && logInForm.controls.email.invalid">
+						<input class = "form-control" type = "text" formControlName = "email" (keyup.escape) = "showLogInModal( false )" (keyup.enter) = "logIn()" [(ngModel)] = "credentials.email"/>
+						<span *ngIf = "logInForm.controls.email.errors" class = "tooltip-content">
+							<div [hidden] = "!logInForm.controls.email.errors.required">
+								El correo electrónico es requerido
+							</div>
+							<div [hidden] = "!logInForm.controls.email.errors.pattern">
+								El correo electrónico no es válido
+							</div>
+							<div [hidden] = "!logInForm.controls.email.errors.emailDoesNotExist">
+								Esta cuenta no se encuentra registrada
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Contraseña</label>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || logInForm.controls.password.touched ) && logInForm.controls.password.invalid">
+						<input class = "form-control" type = "password" formControlName = "password" (keyup.escape) = "showLogInModal( false )" (keyup.enter) = "logIn()" [(ngModel)] = "credentials.password"/>
+						<span *ngIf = "logInForm.controls.password.errors" class = "tooltip-content">
+							<div [hidden] = "!logInForm.controls.password.errors.required">
+								La contraseña es requerida
+							</div>
+							<div [hidden] = "!logInForm.controls.password.errors.minlength">
+								La contraseña debe tener al menos 8 caracteres
+							</div>
+						</span>
+					</label>
+				</div>
+			</form>
+		</div>
+		<div *ngIf = "loading" class = "progress loop">
+			<progress></progress>
+		</div>
+		<div *ngIf = "loading">
+			<span>Verificando credenciales...</span>
+		</div>
+	</div>
+	<div class = "modal-footer">
+		<button *ngIf = "!loading" class = "btn btn-outline" (click) = "showLogInModal( false )">Cancelar</button>
+		<button *ngIf = "!loading" class = "btn btn-primary" (click) = "logIn()">Ingresar</button>
+	</div>
+</clr-modal>
+
+<loader></loader>

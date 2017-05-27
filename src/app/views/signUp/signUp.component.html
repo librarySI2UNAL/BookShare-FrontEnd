@@ -1,0 +1,123 @@
+<div class = "login-wrapper" [ngClass] = "{ 'custom-none-background': registeredUser }">
+	<div *ngIf = "!registeredUser">
+		<form class = "login" [formGroup] = "signUpForm" (ngSubmit) = "signUp()">
+			<label class = "title">
+				Registro
+			</label>
+
+			<div class = "login-group">
+				<div>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.email.touched ) && signUpForm.controls.email.invalid">
+						<input class = "form-control" type = "text" formControlName = "email" [(ngModel)] = "user.email" placeholder = "Correo electrónico" (keyup.enter)="signUp()"  autofocus>
+						<span *ngIf = "signUpForm.controls.email.errors" class = "tooltip-content">
+							<div [hidden] = "!signUpForm.controls.email.errors.required">
+								El correo electrónico es requerido
+							</div>
+							<div [hidden] = "!signUpForm.controls.email.errors.pattern">
+								El correo electrónico no es válido
+							</div>
+							<div [hidden] = "!signUpForm.controls.email.errors.emailExists">
+								El correo electrónico ya existe
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<br>
+
+				<div>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.name.touched ) && signUpForm.controls.name.invalid">
+						<input class = "form-control" type = "text" formControlName = "name" [(ngModel)] = "user.name" placeholder = "Nombre" (keyup.enter)="signUp()" >
+						<span *ngIf = "signUpForm.controls.name.errors" class = "tooltip-content">
+							<div [hidden] = "!signUpForm.controls.name.errors.required">
+								El nombre es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<br>
+
+				<div>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.lastName.touched ) && signUpForm.controls.lastName.invalid">
+						<input class = "form-control" type = "text" formControlName = "lastName" [(ngModel)] = "user.lastName" placeholder = "Apellido" (keyup.enter)="signUp()" >
+						<span *ngIf = "signUpForm.controls.lastName.errors" class = "tooltip-content">
+							<div [hidden] = "!signUpForm.controls.lastName.errors.required">
+								El apellido es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<br>
+
+				<div>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.password.touched ) && signUpForm.controls.password.invalid">
+						<input class = "form-control" type = "password" formControlName = "password" [(ngModel)] = "password.value" placeholder = "Contraseña" (keyup.enter)="signUp()" >
+						<span *ngIf = "signUpForm.controls.password.errors" class = "tooltip-content">
+							<div [hidden] = "!signUpForm.controls.password.errors.required">
+								La contraseña es requerida
+							</div>
+							<div [hidden] = "!signUpForm.controls.password.errors.minlength">
+								La contraseña debe tener al menos 8 caracteres
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<br>
+
+				<div>
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || signUpForm.controls.passwordConfirmation.touched ) && signUpForm.controls.passwordConfirmation.invalid">
+						<input class = "form-control" type = "password" formControlName = "passwordConfirmation" [(ngModel)] = "password.confirmation" placeholder = "Confirme la contraseña" (keyup.enter)="signUp()" required>
+						<span *ngIf = "signUpForm.controls.passwordConfirmation.errors" class = "tooltip-content">
+							<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.required">
+								Debe confirmar la contraseña
+							</div>
+							<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.minlength">
+								La contraseña debe tener al menos 8 caracteres
+							</div>
+							<div [hidden] = "!signUpForm.controls.passwordConfirmation.errors.mismatch">
+								Las contraseñas no coinciden
+							</div>
+						</span>
+					</label>
+				</div>
+				
+				<button class = "btn btn-primary btn-lg btn-block" type = "submit">Regístrate</button>
+			</div>
+		</form>
+	</div>
+	<div *ngIf = "registeredUser" class = "row custom-width">
+		<div class = "col-xs-5">
+			<form class = "login">
+				<label class = "title">
+					Registro
+				</label>
+
+				<h3>Carga tu foto de perfil</h3>
+				<div class = "flex-items-xs-center custom-pointer" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+					<img class = "img-thumbnail custom-profile-image" [src] = "profileImage">
+					<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
+				</div>
+
+				<br>
+				<br>
+
+				<button class = "btn btn-link" routerLink = "/home">Saltar este paso</button>
+				<button class = "btn btn-primary" (click) = "updateUser()">Aceptar</button>
+			</form>
+		</div>
+		<div class = "col-xs-7">
+			<h3>Selecciona tus intereses</h3>
+			<div class = "custom-display-grid">
+				<a *ngFor = "let interest of interests; let i = index" class = "card clickable card-img custom-cursor-pointer" [ngClass] = "{ 'custom-item-selected': user.interests.indexOf( interest ) >= 0 }" (click) = "selectInterest( i )">
+					<img [src] = "server + interest.photo.image.url">
+					<div class = "custom-over">
+						<div class = "custom-over-text">{{ interest.name }}</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

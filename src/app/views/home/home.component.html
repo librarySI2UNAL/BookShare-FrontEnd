@@ -1,0 +1,26 @@
+<div>
+	<div class = "row custom-width">
+		<img class = "custom-image-bookshare" src = "assets/images/BookShare.jpg">
+	</div>
+
+	<br>
+
+	<swiper *ngIf = "showSwiper" [config] = "swiperConfig">
+		<div class = "swiper-wrapper">
+			<div *ngFor = "let interest of interests; let i = index" class = "swiper-slide custom-image-size" (click) = "selectInterest( interest.id )">
+				<img [src] = "server + interest.photo.image.url">
+				<div class = "custom-hover">
+					<div class = "custom-hover-text">{{ interest.name }}</div>
+				</div>
+			</div>
+			
+		
+		</div>
+
+		<div class = "swiper-pagination"></div>
+		<div class = "swiper-button-next"></div>
+		<div class = "swiper-button-prev"></div>
+	</swiper>
+	
+	<featuredProducts></featuredProducts>
+</div>

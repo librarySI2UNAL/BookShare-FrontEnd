@@ -1,173 +1,187 @@
-<!--Header Book Share-->
-<div class="header">
-	<div class="header-top">
-		<div class="container">
-			<div class="col-sm-4 world"></div>
-			<div class="col-sm-4 logo">
-					<a href="/home"><img src="assets/images/logo.png" alt=""></a>
+<div class = "custom-padding-left-5" >
+	<div class = "row flex-items-xs-center" >
+		<h1>Perfil</h1>
+	</div>
+
+	<div class = "row flex-items-xs-center">
+		<div class = "col-xs offset-xs-1 custom-profile-image" [ngClass] = "{ 'custom-pointer': mode === 'edit' }" ng2FileDrop [uploader] = "uploader" (click) = "showInputFileDialog( fileInput )">
+			<img class = "img-thumbnail" [src] = "profileImage">
+			<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader" (change) = "updatePhoto()"/>
+		</div>
+
+		<div class = "col-xs-4 offset-xs-1" *ngIf = "userAux">
+			<form [formGroup] = "profileForm" >
+				<h3>Datos personales</h3>
+
+				<br>
+
+				<div class = "form-group">
+					<label>Nombre</label>
+					<span *ngIf = "mode === 'view'">{{ userAux.name }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.name.touched ) && profileForm.controls.name.invalid">
+						<input type = "text" formControlName = "name" [(ngModel)] = "userAux.name">
+
+						<span *ngIf = "profileForm.controls.name.errors" class = "tooltip-content">
+							<div [hidden] = "!profileForm.controls.name.errors.required">
+								El nombre es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Apellido</label>
+					<span *ngIf = "mode === 'view'">{{ userAux.lastName }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.lastName.touched ) && profileForm.controls.lastName.invalid">
+						<input type = "text" formControlName = "lastName" [(ngModel)] = "userAux.lastName">
+
+						<span *ngIf = "profileForm.controls.lastName.errors" class = "tooltip-content">
+							<div [hidden] = "!profileForm.controls.lastName.errors.required">
+								El apellido es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Correo electrónico</label>
+					<span *ngIf = "mode === 'view'">{{ userAux.email }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || profileForm.controls.email.touched ) && profileForm.controls.email.invalid">
+						<input type = "text" formControlName = "email" [(ngModel)] = "userAux.email">
+
+						<span *ngIf = "profileForm.controls.email.errors" class = "tooltip-content">
+							<div [hidden] = "!profileForm.controls.email.errors.required">
+								El correo electrónico es requerido
+							</div>
+
+							<div [hidden] = "!profileForm.controls.email.errors.pattern">
+								El correo electrónico no es válido
+							</div>
+							<div [hidden] = "!profileForm.controls.email.errors.emailExists">
+								El correo electrónico ya existe
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group" *ngIf = "mode === 'view'">
+					<label>Ciudad</label>
+					<span >{{ userAux.city.name }}</span>
+				</div>
+
+			</form>
+		</div>
+
+	</div>
+
+	<div class="custom-buttons">
+		<div *ngIf = "mode === 'view' && ownProfile" >
+			<button class = "btn btn-primary" (click) = "modeView()">Editar</button>
+		</div>
+
+		<div *ngIf = "mode === 'edit'">
+			<button class = "btn" (click) = "cancel()">Cancelar</button>
+			<button class = "btn btn-primary" (click) = "edit()">Aceptar</button>
+		</div>
+
+	</div>
+
+
+	<div class = "row flex-items-xs-center">
+		<div class = "col-xs-10 offset-xs-1">
+			<h3>Intereses</h3>
+			<div class = "custom-display-grid">
+				<a *ngFor = "let interest of interests; let i = index" class = "card card-img" [ngClass] = "{ 'custom-item-selected': checkContainsInterest( interest ), 'clickable custom-pointer': mode !== 'view' }" (click) = "selectInterest( i )">
+					<img [src] = "server + interest.photo.image.url">
+					<div class = "custom-over">
+						<div class = "custom-over-text">{{ interest.name }}</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+
+	<div class = "row flex-items-xs-center">
+		<div class="col-xs-3 offset-xs-1 card">
+			<div class="card-header">Tus productos disponibles</div>
+			<div class = "card-text" *ngIf = "productsAvailable.length == 0">
+				<span>No tienes productos disponibles. <a routerLink = "/product">¿Deseas agregar uno?</a></span>
+
+				<br>
+				
+				<img class = "custom-products-not-found-image" src = "./assets/images/Products.png" (click) = "redirectToCreateProduct()" >
+			</div>
+			<div class = "card-block" *ngIf = "productsAvailable.length > 0">
+				<ng-container *ngIf = "!productsNotFound">
+					<swiper [config] = "swiperConfig">
+						<div class="swiper-wrapper">
+							<ng-container *ngFor="let product of productsAvailable">
+								<div class="swiper-slide">
+									<div class = "clickable custom-product-container" (click) = "redirectToProduct( product.id )">
+										<div class = "custom-thumbnail-container">
+											<ng-container *ngIf="product.photos[0]">
+												<img [src] = "server + product.photos[0].image.url">
+											</ng-container>
+											<ng-container *ngIf="!product.photos[0]">
+												<img [src] = "server + genericPhotoURL">
+											</ng-container>
+										</div>
+										<div class="custom-overlay">
+											<div class="text">{{ product.productItem.name }}</div>
+
+											<br>
+											
+											<div class="text">
+												{{ product.value | currency: 'COP': true }}
+											</div>
+										</div>
+									</div>
+								</div>
+							</ng-container>
+						</div>
+						<!-- Add Pagination -->
+						<div class="swiper-pagination"></div>
+					</swiper>
+				</ng-container>
+			</div>
+		</div>
+
+		<div class="col-xs-3 offset-xs-1 card">
+			<div class = "custom-featured-products-wrapper">
+				<div class="card-header">Tus productos vendidos</div>
+				<div class = "card-text"*ngIf = "productsUnavailable.length == 0">
+					<p>No tienes productos vendidos</p><br>
+					<img class = "custom-products-not-found-image" src = "./assets/images/Products.png" (click) = "redirectToCreateProduct()" >
+				</div>
+				<div class = "card-block" *ngIf = "productsUnavailable.length > 0">
+					<ng-container *ngIf = "!productsNotFound">
+						<swiper [config] = "swiperConfig">
+							<div class="swiper-wrapper">
+								<ng-container *ngFor="let product of productsUnavailable">
+									<div class="swiper-slide">
+										<div class = "clickable custom-product-container" (click) = "redirectToProduct( product.id )">
+											<div class = "custom-thumbnail-container">
+												<ng-container *ngIf="product.photos[0]">
+													<img [src] = "server + product.photos[0].image.url">
+												</ng-container>
+												<ng-container *ngIf="!product.photos[0]">
+													<img [src] = "server + genericPhotoURL">
+												</ng-container>
+											</div>
+											<div class="custom-overlay">
+												<div class="text">{{ product.productItem.name }}</div>
+											</div>
+										</div>
+									</div>
+								</ng-container>
+							</div>
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
+						</swiper>
+					</ng-container>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-<div class="container">
-         <div class="row">
-            <h2>User</h2>
-            <div class="col-md-7 ">
-               <div class="panel panel-default">
-                  <div class="panel-heading">
-                     <h4 >User Profile</h4>
-                  </div>
-                  <div class="panel-body">
-                     <div class="box box-info">
-                        <div class="box-body">
-                           <div class="col-sm-6">
-                              <div  align="center">
-                                 <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive"> 
-                                 <input id="profilex-image-upload" class="hidden" type="file">
-                                 <div style="color:#999;" >click aqui para cambiar de imagen</div>
-                                 <!--Upload Image Js And Css-->
-                              </div>
-                              <br>
-                              <!-- /input-group -->
-                           </div>
-                           <div class="col-sm-6">
-                              <span>
-                                 <h4 style="color:#00b1b1;">Ivan Dario Rojas Florez</h4>
-                              </span>
-                              <span>
-                                 <p>idrojasf</p>
-                              </span>
-                           </div>
-                           <div class="clearfix"></div>
-                           <hr style="margin:5px 0 5px 0;">
-                           <div class="col-sm-5 col-xs-6 tital " >Nombres::</div>
-                           <div class="col-sm-7 col-xs-6 ">Ivan Dario</div>
-                           <div class="clearfix"></div>
-                           <div class="bot-border"></div>
-                           <div class="col-sm-5 col-xs-6 tital " >Apellidos:</div>
-                           <div class="col-sm-7"> Rojas Florez</div>
-                           <div class="clearfix"></div>
-                           <div class="bot-border"></div>
-                           <div class="col-sm-5 col-xs-6 tital " >Correo:</div>
-                           <div class="col-sm-7">idrojasf@unal.edu.co</div>
-                           <div class="clearfix"></div>
-                           <div class="bot-border"></div>
-                           <div class="col-sm-5 col-xs-6 tital " >Fecha de Ingreso:</div>
-                           <div class="col-sm-7">15 Jun 2016</div>
-                           <div class="clearfix"></div>
-                           <div class="bot-border"></div>
-                           <div class="col-sm-5 col-xs-6 tital " >Ciudad:</div>
-                           <div class="col-sm-7">Bogotá</div>
-                           <div class="clearfix"></div>
-                           <div class="bot-border"></div>
-                           <div class="col-sm-5 col-xs-6 tital " >Calificación:</div>
-                           <div class="col-sm-7">
-                              <div class="row">
-                                 <div class="col-sm-3">
-                                    <div class="rating-block">
-                                       <h4>Average user rating</h4>
-                                       <h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
-                                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                       <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                       </button>
-                                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                       <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                       </button>
-                                       <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                       <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                       </button>
-                                       <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                       <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                       </button>
-                                       <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                       <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                       </button>
-                                    </div>
-                                 </div>
-                                 <div class="col-sm-3">
-                                    <h4>Rating breakdown</h4>
-                                    <div class="pull-left">
-                                       <div class="pull-left" style="width:35px; line-height:1;">
-                                          <div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
-                                       </div>
-                                       <div class="pull-left" style="width:180px;">
-                                          <div class="progress" style="height:9px; margin:8px 0;">
-                                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="pull-right" style="margin-left:10px;">1</div>
-                                    </div>
-                                    <div class="pull-left">
-                                       <div class="pull-left" style="width:35px; line-height:1;">
-                                          <div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>
-                                       </div>
-                                       <div class="pull-left" style="width:180px;">
-                                          <div class="progress" style="height:9px; margin:8px 0;">
-                                             <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="pull-right" style="margin-left:10px;">1</div>
-                                    </div>
-                                    <div class="pull-left">
-                                       <div class="pull-left" style="width:35px; line-height:1;">
-                                          <div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>
-                                       </div>
-                                       <div class="pull-left" style="width:180px;">
-                                          <div class="progress" style="height:9px; margin:8px 0;">
-                                             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="pull-right" style="margin-left:10px;">0</div>
-                                    </div>
-                                    <div class="pull-left">
-                                       <div class="pull-left" style="width:35px; line-height:1;">
-                                          <div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>
-                                       </div>
-                                       <div class="pull-left" style="width:180px;">
-                                          <div class="progress" style="height:9px; margin:8px 0;">
-                                             <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="pull-right" style="margin-left:10px;">0</div>
-                                    </div>
-                                    <div class="pull-left">
-                                       <div class="pull-left" style="width:35px; line-height:1;">
-                                          <div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>
-                                       </div>
-                                       <div class="pull-left" style="width:180px;">
-                                          <div class="progress" style="height:9px; margin:8px 0;">
-                                             <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="pull-right" style="margin-left:10px;">0</div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <script>
-               $(function() {
-               $('#profile-image1').on('click', function() {
-               $('#profile-image-upload').click();
-               });
-               });       
-            </script> 
-         </div>
-      </div>

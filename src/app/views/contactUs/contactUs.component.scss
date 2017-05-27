@@ -1,0 +1,50 @@
+@import "../../../styles";
+
+contact-us
+{
+	.custom-container
+	{
+		position: relative;
+	}
+
+	.custom-container:hover
+	{
+		.custom-hover-transition
+		{
+			display: block;
+			width: 100%;
+  			left: 0;
+		}
+	}
+
+	.custom-hover-transition
+	{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 100%;
+		right: 0;
+		background-color: rgba( 255, 255, 255, 0.7 );
+		overflow: hidden;
+		width: 0;
+		height: 100%;
+		transition: 1s ease;
+	}
+
+	.custom-hover-text-transition
+	{
+  		@extend .custom-hover-text;
+	}
+
+	.custom-social-icon
+	{
+		max-width: 32px;
+		max-height: 32px;
+	}
+
+	.custom-contact-img
+	{
+		width: 240px;
+		height: 240px;
+	}
+}

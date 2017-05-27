@@ -1,0 +1,131 @@
+html,
+body {
+    position: absolute;
+    height:100%;
+    width: 100%;
+    margin:0;
+}
+    
+.custom-width
+{
+	width: 100%;
+}
+
+.custom-width-200
+{
+	width: 200px;
+}
+
+.custom-image-48
+{
+	height: 48px;
+	margin: 5px;
+}
+
+.custom-image-bookshare
+{
+	width: 100%;
+	height: 37.125%;
+	padding-left: 30px;
+}
+
+.custom-overflow-visible
+{
+	overflow: visible;
+}
+
+.custom-overflow-hidden
+{
+	overflow: hidden;
+}
+
+.custom-display-none
+{
+	display: none;
+}
+
+.custom-pointer
+{
+	cursor: pointer;
+}
+
+.custom-profile-image
+{
+	max-width: 320px;
+	max-heigth: 320px;
+}
+
+.custom-display-grid
+{
+	display: grid;
+	grid-template-columns: 23% 23% 23% 23%;
+}
+
+.custom-item-selected
+{
+	border-color: #337AB7;
+	opacity: 0.4;
+}
+
+.custom-over
+{
+	position: absolute;
+	background-color: transparent;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.custom-over-text
+{
+	color: white;
+	background-color: black;
+	font-size: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.custom-error-text
+{
+	color: #C92100;
+}
+
+.custom-hover
+{
+	position: absolute;
+	background-color: transparent;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.custom-hover-text
+{
+	color: white;
+	background-color: black;
+	font-size: 40px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.custom-product-image
+{
+	max-width: 256px;
+	max-heigth: 256px;
+}
+
+.custom-product-image-thumbnail
+{
+	max-width: 128px;
+	max-heigth: 64px;
+}

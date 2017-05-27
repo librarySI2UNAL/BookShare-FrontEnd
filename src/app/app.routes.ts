@@ -1,53 +1,65 @@
-//componentes de la aplicacion
-//import { AppModule } from "../app.module";
-import { AppComponent } 			from "./app.component";
-import { HomeComponent } 			from "./views/homepage/home.component";
-import { LoginComponent } 			from './views/login/login.component';
-import { ContactusComponent } 		from './views/contactus/contactus.component';
-import { AvailableprodComponent }	from './views/availableprod/availableprod.component';
-import { RegistryComponent } 		from './views/registry/registry.component';
-import { ProfileComponent } 		from './views/profile/profile.component';
-import { ProductComponent } 		from './views/product/product.component';
-//componentes de enrutamiento
-import { ModuleWithProviders   } from '@angular/core'; 
-import { Routes , RouterModule } from '@angular/router'; 
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
+import { HomeComponent } from "./views/home/home.component";
+import { ContactUsComponent } from "./views/contactUs/contactUs.component";
+import { ProductsComponent } from "./views/products/products.component";
+import { SignUpComponent } from "./views/signUp/signUp.component";
+import { ProfileComponent } from "./views/profile/profile.component";
+import { ProductComponent }	from "./views/product/product.component";
+import { NearProductsComponent } from './views/nearProducts/nearProducts.component';
 
-//rutas de la aplicacion
 const routes : Routes = [
-	
 	{
-		path: 		'home',
-		component:	 HomeComponent	
-	},
-	
-	{
-		path: 		'login',
-		component:	LoginComponent	
+		path: "",
+		redirectTo: "/home",
+		pathMatch: "full"
 	},
 	{
-		path: 		'registry',
-		component:	RegistryComponent	
+		path: "home",
+		component: HomeComponent
 	},
 	{
-		path: 		'contactus',	 
-		component:	 ContactusComponent	
+		path: "sign-up",
+		component: SignUpComponent
 	},
 	{
-		path: 		'profile',
-		component:	 ProfileComponent	
+		path: "contact-us",
+		component: ContactUsComponent
 	},
 	{
-		path: 		'availprod',
-		component:	 AvailableprodComponent	
+		path: "profile",
+		component: ProfileComponent
 	},
 	{
-		path: 		'',
-		redirectTo: '/home',
-		pathMatch: 'full'
+		path: "profile/:id",
+		component: ProfileComponent
 	},
-	
+	{
+		path: "products",
+		component: ProductsComponent
+	},
+	{
+		path: "product/:id",
+		component: ProductComponent
+	},
+	{
+		path: "product",
+		component: ProductComponent
+	},
+	{
+		path: "near-products",
+		component: NearProductsComponent
+	}
 ];
 
-//exportar constante con las rutas para ser usada externamente
-export const routing: ModuleWithProviders = RouterModule.forRoot(routes); 
+@NgModule(
+{
+	imports: [ RouterModule.forRoot( routes ) ],
+  	exports: [ RouterModule ]
+} )
+
+export class AppRoutingModule
+{
+
+}

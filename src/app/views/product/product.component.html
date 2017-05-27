@@ -1,3 +1,374 @@
-<p>
-  product works!
-</p>
+<div class = "row flex-items-xs-center custom-width">
+	<h1 *ngIf = "mode === 'view'">{{ product.productItem.name }}</h1>
+	<h1 *ngIf = "mode !== 'view'">Crea tu producto</h1>
+</div>
+
+<div *ngIf = "mode !== 'create'">
+	<div *ngIf = "mode === 'edit' && product.photos.length < 5" class = "row flex-items-xs-center custom-width">
+		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
+		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
+	</div>
+	
+	<div class = "row flex-items-xs-center custom-width">
+		<div *ngFor = "let photo of product.photos; let i = index">
+			<button *ngIf = "mode === 'edit'" class = "close" (click) = "deletePhoto( i )">
+				<clr-icon shape = "close"></clr-icon>
+			</button>
+			<img class = "img-thumbnail custom-product-image" [src] = "server + photo.image.url">
+		</div>
+	</div>
+
+	<br>
+
+	<div *ngIf = "mode === 'view' && !ownProduct" class = "row flex-items-xs-center custom-width">
+		<div class = "col-xs-4">
+			<button class = "btn btn-success btn-block" (click) = "showUserInformationModal( true )">Quiero comprar el producto</button>
+		</div>
+	</div>
+
+	<div *ngIf = "mode === 'view' && ownProduct" class = "row flex-items-xs-center custom-width">
+		<button class = "btn btn-success" (click) = "setAvailability( false )" [clrLoading] = "loadingSold">Ya vendí este producto</button>
+		<button class = "btn btn-primary" (click) = "edit( true )">Editar</button>
+		<button class = "btn btn-warning" (click) = "showDeleteConfirmationModal( true )">Eliminar</button>
+	</div>
+</div>
+
+<clr-modal [(clrModalOpen)] = "showDeleteConfirmation">
+	<h3 class = "modal-title">{{ product.productItem.name }}</h3>
+	<div class = "modal-body">
+		<h4>¿Desea eliminar el producto?</h4>
+	</div>
+	<div class = "modal-footer">
+		<button class = "btn btn-outline" (click) = "showDeleteConfirmationModal( false )">Cancelar</button>
+		<button [clrLoading] = "deleteLoading" class = "btn btn-warning" (click) = "delete()">Aceptar</button>
+	</div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)] = "showUserInformation">
+	<h3 class = "modal-title">Propietario</h3>
+	<div class = "modal-body">
+		<div *ngIf = "product.user" class = "row custom-padding-left-5 custom-width custom-overflow-hidden">
+			<div>
+				<img *ngIf = "product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + product.user.photo.image.url">
+				<img *ngIf = "!product.user.photo" class = "img-thumbnail custom-profile-image-128" [src] = "server + avatarImage">
+			</div>
+
+			<div class = "custom-padding-left-5">
+				<h3>{{ product.user.name }} {{ product.user.lastName }}</h3>
+				<h4>{{ product.user.email }}</h4>
+			</div>
+		</div>
+	</div>
+	<div class = "modal-footer">
+		<button class = "btn btn-outline" (click) = "showUserInformationModal( false )">Cancelar</button>
+		<button class = "btn btn-primary" (click) = "showUserInformationModal( false )">Aceptar</button>
+	</div>
+</clr-modal>
+
+
+<div *ngIf = "createdProduct">
+	<div *ngIf = "productImages.length < 5" class = "row flex-items-xs-center custom-width">
+		<button class = "btn" (click) = "showInputFileDialog()">Agregar foto</button>
+		<input class = "custom-display-none" #fileInput type = "file" ng2FileSelect [uploader] = "uploader"/>
+	</div>
+
+	<div class = "row flex-items-xs-center custom-width">
+		<div *ngFor = "let productImage of productImages; let i = index">
+			<button class = "close" (click) = "deletePhoto( i )">
+				<clr-icon shape = "close"></clr-icon>
+			</button>
+			<img class = "img-thumbnail custom-product-image" [src] = "productImage">
+		</div>
+	</div>
+
+	<div class = "row flex-items-xs-center custom-width">
+		<section class = "form-block">
+			<div class = "form-group">
+				<label>¿Puedes darnos una descripción más detallada del producto?</label>
+				<textarea rows = "5" [(ngModel)] = "product.description"></textarea>
+			</div>
+		</section>
+	</div>
+
+	<div class = "row flex-items-xs-center custom-width">
+		<button class = "btn btn-link" routerLink = "/home">Saltar este paso</button>
+		<button class = "btn btn-primary" (click) = "updateProduct()">Aceptar</button>
+	</div>
+</div>
+<div *ngIf = "!createdProduct && product">
+	<form [formGroup] = "productForm" (ngSubmit) = "save()">
+		<div *ngIf = "mode === 'create'" class = "row custom-width">
+			<img class = "custom-image-bookshare" src = "assets/images/BookShare.jpg">
+		</div>
+
+		<br>
+
+		<div class = "row custom-width">
+			<div class = "col-xs offset-xs-1">
+				<div class = "form-group">
+					<label>Nombre</label>
+					<span *ngIf = "mode === 'view'">{{ product.productItem.name }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.name.touched ) && productForm.controls.name.invalid">
+						<input type = "text" formControlName = "name" [(ngModel)] = "product.productItem.name">
+
+						<span *ngIf = "productForm.controls.name.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.name.errors.required">
+								El nombre es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Autor</label>
+					<span *ngIf = "mode === 'view'">{{ product.productItem.author }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.author.touched ) && productForm.controls.author.invalid">
+						<input type = "text" formControlName = "author" [(ngModel)] = "product.productItem.author">
+
+						<span *ngIf = "productForm.controls.author.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.author.errors.required">
+								El autor es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Género</label>
+					<span *ngIf = "mode === 'view' && product.productItem.genre">{{ product.productItem.genre.name }}</span>
+					<!--<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" [(ngModel)] = "product.productItem.genre">
+					<label class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
+						<span *ngIf = "productForm.controls.genre.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.genre.errors.required">
+								El género es requerido
+							</div>
+						</span>
+					</label>-->
+					<div *ngIf = "mode === 'edit'" class = "col-xs">
+						<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" (valueChanged) = "setGenre( $event )" [(ngModel)] = "product.productItem.genre" no-match-found-text = "No existe este género">
+						
+						<div *ngIf = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
+							<span *ngIf = "productForm.controls.genre.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.genre.errors.required">
+									El género es requerido
+								</div>
+							</span>
+						</div>
+					</div>
+
+					<div *ngIf = "mode === 'create'" class = "col-xs">
+						<input [ngClass] = "{ 'custom-input-error': ( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid }" type = "text" formControlName = "genre" auto-complete [source] = "genres" value-formatter = "name" list-formatter = "name" (valueChanged) = "setGenre( $event )" no-match-found-text = "No existe este género">
+						
+						<div *ngIf = "( submitted || productForm.controls.genre.touched ) && productForm.controls.genre.invalid">
+							<span *ngIf = "productForm.controls.genre.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.genre.errors.required">
+									El género es requerido
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Año de publicación</label>
+					<span *ngIf = "mode === 'view'">{{ product.productItem.yearOfPublication }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.yearOfPublication.touched ) && productForm.controls.yearOfPublication.invalid">
+						<input type = "number" formControlName = "yearOfPublication" [(ngModel)] = "product.productItem.yearOfPublication">
+
+						<span *ngIf = "productForm.controls.yearOfPublication.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.yearOfPublication.errors.required">
+								El año de publicación es requerido
+							</div>
+							<div [hidden] = "!productForm.controls.yearOfPublication.errors.pattern">
+								El formato para el año no es válido
+							</div>
+							<div [hidden] = "!productForm.controls.yearOfPublication.errors.maxValue">
+								El año de publicación no puede ser mayor al año actual
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Editorial</label>
+					<span *ngIf = "mode === 'view'">{{ product.productItem.editorial }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.editorial.touched ) && productForm.controls.editorial.invalid">
+						<input type = "text" formControlName = "editorial" [(ngModel)] = "product.productItem.editorial">
+
+						<span *ngIf = "productForm.controls.editorial.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.editorial.errors.required">
+								La editorial es requerida
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div *ngIf = "mode !== 'view'" class = "form-group">
+					<label>Producto destacado</label>
+					<clr-checkbox [(ngModel)] = "product.special" [ngModelOptions] = "{ standalone: true }">
+						¿Es un producto que se debe destacar?
+					</clr-checkbox>
+					<clr-tooltip [clrTooltipDirection] = "'top-left'" [clrTooltipSize] = "'lg'">
+						<clr-icon shape = "help"></clr-icon>
+						<clr-tooltip-content>
+							<span>Un producto destacado es un libro o colección de una edición especial o de una primera edición</span>
+						</clr-tooltip-content>
+					</clr-tooltip>
+				</div>
+
+				<div *ngIf = "mode !== 'create' && product.description && product.description.length > 0" class = "form-group">
+					<label>Descripción</label>
+					<span *ngIf = "mode === 'view'">{{ product.description }}</span>
+					<textarea *ngIf = "mode === 'edit'" [(ngModel)] = "product.description" [ngModelOptions] = "{ standalone: true }"></textarea>
+				</div>
+			</div>
+
+			<div class = "col-xs">
+				<div class = "form-group">
+					<label>Tipo de producto</label>
+					<span *ngIf = "mode === 'view'">{{ typeTexts[product.productItem.type] }}</span>
+					<div *ngIf = "mode !== 'view'" class = "col-xs">
+						<select formControlName = "type" [(ngModel)] = "product.productItem.type">
+							<option *ngFor = "let type of types" [ngValue] = "typeValues[type]">{{ type }}</option>
+						</select>
+						
+						<div *ngIf = "( submitted || productForm.controls.type.touched ) && productForm.controls.type.invalid">
+							<span *ngIf = "productForm.controls.type.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.type.errors.required">
+									El tipo de producto es requerido
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Tipo de código (ISBN, ASIN, ...)</label>
+					<span *ngIf = "mode === 'view'">{{ product.codeType }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.codeType.touched ) && productForm.controls.codeType.invalid">
+						<input type = "text" formControlName = "codeType" [(ngModel)] = "product.codeType">
+
+						<span *ngIf = "productForm.controls.codeType.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.codeType.errors.required">
+								El tipo de código es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Código</label>
+					<span *ngIf = "mode === 'view'">{{ product.code }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.code.touched ) && productForm.controls.code.invalid">
+						<input type = "text" formControlName = "code" [(ngModel)] = "product.code">
+
+						<span *ngIf = "productForm.controls.code.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.code.errors.required">
+								El código es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+
+				<div class = "form-group">
+					<label>Cubierta</label>
+					<span *ngIf = "mode === 'view'">{{ covers[product.cover - 1] }}</span>
+					<div *ngIf = "mode !== 'view'" class = "col-xs">
+						<select formControlName = "cover" [(ngModel)] = "product.cover">
+							<option *ngFor = "let cover of covers; let i = index" [ngValue] = "i + 1">{{ cover }}</option>
+						</select>
+						
+						<div *ngIf = "( submitted || productForm.controls.cover.touched ) && productForm.controls.cover.invalid">
+							<span *ngIf = "productForm.controls.cover.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.cover.errors.required">
+									La cubierta es requerida
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Estado</label>
+					<span *ngIf = "mode === 'view'">{{ statuses[product.status - 1] }}</span>
+					<div *ngIf = "mode !== 'view'" class = "col-xs">
+						<select formControlName = "status" [(ngModel)] = "product.status">
+							<option *ngFor = "let status of statuses; let i = index" [ngValue] = "i + 1">{{ status }}</option>
+						</select>
+						
+						<div *ngIf = "( submitted || productForm.controls.status.touched ) && productForm.controls.status.invalid">
+							<span *ngIf = "productForm.controls.status.errors" class = "custom-error-text">
+								<div [hidden] = "!productForm.controls.status.errors.required">
+									El estado es requerido
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class = "form-group">
+					<label>Valor del producto</label>
+					<span *ngIf = "mode === 'view'">{{ product.value | currency: 'COP': true }}</span>
+					<label *ngIf = "mode !== 'view'" class = "tooltip tooltip-validation tooltip-md tooltip-top-left" [class.invalid] = "( submitted || productForm.controls.value.touched ) && productForm.controls.value.invalid">
+						<input type = "number" min = "0" formControlName = "value" [(ngModel)] = "product.value">
+
+						<span *ngIf = "productForm.controls.value.errors" class = "tooltip-content">
+							<div [hidden] = "!productForm.controls.value.errors.required">
+								El valor es requerido
+							</div>
+						</span>
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<div class = "row flex-items-xs-center custom-width">
+			<div class = "col-xs-1">
+				<button *ngIf = "mode === 'edit'" class = "btn" (click) = "edit( false )">Cancelar</button>
+			</div>
+			<div class = "col-xs-4">
+				<button *ngIf = "mode !== 'view'" class = "btn btn-primary btn-block" type = "submit">Guardar</button>
+			</div>
+		</div>
+	</form>
+
+	<div *ngIf = "mode === 'view'" class = "row flex-items-xs-center custom-width">
+		<div class = "col-xs-8">
+			<div class = "row flex-items-xs-center custom-width">
+				<h3>Comentarios</h3>
+			</div>
+
+			<div class = "col-xs custom-width custom-comment-wrapper">
+				<div class = "row flex-items-xs-center custom-width" *ngFor = "let comment of product.comments">
+					<div>
+						<img *ngIf = "comment.user.photo" class = "img-thumbnail custom-profile-image-64" [src] = "server + comment.user.photo.image.url">
+						<img *ngIf = "!comment.user.photo" class = "img-thumbnail custom-profile-image-64" [src] = "server + avatarImage">
+					</div>
+					<div class = "col-xs">
+						<label><b>{{ comment.user.name }} {{ comment.user.lastName }}</b></label>
+						<br>
+						<label>{{ comment.comment }}</label>
+					</div>
+				</div>
+			</div>
+
+			<br>
+
+			<div class = "row flex-items-xs-center custom-width">
+				<div>
+					<img class = "img-thumbnail custom-profile-image-64" [src] = "server + profileImage">
+				</div>
+				<div class = "col-xs">
+					<label><b>{{ user.name }} {{ user.lastName }}</b></label>
+					<textarea rows = "2" placeholder = "Escribe un comentario..." [(ngModel)] = "comment"></textarea>
+				</div>
+			</div>
+
+			<div class = "row custom-width">
+				<button class = "btn btn-outline" [clrLoading] = "loadingComment" (click) = "addComment()">Comentar</button>
+			</div>
+
+			<br>
+		</div>
+	</div>
+</div>
